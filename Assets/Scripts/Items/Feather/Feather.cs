@@ -47,12 +47,23 @@ public class Feather : PassiveItemTemplate
         return currState;
     }
 
-    public Action<CharacterMovementController> getEffectFunction()
+    public Action<GameObject> getPositiveEffectFunction()
     {
-        return (CharacterMovementController x) =>
+        return (GameObject x) =>
         {
-            x.jumpNumber = getStacks() + 1;
-            currentCoolDownTime = coolDownTime;
+
+            PlayerJump script = x.GetComponent<PlayerJump>();
+
+            script.SetJumpNumber(getStacks() + 1);
+
+        };
+    }
+
+    public Action<GameObject> getNegativeEffectFunction()
+    {
+        return (GameObject x) =>
+        {
+            return;
         };
     }
 
