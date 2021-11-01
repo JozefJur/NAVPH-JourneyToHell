@@ -16,6 +16,7 @@ public class CharacterMovementController : MonoBehaviour
     private PlayerHealth playerHealth;
     private PlayerMovement playerMov;
     private PlayerJump playerJump;
+    private PlayerAttack playerAttack;
 
     void Start()
     {
@@ -24,7 +25,7 @@ public class CharacterMovementController : MonoBehaviour
         playerHealth = GetComponent<PlayerHealth>();
         playerMov = GetComponent<PlayerMovement>();
         playerJump = GetComponent<PlayerJump>();
-
+        playerAttack = GetComponent<PlayerAttack>();
         /* var items = FindObjectsOfType<Object>().OfType<ItemTemplate>();
          foreach (ItemTemplate item in items)
          {
@@ -100,6 +101,7 @@ public class CharacterMovementController : MonoBehaviour
         playerHealth.resetStats();
         playerJump.resetStats();
         playerMov.resetStats();
+        playerAttack.resetStats();
     }
 
 

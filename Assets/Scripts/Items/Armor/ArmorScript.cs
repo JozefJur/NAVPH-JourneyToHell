@@ -7,6 +7,9 @@ public class ArmorScript : PassiveItemTemplate
 {
     public float coolDownTime = 0f;
 
+    public float maxHealthBoost = 0.1f;
+    public float movementSpeedPenalty = 0.05f;
+
     private float currentCoolDownTime = 0f;
 
     private ItemTemplate.State currState = ItemTemplate.State.READY;
@@ -53,7 +56,7 @@ public class ArmorScript : PassiveItemTemplate
 
             PlayerHealth scriptH = x.GetComponent<PlayerHealth>();
 
-            scriptH.SetMaxHealth(scriptH.baseMaxHealth + ((getStacks() * 0.1f) * scriptH.baseMaxHealth));
+            scriptH.SetMaxHealth(scriptH.baseMaxHealth + ((getStacks() * maxHealthBoost) * scriptH.baseMaxHealth));
         };
     }
 
@@ -64,7 +67,7 @@ public class ArmorScript : PassiveItemTemplate
 
             PlayerMovement scriptM = x.GetComponent<PlayerMovement>();
 
-            scriptM.movementSpeed -= ((getStacks() * 0.1f) * scriptM.baseMovementSpeed);
+            scriptM.movementSpeed -= ((getStacks() * movementSpeedPenalty) * scriptM.baseMovementSpeed);
         };
     }
 
