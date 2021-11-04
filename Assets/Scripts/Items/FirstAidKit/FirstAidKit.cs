@@ -49,12 +49,33 @@ public class FirstAidKit : PassiveItemTemplate
         return currState;
     }
 
-    public Action<CharacterMovementController> getEffectFunction()
+/*    public Action<CharacterMovementController> getEffectFunction()
     {
         return (CharacterMovementController x) =>
         {
             x.heal(hp);
             currentCoolDownTime = coolDownTime;
+        };
+    }*/
+
+    public Action<GameObject> getPositiveEffectFunction()
+    {
+        return (GameObject x) =>
+        {
+
+            PlayerHealth script = x.GetComponent<PlayerHealth>();
+
+            script.HealObject(hp);
+
+        };
+    }
+
+    public Action<GameObject> getNegativeEffectFunction()
+    {
+        return (GameObject x) =>
+        {
+            CharacterMovementController playerScript = x.GetComponent<CharacterMovementController>();
+            playerScript.RemoveItem(this);
         };
     }
 

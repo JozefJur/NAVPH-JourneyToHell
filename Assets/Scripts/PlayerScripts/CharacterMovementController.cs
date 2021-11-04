@@ -57,7 +57,7 @@ public class CharacterMovementController : MonoBehaviour
 
     private void applyPositivePassiveEffects()
     {
-        foreach (ItemTemplate item in allItems)
+        foreach (ItemTemplate item in allItems.ToList())
         {
             if (item is PassiveItemTemplate)
             {
@@ -71,7 +71,7 @@ public class CharacterMovementController : MonoBehaviour
 
     private void applyNegavitvePassiveEffects()
     {
-        foreach (ItemTemplate item in allItems)
+        foreach (ItemTemplate item in allItems.ToList())
         {
             if (item is PassiveItemTemplate)
             {
@@ -85,7 +85,7 @@ public class CharacterMovementController : MonoBehaviour
 
     private void applyOtherEffects()
     {
-        foreach (ItemTemplate item in allItems)
+        foreach (ItemTemplate item in allItems.ToList())
         {
             if (!(item is PassiveItemTemplate))
             {
@@ -132,7 +132,7 @@ public class CharacterMovementController : MonoBehaviour
         }
     }
 
-    private void performSprint(){
+/*    private void performSprint(){
         if(Input.GetKey(KeyCode.LeftShift) && (currSpeed == movementSpeed) && (!inJump)){
             currSpeed = movementSpeed;
             movementSpeed += 25f;
@@ -140,7 +140,7 @@ public class CharacterMovementController : MonoBehaviour
         else{
             movementSpeed = currSpeed;
         }
-    }
+    }*/
 
     public void addItem(ItemTemplate item)
     {
@@ -148,8 +148,9 @@ public class CharacterMovementController : MonoBehaviour
 
         bool containsItem = false;
 
-        foreach(ItemTemplate itemC in allItems){
-            if(itemC.GetType().Equals(item.GetType()))
+        foreach (ItemTemplate itemC in allItems)
+        {
+            if (itemC.GetType().Equals(item.GetType()))
             {
                 itemC.addStack();
                 containsItem = true;
@@ -161,6 +162,7 @@ public class CharacterMovementController : MonoBehaviour
             item.addStack();
             allItems.Add(item);
         }
+    }
 
  //TRANSFER TO SEPARATE FILE
     public void getDamage(int dmg){
@@ -185,7 +187,7 @@ public class CharacterMovementController : MonoBehaviour
 
     public void RemoveItem(ItemTemplate item)
     {
-        foreach (ItemTemplate itemC in allItems)
+        foreach (ItemTemplate itemC in allItems.ToList())
         {
             if (itemC.GetType().Equals(item.GetType()))
             {
