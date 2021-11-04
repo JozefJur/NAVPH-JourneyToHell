@@ -18,7 +18,6 @@ public class Feather : PassiveItemTemplate
 
     //private bool canPickUp = false;
     
-
     public void addStack()
     {
         stacks++;

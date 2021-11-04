@@ -14,6 +14,8 @@ public class PlayerJump : MonoBehaviour
     private Rigidbody2D rigidBody;
     private int currJumpLeft = 1;
 
+    private bool jumped = false;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -26,9 +28,11 @@ public class PlayerJump : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Space) && currJumpLeft > 0)
         {
+
             rigidBody.velocity = new Vector2(rigidBody.velocity.x, 0);
             rigidBody.AddForce(new Vector2(0, jumpForce), ForceMode2D.Impulse);
             currJumpLeft--;
+            jumped = true;
         }
     }
 
@@ -38,19 +42,23 @@ public class PlayerJump : MonoBehaviour
         if (col.gameObject.tag == "Ground")
         {
             currJumpLeft = jumpNumber;
+            jumped = false;
         }
     }
 
     public bool HasJumped()
     {
-        return !(currJumpLeft == jumpNumber);
+        return jumped;
     }
 
     public void SetJumpNumber(int jumpNumber)
     {
-        if (!HasJumped())
+
+        //Debug.Log(HasJumped() + " " + currJumpLeft + " - " + jumpNumber);
+
+        if (!jumped)
         {
-            this.currJumpLeft = jumpNumber;
+            currJumpLeft = jumpNumber;
         }
 
         this.jumpNumber = jumpNumber;
