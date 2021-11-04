@@ -7,6 +7,8 @@ public class CharacterMovementController : MonoBehaviour
 {
 
     public List<ItemTemplate> allItems = new List<ItemTemplate>();
+    public int maxHealth = 100;
+    public int currHealth;
 
     //private float dashCooldown = 0;
 
@@ -18,6 +20,7 @@ public class CharacterMovementController : MonoBehaviour
     private PlayerJump playerJump;
     private PlayerAttack playerAttack;
 
+   
     void Start()
     {
         rigidBody = GetComponent<Rigidbody2D>();
@@ -129,6 +132,16 @@ public class CharacterMovementController : MonoBehaviour
         }
     }
 
+    private void performSprint(){
+        if(Input.GetKey(KeyCode.LeftShift) && (currSpeed == movementSpeed) && (!inJump)){
+            currSpeed = movementSpeed;
+            movementSpeed += 25f;
+        }
+        else{
+            movementSpeed = currSpeed;
+        }
+    }
+
     public void addItem(ItemTemplate item)
     {
         //Debug.Log(item is Feather);
@@ -149,12 +162,29 @@ public class CharacterMovementController : MonoBehaviour
             allItems.Add(item);
         }
 
+ //TRANSFER TO SEPARATE FILE
+    public void getDamage(int dmg){
+        currHealth -= dmg;
+        if (currHealth <= 0){
+            currHealth = 0;
+        }
+    }
+
+    public void heal(int hp){
+        currHealth += hp;
+        if (currHealth > maxHealth){
+            currHealth = maxHealth;
+        }
+        Debug.Log($"Curr health - {currHealth}, max health - {maxHealth}");
+    }
+
+    public void maxHealthUp(int hp){
+        maxHealth += hp;
+
     }
 
     public void RemoveItem(ItemTemplate item)
     {
-
-
         foreach (ItemTemplate itemC in allItems)
         {
             if (itemC.GetType().Equals(item.GetType()))
@@ -166,6 +196,5 @@ public class CharacterMovementController : MonoBehaviour
                 }
             }
         }
-
     }
 }
