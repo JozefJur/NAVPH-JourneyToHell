@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 
-public class Feather : PassiveItemTemplate
+public class FirstAidKit : PassiveItemTemplate
 {
-
+    
     public float coolDownTime = 0f;
 
     private float currentCoolDownTime = 0f;
@@ -13,6 +13,8 @@ public class Feather : PassiveItemTemplate
     private ItemTemplate.State currState = ItemTemplate.State.READY;
 
     private int stacks = 0;
+
+    private int hp = 10;
 
     //private bool canPickUp = false;
     
@@ -49,10 +51,9 @@ public class Feather : PassiveItemTemplate
 
     public Action<CharacterMovementController> getEffectFunction()
     {
-        
         return (CharacterMovementController x) =>
         {
-            x.jumpNumber = getStacks() + 1;
+            x.heal(hp);
             currentCoolDownTime = coolDownTime;
         };
     }
@@ -65,7 +66,7 @@ public class Feather : PassiveItemTemplate
             currentCoolDownTime = 0f;
         }
         else
-        {
+        { 
             currentCoolDownTime -= Time.deltaTime;
         }
     }
@@ -74,5 +75,4 @@ public class Feather : PassiveItemTemplate
     {
         return ItemTemplate.Rarity.COMMON;
     }
-
 }

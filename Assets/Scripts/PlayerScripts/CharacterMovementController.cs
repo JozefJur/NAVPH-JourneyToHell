@@ -12,6 +12,8 @@ public class CharacterMovementController : MonoBehaviour
     public float dashDuration = 0.3f; // player dash duration
     public int jumpNumber = 1;
     public List<ItemTemplate> allItems = new List<ItemTemplate>();
+    public int maxHealth = 100;
+    public int currHealth;
 
 
     private float dashCooldown = 0;
@@ -28,10 +30,15 @@ public class CharacterMovementController : MonoBehaviour
 
     private Vector2 accVelocity;
 
+    private bool inJump = false;
+
+    private float currSpeed;
    
     void Start()
     {
         rigidBody = GetComponent<Rigidbody2D>();
+        currHealth = maxHealth;
+        currSpeed = movementSpeed;
        /* var items = FindObjectsOfType<Object>().OfType<ItemTemplate>();
         foreach (ItemTemplate item in items)
         {
@@ -45,7 +52,7 @@ public class CharacterMovementController : MonoBehaviour
     void Update()
     {
         //Debug.Log(jumpNumber);
-        Debug.Log(movementSpeed + " " + jumpNumber);
+        //Debug.Log(movementSpeed + " " + jumpNumber);
         foreach (ItemTemplate item in allItems)
         {
             if (item.isReady())
@@ -65,11 +72,13 @@ public class CharacterMovementController : MonoBehaviour
 
         preformDash();
         
+        performSprint();
     }
 
     private void preformMovement()
     {
         var movementAxis = Input.GetAxis("Horizontal");
+        
         transform.position += new Vector3(movementAxis, 0, 0) * Time.deltaTime * movementSpeed;
 
         if (Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.D))
@@ -82,6 +91,7 @@ public class CharacterMovementController : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Space) && currJumpLeft > 0)
         {
+            inJump = true;
             rigidBody.velocity = new Vector2(rigidBody.velocity.x, 0);
             rigidBody.AddForce(new Vector2(0, jumpForce), ForceMode2D.Impulse);
             currJumpLeft--;
@@ -120,6 +130,16 @@ public class CharacterMovementController : MonoBehaviour
         }
     }
 
+    private void performSprint(){
+        if(Input.GetKey(KeyCode.LeftShift) && (currSpeed == movementSpeed) && (!inJump)){
+            currSpeed = movementSpeed;
+            movementSpeed += 25f;
+        }
+        else{
+            movementSpeed = currSpeed;
+        }
+    }
+
     public void addItem(ItemTemplate item)
     {
         //Debug.Log(item is Feather);
@@ -141,14 +161,36 @@ public class CharacterMovementController : MonoBehaviour
         }
     }
 
+    public void getDamage(int dmg){
+        currHealth -= dmg;
+        if (currHealth <= 0){
+            currHealth = 0;
+        }
+    }
+
+    public void heal(int hp){
+        currHealth += hp;
+        if (currHealth > maxHealth){
+            currHealth = maxHealth;
+        }
+        Debug.Log($"Curr health - {currHealth}, max health - {maxHealth}");
+    }
+
+    public void maxHealthUp(int hp){
+        maxHealth += hp;
+    }
 
     void OnCollisionEnter2D(Collision2D col)
     {
-
         if (col.gameObject.tag == "Ground")
         {
-            currJumpLeft = jumpNumber;
-        }
+            Vector3 direction = transform.position - col.gameObject.transform.position;
+            if(direction.y > 0)
+            {
+                inJump = false;
+                currJumpLeft = jumpNumber;
+                Debug.Log($"Collision with {col.gameObject.tag}");}
+            }
     }
 
     public enum DashState
