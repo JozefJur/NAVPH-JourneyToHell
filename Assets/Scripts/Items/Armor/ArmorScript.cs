@@ -3,12 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 
-public class RedBull : PassiveItemTemplate
+public class ArmorScript : PassiveItemTemplate
 {
     public float coolDownTime = 0f;
 
-    public float movementSpeedBoost = 0.1f;
-    public float healthPenalty = 0.05f;
+    public float maxHealthBoost = 0.1f;
+    public float movementSpeedPenalty = 0.05f;
 
     private float currentCoolDownTime = 0f;
 
@@ -54,9 +54,9 @@ public class RedBull : PassiveItemTemplate
         return (GameObject x) =>
         {
 
-            PlayerMovement scriptM = x.GetComponent<PlayerMovement>();
+            PlayerHealth scriptH = x.GetComponent<PlayerHealth>();
 
-            scriptM.movementSpeed = scriptM.baseMovementSpeed + ((getStacks() * movementSpeedBoost) * scriptM.baseMovementSpeed);
+            scriptH.SetMaxHealth(scriptH.baseMaxHealth + ((getStacks() * maxHealthBoost) * scriptH.baseMaxHealth));
         };
     }
 
@@ -65,9 +65,9 @@ public class RedBull : PassiveItemTemplate
         return (GameObject x) =>
         {
 
-            PlayerHealth scriptH = x.GetComponent<PlayerHealth>();
+            PlayerMovement scriptM = x.GetComponent<PlayerMovement>();
 
-            scriptH.SetMaxHealth(scriptH.MaxHealth - ((getStacks() * healthPenalty) * scriptH.baseMaxHealth));
+            scriptM.movementSpeed -= ((getStacks() * movementSpeedPenalty) * scriptM.baseMovementSpeed);
         };
     }
 
