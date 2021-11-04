@@ -8,6 +8,8 @@ public class Feather : PassiveItemTemplate
 
     public float coolDownTime = 0f;
 
+    public int jumpNumBoost = 1;
+
     private float currentCoolDownTime = 0f;
 
     private ItemTemplate.State currState = ItemTemplate.State.READY;
@@ -47,13 +49,23 @@ public class Feather : PassiveItemTemplate
         return currState;
     }
 
-    public Action<CharacterMovementController> getEffectFunction()
+    public Action<GameObject> getPositiveEffectFunction()
     {
-        
-        return (CharacterMovementController x) =>
+        return (GameObject x) =>
         {
-            x.jumpNumber = getStacks() + 1;
-            currentCoolDownTime = coolDownTime;
+
+            PlayerJump script = x.GetComponent<PlayerJump>();
+
+            script.SetJumpNumber(getStacks() + jumpNumBoost);
+
+        };
+    }
+
+    public Action<GameObject> getNegativeEffectFunction()
+    {
+        return (GameObject x) =>
+        {
+            return;
         };
     }
 

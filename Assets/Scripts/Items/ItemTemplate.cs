@@ -1,4 +1,5 @@
 using System;
+using UnityEngine;
 
 public interface ItemTemplate
 {
@@ -13,7 +14,9 @@ public interface ItemTemplate
 
     State getState();
 
-    Action<CharacterMovementController> getEffectFunction();
+    Action<GameObject> getPositiveEffectFunction();
+
+    Action<GameObject> getNegativeEffectFunction();
 
     public enum Rarity
     {
