@@ -7,7 +7,7 @@ public class PlayerMovement : MonoBehaviour
 
     public float movementSpeed = 15f;
     public float baseMovementSpeed = 15f;
-    public float sprintModifier = 25f;
+    public float sprintModifier = 15f;
     public MOVEMENT_STATE MovementState = MOVEMENT_STATE.WALKING;
 
 
@@ -25,7 +25,15 @@ public class PlayerMovement : MonoBehaviour
 
     void FixedUpdate()
     {
-        transform.position += new Vector3(movementAxis, 0, 0) * Time.deltaTime * (movementSpeed + (MovementState.Equals(MOVEMENT_STATE.SPRINTING) ? sprintModifier : 0));
+     //   transform.position += new Vector3(movementAxis, 0, 0) * Time.deltaTime * (movementSpeed + (MovementState.Equals(MOVEMENT_STATE.SPRINTING) ? sprintModifier : 0));
+      //  rigidBody.MovePosition(transform.position + new Vector3(movementAxis, rigidBody.velocity.y, 0) * Time.deltaTime * (movementSpeed + (MovementState.Equals(MOVEMENT_STATE.SPRINTING) ? sprintModifier : 0)));
+       
+        /*
+         *   FIXNUT NARAZ Z BOKU A DODGE
+        */
+     
+        rigidBody.velocity = new Vector2(movementAxis*(movementSpeed + (MovementState.Equals(MOVEMENT_STATE.SPRINTING) ? sprintModifier : 0)), rigidBody.velocity.y);
+        //transform.Translate(new Vector3(movementAxis, 0, 0) * Time.deltaTime * (movementSpeed + (MovementState.Equals(MOVEMENT_STATE.SPRINTING) ? sprintModifier : 0)));
     }
 
     // Start is called before the first frame update

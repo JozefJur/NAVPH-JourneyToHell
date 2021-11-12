@@ -41,9 +41,14 @@ public class PlayerJump : MonoBehaviour
 
         if (col.gameObject.tag == "Ground")
         {
-            currJumpLeft = jumpNumber;
-            jumped = false;
+            Vector3 direction = transform.position - col.gameObject.transform.position;
+            if(direction.y > 0)
+            {
+                jumped = false;
+                currJumpLeft = jumpNumber;
+            }
         }
+        
     }
 
     public bool HasJumped()
