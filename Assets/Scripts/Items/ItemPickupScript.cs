@@ -18,7 +18,7 @@ public class ItemPickupScript : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.name.Equals("Player"))
+        if (collision.gameObject.tag.Equals("Player"))
         {
             canPickUp = true;
         }
@@ -26,7 +26,7 @@ public class ItemPickupScript : MonoBehaviour
 
     private void OnTriggerExit2D(Collider2D collision)
     {
-        if (collision.gameObject.name.Equals("Player"))
+        if (collision.gameObject.tag.Equals("Player"))
         {
             canPickUp = false;
         }

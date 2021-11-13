@@ -14,8 +14,11 @@ public class PlayerMovement : MonoBehaviour
     private float orientation = 1;
     private CharacterMovementController Player;
     private PlayerJump PlayerJump;
+    private PlayerDash PlayerDash;
     private Rigidbody2D rigidBody;
     private float movementAxis;
+    private Animator playerAnimator;
+    private float scale;
 
     public enum MOVEMENT_STATE
     {
@@ -25,14 +28,19 @@ public class PlayerMovement : MonoBehaviour
 
     void FixedUpdate()
     {
-     //   transform.position += new Vector3(movementAxis, 0, 0) * Time.deltaTime * (movementSpeed + (MovementState.Equals(MOVEMENT_STATE.SPRINTING) ? sprintModifier : 0));
-      //  rigidBody.MovePosition(transform.position + new Vector3(movementAxis, rigidBody.velocity.y, 0) * Time.deltaTime * (movementSpeed + (MovementState.Equals(MOVEMENT_STATE.SPRINTING) ? sprintModifier : 0)));
-       
+        //   transform.position += new Vector3(movementAxis, 0, 0) * Time.deltaTime * (movementSpeed + (MovementState.Equals(MOVEMENT_STATE.SPRINTING) ? sprintModifier : 0));
+        //  rigidBody.MovePosition(transform.position + new Vector3(movementAxis, rigidBody.velocity.y, 0) * Time.deltaTime * (movementSpeed + (MovementState.Equals(MOVEMENT_STATE.SPRINTING) ? sprintModifier : 0)));
+
         /*
          *   FIXNUT NARAZ Z BOKU A DODGE
         */
-     
-        rigidBody.velocity = new Vector2(movementAxis*(movementSpeed + (MovementState.Equals(MOVEMENT_STATE.SPRINTING) ? sprintModifier : 0)), rigidBody.velocity.y);
+        playerAnimator.SetFloat("speed", Mathf.Abs(movementAxis * movementSpeed));
+        playerAnimator.SetFloat("yVelocity", rigidBody.velocity.y);
+
+        if (!PlayerDash.isDashing())
+        {
+            rigidBody.velocity = new Vector2(movementAxis*(movementSpeed + (MovementState.Equals(MOVEMENT_STATE.SPRINTING) ? sprintModifier : 0)), rigidBody.velocity.y);
+        }
         //transform.Translate(new Vector3(movementAxis, 0, 0) * Time.deltaTime * (movementSpeed + (MovementState.Equals(MOVEMENT_STATE.SPRINTING) ? sprintModifier : 0)));
     }
 
@@ -42,12 +50,17 @@ public class PlayerMovement : MonoBehaviour
         Player = gameObject.GetComponent<CharacterMovementController>();
         rigidBody = gameObject.GetComponent<Rigidbody2D>();
         PlayerJump = gameObject.GetComponent<PlayerJump>();
+        PlayerDash = gameObject.GetComponent<PlayerDash>();
+        playerAnimator = gameObject.GetComponent<Animator>();
+        scale = transform.localScale.x;
     }
 
     // Update is called once per frame
     void Update()
     {
         movementAxis = Input.GetAxis("Horizontal");
+       // playerAnimator.SetFloat("speed", Mathf.Abs(movementAxis * movementSpeed));
+       // playerAnimator.SetFloat("yVelocity", rigidBody.velocity.y);
         //transform.position += new Vector3(movementAxis, 0, 0) * Time.deltaTime * movementSpeed;
 
         checkSprint();
@@ -56,6 +69,10 @@ public class PlayerMovement : MonoBehaviour
         {
             orientation = Input.GetKeyDown(KeyCode.A) ? -1 : 1;
         }
+
+        Debug.Log(orientation);
+
+        transform.localScale = new Vector2(orientation * scale, transform.localScale.y);
 
     }
 
