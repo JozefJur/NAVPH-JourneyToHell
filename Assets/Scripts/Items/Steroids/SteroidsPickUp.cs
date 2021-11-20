@@ -4,7 +4,7 @@ using UnityEngine;
 using System.Reflection;
 using System;
 
-public class SteroidsPickUp : ItemPickupScript
+public class SteroidsPickUp : ItemPickupScript, ItemPickupInterface
 {
 
     void Update()
@@ -13,6 +13,11 @@ public class SteroidsPickUp : ItemPickupScript
         {
             pickItem();
         }
+    }
+
+    public ItemTemplate getInstanceOfTemplate()
+    {
+        return Activator.CreateInstance<Steroids>();
     }
 
     public void pickItem()

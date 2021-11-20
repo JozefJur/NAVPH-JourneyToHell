@@ -20,10 +20,10 @@ public interface ItemTemplate
 
     public enum Rarity
     {
-        COMMON = 33,
-        UNCOMMON = 20,
+        COMMON = 60,
+        UNCOMMON = 25,
         RARE = 10,
-        LEGENDARY = 3
+        LEGENDARY = 2
     }
 
     public enum State

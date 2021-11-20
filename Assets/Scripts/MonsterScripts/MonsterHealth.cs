@@ -10,11 +10,14 @@ public class MonsterHealth : MonoBehaviour
     private Rigidbody2D RigidBody;
     private Animator monsterAnimator;
 
+    private ItemGiver itemGiver;
+
     // Start is called before the first frame update
     void Start()
     {
         RigidBody = gameObject.GetComponent<Rigidbody2D>();
         monsterAnimator = gameObject.GetComponent<Animator>();
+        itemGiver = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<ItemGiver>();
         CurrentHealth = MaxHealth;
     }
 
@@ -51,7 +54,13 @@ public class MonsterHealth : MonoBehaviour
 
     void DeleteMonster()
     {
+        GameObject item = itemGiver.getRandomItem();
+        Vector3 oldPosition = gameObject.transform.position;
         Destroy(gameObject);
+        if(item != null)
+        {
+            Instantiate(item, oldPosition, Quaternion.identity);
+        }
     }
 
     public void HealObject(float health)

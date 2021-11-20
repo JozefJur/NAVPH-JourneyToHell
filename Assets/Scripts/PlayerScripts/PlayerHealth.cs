@@ -14,12 +14,15 @@ public class PlayerHealth : MonoBehaviour
     private CharacterMovementController Player;
     private Rigidbody2D rigidBody;
 
+    private Animator playerAnimator;
+
     // Start is called before the first frame update
     void Start()
     {
         Player = gameObject.GetComponent<CharacterMovementController>();
         rigidBody = gameObject.GetComponent<Rigidbody2D>();
         CurrentHealth = MaxHealth;
+        playerAnimator = gameObject.GetComponent<Animator>();
     }
 
     // Update is called once per frame
@@ -39,7 +42,16 @@ public class PlayerHealth : MonoBehaviour
 
     public void takeDamage(float dmg)
     {
+        playerAnimator.SetTrigger("takeHit");
         CurrentHealth -= dmg;
+
+        if (CurrentHealth <= 0)
+        {
+            playerAnimator.SetBool("isDead", true);
+            Debug.Log("DEAD");
+            //TODO IMPLEMENT DEATH !!! (mozeme pridat item, ktory napr zabrani smrti a zmizne)
+        }
+
     }
 
     public void SetMaxHealth(float newHealth)

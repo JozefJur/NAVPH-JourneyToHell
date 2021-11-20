@@ -41,7 +41,7 @@ public class PlayerDash : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Debug.Log(dash);
+        //Debug.Log(dash);
         switch (dash)
         {
             case DashState.READY:

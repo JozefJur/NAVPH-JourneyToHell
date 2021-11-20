@@ -12,23 +12,29 @@ public class MonsterAI : MonoBehaviour
     public Transform enemyDetectionCircle;
     public float detectionRange = 0.5f;
 
+    public float aggroTime = 5f;
+    private float aggroTimeLeft = 0;
+
     public MY_STATE currentState = MY_STATE.IDLE;
+
+    private MeleeMonsterAtackScript attackScript;
 
 
     // Start is called before the first frame update
     void Start()
     {
-        
+        attackScript = gameObject.GetComponent<MeleeMonsterAtackScript>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        detectAttack();
-        if (currentState.Equals(MY_STATE.IDLE)){
+        //Debug.Log(attackScript.currectAttackState);
+        if (!attackScript.currectAttackState.Equals(MeleeMonsterAtackScript.AttackState.ATTACKING)){
 
              detectEnemies();
         }
+        detectAttack();
     }
 
     private void detectEnemies()
@@ -37,10 +43,15 @@ public class MonsterAI : MonoBehaviour
         if (enemyInRange != null && enemyInRange.Length > 0)
         {
             currentState = MY_STATE.CLOSING_DISTANCE;
+            aggroTimeLeft = aggroTime;
         }
         else
         {
-            currentState = MY_STATE.IDLE;
+            aggroTimeLeft -= Time.deltaTime;
+            if (aggroTimeLeft <= 0)
+            {
+                currentState = MY_STATE.IDLE;
+            }
         }
     }
 
@@ -50,10 +61,15 @@ public class MonsterAI : MonoBehaviour
         if (enemyInRange != null && enemyInRange.Length > 0)
         {
             currentState = MY_STATE.ATTACKING;
+            aggroTimeLeft = aggroTime;
         }
         else
         {
-            currentState = MY_STATE.IDLE;
+            aggroTimeLeft -= Time.deltaTime;
+            if (aggroTimeLeft > 0 && !attackScript.currectAttackState.Equals(MeleeMonsterAtackScript.AttackState.ATTACKING))
+            {
+                currentState = MY_STATE.CLOSING_DISTANCE;
+            }
         }
     }
 

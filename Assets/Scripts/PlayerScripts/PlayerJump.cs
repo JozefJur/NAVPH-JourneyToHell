@@ -38,18 +38,18 @@ public class PlayerJump : MonoBehaviour
 
     void OnCollisionEnter2D(Collision2D col)
     {
-        Debug.Log("Collision" + " " + col.gameObject.tag + " "+ col.gameObject.name);
+        //Debug.Log("Collision" + " " + col.gameObject.tag + " "+ col.gameObject.name);
         if (col.gameObject.tag == "Ground")
         {
-            Debug.Log("Reset");
+            //Debug.Log("Reset");
             Vector3 direction = transform.position - col.gameObject.transform.position;
-            Debug.Log(direction);
+            //Debug.Log(direction);
             if(direction.y > 0)
             {
-                Debug.Log("Here");
+                //Debug.Log("Here");
                 jumped = false;
                 currJumpLeft = jumpNumber;
-                Debug.Log(currJumpLeft);
+                //Debug.Log(currJumpLeft);
             }
         }
         

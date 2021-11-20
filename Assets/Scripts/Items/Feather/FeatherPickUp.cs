@@ -4,7 +4,7 @@ using UnityEngine;
 using System.Reflection;
 using System;
 
-public class FeatherPickUp : ItemPickupScript
+public class FeatherPickUp : ItemPickupScript, ItemPickupInterface
 {
 
     void Update()
@@ -13,6 +13,11 @@ public class FeatherPickUp : ItemPickupScript
         {
             pickItem();
         }
+    }
+
+    public ItemTemplate getInstanceOfTemplate()
+    {
+        return Activator.CreateInstance<Feather>();
     }
 
     public void pickItem()

@@ -4,7 +4,7 @@ using UnityEngine;
 using System.Reflection;
 using System;
 
-public class FirstAidKitPickup : ItemPickupScript
+public class FirstAidKitPickup : ItemPickupScript, ItemPickupInterface
 {
 
     // Update is called once per frame
@@ -15,7 +15,12 @@ public class FirstAidKitPickup : ItemPickupScript
             pickItem();
         }
     }
-    
+
+    public ItemTemplate getInstanceOfTemplate()
+    {
+        return Activator.CreateInstance<FirstAidKit>();
+    }
+
     public void pickItem()
     {
         Destroy(gameObject);

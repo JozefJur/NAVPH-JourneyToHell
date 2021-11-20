@@ -4,7 +4,7 @@ using UnityEngine;
 using System.Reflection;
 using System;
 
-public class RedBullPickUp : ItemPickupScript
+public class RedBullPickUp : ItemPickupScript, ItemPickupInterface
 {
     void Update()
     {
@@ -14,6 +14,10 @@ public class RedBullPickUp : ItemPickupScript
         }
     }
 
+    public ItemTemplate getInstanceOfTemplate()
+    {
+        return Activator.CreateInstance<RedBull>();
+    }
     public void pickItem()
     {
         Destroy(gameObject);

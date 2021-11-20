@@ -50,6 +50,7 @@ public class MeleeMonsterAtackScript : MonoBehaviour
                 if (monsterBrain.currentState.Equals(MonsterAI.MY_STATE.ATTACKING) && canAttack())
                 {
                     monsterAnimator.SetTrigger("attack");
+                    //monsterAnimator.SetLayerWeight(1, 1);
                     currectAttackState = AttackState.ATTACKING;
                     lightAttackD = lightAttackDuration;
 
@@ -61,6 +62,7 @@ public class MeleeMonsterAtackScript : MonoBehaviour
                 lightAttackC -= Time.deltaTime;
                 if (lightAttackC <= 0)
                 {
+                    //monsterAnimator.SetLayerWeight(1, 0);
                     currectAttackState = AttackState.READY;
                 }
 
