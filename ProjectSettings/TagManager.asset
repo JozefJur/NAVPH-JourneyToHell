@@ -8,6 +8,7 @@ TagManager:
   - Item
   - FirstAidKit
   - Enemy
+  - EnemySpawnPoint
   layers:
   - Default
   - TransparentFX

@@ -110,7 +110,7 @@ public class Narrator : MonoBehaviour
 
     void FixedUpdate()
     {
-        if (currentState.Equals(NARRATOR_STATE.SPAWNING))
+        /*if (currentState.Equals(NARRATOR_STATE.SPAWNING))
         {
             currentBetweenSpawnTimeout -= Time.deltaTime;
             if(currentBetweenSpawnTimeout <= 0)
@@ -135,7 +135,7 @@ public class Narrator : MonoBehaviour
                     currentBetweenSpawnTimeout = 0;
                 }
             }
-        }
+        }*/
     }
 
     public enum NARRATOR_STATE
