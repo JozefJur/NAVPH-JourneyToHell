@@ -55,16 +55,21 @@ public class MonsterMovementScript : MonoBehaviour
 
            if (hittingGround(groundInfo))
             {
-                if (gameObject.transform.position.x < player.position.x)
+
+                if(gameObject.transform.position.x != player.position.x && Mathf.Abs((gameObject.transform.position -  player.position).x) > 0.5)
                 {
-                    orientation = 1;
-                    currentVelocity = new Vector2(orientation * movementSpeed, 0);
+                    if (gameObject.transform.position.x < player.position.x)
+                    {
+                        orientation = 1;
+                        currentVelocity = new Vector2(orientation * movementSpeed, 0);
+                    }
+                    else
+                    {
+                        orientation = -1;
+                        currentVelocity = new Vector2(orientation * movementSpeed, 0);
+                    }
                 }
-                else
-                {
-                    orientation = -1;
-                    currentVelocity = new Vector2(orientation * movementSpeed, 0);
-                }
+
             }
             else
            {

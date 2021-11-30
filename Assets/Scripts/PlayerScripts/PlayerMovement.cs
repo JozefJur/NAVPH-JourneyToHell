@@ -9,7 +9,8 @@ public class PlayerMovement : MonoBehaviour
     public float baseMovementSpeed = 15f;
     public float sprintModifier = 15f;
     public MOVEMENT_STATE MovementState = MOVEMENT_STATE.WALKING;
-
+    public Transform GroundChecker;
+    public GameObject platformHit;
 
     private float orientation = 1;
     private CharacterMovementController Player;
@@ -19,6 +20,7 @@ public class PlayerMovement : MonoBehaviour
     private float movementAxis;
     private Animator playerAnimator;
     private float scale;
+
 
     public enum MOVEMENT_STATE
     {
@@ -59,10 +61,12 @@ public class PlayerMovement : MonoBehaviour
     void Update()
     {
         movementAxis = Input.GetAxis("Horizontal");
-       // playerAnimator.SetFloat("speed", Mathf.Abs(movementAxis * movementSpeed));
-       // playerAnimator.SetFloat("yVelocity", rigidBody.velocity.y);
+        // playerAnimator.SetFloat("speed", Mathf.Abs(movementAxis * movementSpeed));
+        // playerAnimator.SetFloat("yVelocity", rigidBody.velocity.y);
         //transform.position += new Vector3(movementAxis, 0, 0) * Time.deltaTime * movementSpeed;
 
+        RaycastHit2D[] groundInfo = Physics2D.RaycastAll(GroundChecker.position, Vector2.down, 1f);
+        hittingGround(groundInfo);
         checkSprint();
 
         if (Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.D))
@@ -73,6 +77,22 @@ public class PlayerMovement : MonoBehaviour
         //Debug.Log(orientation);
 
         transform.localScale = new Vector2(orientation * scale, transform.localScale.y);
+
+    }
+
+    private void hittingGround(RaycastHit2D[] groundInfo)
+    {
+        foreach (RaycastHit2D hit in groundInfo)
+        {
+            if (hit.transform.tag.Equals("Ground"))
+            {
+                Debug.Log("Player " + hit.transform.gameObject.GetInstanceID());
+                platformHit = hit.transform.gameObject;
+                return;
+            }
+        }
+
+        platformHit = null;
 
     }
 

@@ -9,6 +9,8 @@ TagManager:
   - FirstAidKit
   - Enemy
   - EnemySpawnPoint
+  - TotemSpawn
+  - Boss
   layers:
   - Default
   - TransparentFX

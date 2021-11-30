@@ -6,11 +6,13 @@ public class MonsterHealth : MonoBehaviour
 {
     public float MaxHealth = 100;
     public float CurrentHealth = 100;
-    
+    public bool canHit = true;
+
     private Rigidbody2D RigidBody;
     private Animator monsterAnimator;
 
     private ItemGiver itemGiver;
+
 
     // Start is called before the first frame update
     void Start()
@@ -43,13 +45,18 @@ public class MonsterHealth : MonoBehaviour
 
     public void TakeDamage(float dmg)
     {
-        monsterAnimator.SetTrigger("takeHit");
-        CurrentHealth -= dmg;
 
-        if (CurrentHealth <= 0)
+        if (canHit)
         {
-            monsterAnimator.SetBool("isDead", true);
+            monsterAnimator.SetTrigger("takeHit");
+            CurrentHealth -= dmg;
+
+            if (CurrentHealth <= 0)
+            {
+                monsterAnimator.SetBool("isDead", true);
+            }
         }
+
     }
 
     void DeleteMonster()
