@@ -21,13 +21,13 @@ public class MonsterAI : MonoBehaviour
 
 
     // Start is called before the first frame update
-    void Start()
+    protected virtual void Start()
     {
         attackScript = gameObject.GetComponent<MeleeMonsterAtackScript>();
     }
 
     // Update is called once per frame
-    void Update()
+    protected virtual void Update()
     {
         //Debug.Log(attackScript.currectAttackState);
         if (!attackScript.currectAttackState.Equals(MeleeMonsterAtackScript.AttackState.ATTACKING)){
@@ -76,7 +76,6 @@ public class MonsterAI : MonoBehaviour
     public enum MY_STATE
     {
         IDLE,
-        RUNNING_AWAY,
         CLOSING_DISTANCE,
         ATTACKING
     }

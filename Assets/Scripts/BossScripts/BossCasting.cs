@@ -49,6 +49,14 @@ public class BossCasting : MonoBehaviour
                                 Instantiate(SpellTemplate, playerPos, Quaternion.identity);
                                 CurrentBetweenChargeCooldown = BetweenChargeCooldown;
                             }
+                            else
+                            {
+                                if(ChargesLeft < MaxCharges)
+                                {
+                                    ChargesLeft++;
+                                    CurrentBetweenChargeCooldown = BetweenChargeCooldown;
+                                }
+                            }
                         }
                     }
                     else

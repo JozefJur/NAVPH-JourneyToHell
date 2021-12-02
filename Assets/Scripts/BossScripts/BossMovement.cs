@@ -163,6 +163,11 @@ public class BossMovement : MonoBehaviour
         gameObject.GetComponent<MonsterHealth>().canHit = true;
     }
 
+    public void setCurrentVelocity(Vector2 velocity)
+    {
+        this.currentVelocity = velocity;
+    }
+
     void FixedUpdate()
     {
         bossRigidBody.velocity = currentVelocity;

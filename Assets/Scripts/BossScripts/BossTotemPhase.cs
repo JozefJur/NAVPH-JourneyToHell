@@ -44,6 +44,7 @@ public class BossTotemPhase : MonoBehaviour
             {
                 case BossBrain.TOTEM_PHASE_STATES.INITIALIZING:
                     gameObject.GetComponent<MonsterHealth>().canHit = false;
+                    gameObject.GetComponent<BossMovement>().setCurrentVelocity(new Vector2(0, 0));
                     bossAnimator.SetLayerWeight(0, 0);
                     bossAnimator.SetLayerWeight(1, 1);
                     bossAnimator.SetTrigger("teleport_totem");
