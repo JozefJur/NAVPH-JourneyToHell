@@ -88,4 +88,9 @@ public class ArmorScript : PassiveItemTemplate
     {
         return ItemTemplate.Rarity.COMMON;
     }
+
+    public Sprite getSprite()
+    {
+        return ItemAssetsHolder.Instance.armorSprite;
+    }
 }

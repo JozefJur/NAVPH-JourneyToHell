@@ -96,4 +96,9 @@ public class FirstAidKit : PassiveItemTemplate
     {
         return ItemTemplate.Rarity.COMMON;
     }
+
+    public Sprite getSprite()
+    {
+        return ItemAssetsHolder.Instance.firstAidSprite;
+    }
 }

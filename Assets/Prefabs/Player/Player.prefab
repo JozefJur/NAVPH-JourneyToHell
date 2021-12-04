@@ -1,5 +1,95 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &376364724
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 376364725}
+  m_Layer: 7
+  m_Name: SpawnPoint2
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &376364725
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 376364724}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 4.45, y: -0.11, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 7365080105447013194}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &548234182
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 548234183}
+  m_Layer: 7
+  m_Name: GroundChecker
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &548234183
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 548234182}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.006, y: -0.151, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 7365080105447013194}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1064181309
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1064181310}
+  m_Layer: 7
+  m_Name: SpawnPoint1
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1064181310
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1064181309}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -3.22, y: -0.1, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 7365080105447013194}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &7365080105447013197
 GameObject:
   m_ObjectHideFlags: 0
@@ -38,6 +128,9 @@ Transform:
   m_LocalScale: {x: 9.6119995, y: 10, z: 1}
   m_Children:
   - {fileID: 8001031293326334795}
+  - {fileID: 1064181310}
+  - {fileID: 376364725}
+  - {fileID: 548234183}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -172,6 +265,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHealth: 100
   currHealth: 0
+  healthBar: {fileID: 0}
+  inventory: {fileID: 0}
+  attackCoolDown: {fileID: 0}
+  dashCoolDown: {fileID: 0}
+  sprintCoolDown: {fileID: 0}
+  jumpCoolDown: {fileID: 0}
+  jumpNum: {fileID: 0}
 --- !u!114 &7365080105447013189
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -184,7 +284,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ad0b8685f8b08c543a8712befe50aa0f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  baseDmg: 10
+  baseDmg: 40
   currentDmg: 10
   currentAttackSpeed: 1
   baseAttackSpeed: 1
@@ -242,6 +342,9 @@ MonoBehaviour:
   jumpNumber: 1
   baseJumpForce: 10
   baseJumpNumber: 1
+  jumpCoolDown: 0.8
+  currentJumpCoolDown: 0
+  jumpState: 0
 --- !u!114 &7365080105447013193
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -258,6 +361,8 @@ MonoBehaviour:
   baseMovementSpeed: 15
   sprintModifier: 15
   MovementState: 0
+  GroundChecker: {fileID: 548234183}
+  platformHit: {fileID: 0}
 --- !u!1001 &7365080106230603077
 PrefabInstance:
   m_ObjectHideFlags: 0

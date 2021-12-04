@@ -10,6 +10,13 @@ public class CharacterMovementController : MonoBehaviour
     public int maxHealth = 100;
     public int currHealth;
 
+    public HealthBarController healthBar;
+    public InventoryHandler inventory;
+    public CoolDownController attackCoolDown;
+    public CoolDownController dashCoolDown;
+    public CoolDownController sprintCoolDown;
+    public CoolDownController jumpCoolDown;
+    public JumpNumberController jumpNum;
     //private float dashCooldown = 0;
 
     private Rigidbody2D rigidBody;  // rigid body instance
@@ -117,7 +124,9 @@ public class CharacterMovementController : MonoBehaviour
         applyNegavitvePassiveEffects();
 
         applyOtherEffects();
-
+        healthBar.setMaxHealth(playerHealth.MaxHealth);
+        healthBar.setCurrentHealth(playerHealth.CurrentHealth);
+        Debug.Log(allItems.Count);
     }
 
     void Update()
@@ -162,6 +171,9 @@ public class CharacterMovementController : MonoBehaviour
             item.addStack();
             allItems.Add(item);
         }
+
+        inventory.setItems(allItems);
+
     }
 
  //TRANSFER TO SEPARATE FILE
@@ -198,5 +210,8 @@ public class CharacterMovementController : MonoBehaviour
                 }
             }
         }
+
+        inventory.setItems(allItems);
+
     }
 }

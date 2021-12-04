@@ -88,4 +88,9 @@ public class RedBull : PassiveItemTemplate
     {
         return ItemTemplate.Rarity.COMMON;
     }
+
+    public Sprite getSprite()
+    {
+        return ItemAssetsHolder.Instance.redbullSprite;
+    }
 }

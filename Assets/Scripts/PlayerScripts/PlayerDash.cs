@@ -52,6 +52,7 @@ public class PlayerDash : MonoBehaviour
                     //accVelocity = rigidBody.velocity;
                     rigidBody.velocity = new Vector2(0, 0);
                     appliedVelocity = new Vector2(PlayerMovement.getOrientation() * dodgeForce, rigidBody.velocity.y);
+                    Player.dashCoolDown.setCooldown(dashDuration + 1f);
                 }
                 break;
             case DashState.IN_PROGRESS:

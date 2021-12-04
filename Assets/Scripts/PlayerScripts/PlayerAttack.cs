@@ -31,7 +31,7 @@ public class PlayerAttack : MonoBehaviour
     private PlayerJump playerJump;
     private PlayerMovement playerMov;
     private Rigidbody2D rigidBody;
-
+    private CharacterMovementController controller;
 
 
     public Transform sword;
@@ -46,6 +46,7 @@ public class PlayerAttack : MonoBehaviour
         playerJump = gameObject.GetComponent<PlayerJump>();
         playerMov = gameObject.GetComponent<PlayerMovement>();
         rigidBody = gameObject.GetComponent<Rigidbody2D>();
+        controller = gameObject.GetComponent<CharacterMovementController>();
     }
 
     // Update is called once per frame
@@ -94,7 +95,7 @@ public class PlayerAttack : MonoBehaviour
                     playerAnimator.SetTrigger("attack");
                     lightAttackState = AttackState.ATTACKING;
                     lightAttackD = lightAttackDuration;
-
+                    controller.attackCoolDown.setCooldown(lightAttackD);
 
                 }
 

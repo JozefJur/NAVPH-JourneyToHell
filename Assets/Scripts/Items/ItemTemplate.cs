@@ -14,6 +14,8 @@ public interface ItemTemplate
 
     State getState();
 
+    Sprite getSprite();
+
     Action<GameObject> getPositiveEffectFunction();
 
     Action<GameObject> getNegativeEffectFunction();

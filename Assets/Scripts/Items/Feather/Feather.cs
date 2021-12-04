@@ -86,4 +86,8 @@ public class Feather : PassiveItemTemplate
         return ItemTemplate.Rarity.COMMON;
     }
 
+    public Sprite getSprite()
+    {
+        return ItemAssetsHolder.Instance.featherSprite;
+    }
 }

@@ -44,6 +44,7 @@ public class PlayerHealth : MonoBehaviour
     {
         playerAnimator.SetTrigger("takeHit");
         CurrentHealth -= dmg;
+        Player.healthBar.setCurrentHealth(CurrentHealth);
 
         if (CurrentHealth <= 0)
         {
@@ -62,6 +63,7 @@ public class PlayerHealth : MonoBehaviour
     public void HealObject(float health)
     {
         CurrentHealth = (CurrentHealth + health > MaxHealth) ? CurrentHealth : CurrentHealth + health;
+        Player.healthBar.setCurrentHealth(CurrentHealth);
     }
 
     public void resetStats()
