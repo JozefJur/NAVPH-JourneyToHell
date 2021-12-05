@@ -14,24 +14,24 @@ public class MeleeMonsterAtackScript : MonoBehaviour
 
     public float lightAttackDuration = 0.5f;
 
-    private float lightAttackCoolDown = 1;
+    public float lightAttackCoolDown = 1;
     
     private float lightAttackC = 0f;
     private float lightAttackD = 0f;
 
     public AttackState currectAttackState = AttackState.READY;
-    private MonsterAI monsterBrain;
-    private Animator monsterAnimator;
+    protected MonsterAI monsterBrain;
+    protected Animator monsterAnimator;
 
     // Start is called before the first frame update
-    void Start()
+    protected virtual void Start()
     {
         monsterBrain = gameObject.GetComponent<MonsterAI>();
         monsterAnimator = gameObject.GetComponent<Animator>();
     }
 
     // Update is called once per frame
-    void Update()
+    protected virtual void Update()
     {
         checkAttack();
     }
@@ -84,7 +84,7 @@ public class MeleeMonsterAtackScript : MonoBehaviour
         Collider2D[] enemyToHit = Physics2D.OverlapCircleAll(monsterBrain.damageCircle.position, monsterBrain.damageRange, monsterBrain.enemyLayers);
         if (enemyToHit != null && enemyToHit.Length > 0)
         {
-            enemyToHit[0].gameObject.GetComponent<PlayerHealth>().takeDamage(10);
+            enemyToHit[0].gameObject.GetComponent<PlayerHealth>().takeDamage(currentDmg);
         }
     }
 

@@ -9,13 +9,13 @@ public class MonsterHealth : MonoBehaviour
     public bool canHit = true;
 
     private Rigidbody2D RigidBody;
-    private Animator monsterAnimator;
+    protected Animator monsterAnimator;
 
     private ItemGiver itemGiver;
 
 
     // Start is called before the first frame update
-    void Start()
+    protected virtual void Start()
     {
         RigidBody = gameObject.GetComponent<Rigidbody2D>();
         monsterAnimator = gameObject.GetComponent<Animator>();
@@ -43,7 +43,7 @@ public class MonsterHealth : MonoBehaviour
         }
     }
 
-    public void TakeDamage(float dmg)
+    public virtual void TakeDamage(float dmg)
     {
 
         if (canHit)

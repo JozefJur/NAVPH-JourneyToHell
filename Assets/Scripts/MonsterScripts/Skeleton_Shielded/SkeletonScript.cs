@@ -5,12 +5,12 @@ using UnityEngine;
 public class SkeletonScript : MonoBehaviour, MonsterTemplate
 {
 
-    public GameObject goblin;
+    public GameObject skeleton;
     public int price;
 
     public GameObject getMonster()
     {
-        return goblin;
+        return skeleton;
     }
 
     public int monsterCost()

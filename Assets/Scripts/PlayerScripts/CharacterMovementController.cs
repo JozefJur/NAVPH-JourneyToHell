@@ -126,7 +126,7 @@ public class CharacterMovementController : MonoBehaviour
         applyOtherEffects();
         healthBar.setMaxHealth(playerHealth.MaxHealth);
         healthBar.setCurrentHealth(playerHealth.CurrentHealth);
-        Debug.Log(allItems.Count);
+        //Debug.Log(allItems.Count);
     }
 
     void Update()

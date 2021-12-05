@@ -114,7 +114,6 @@ GameObject:
   - component: {fileID: 8047981317472209099}
   - component: {fileID: 8789654271007344776}
   - component: {fileID: 567254775779353622}
-  - component: {fileID: 3376862937905474728}
   - component: {fileID: 2374200490685813400}
   - component: {fileID: 3372822191362162292}
   - component: {fileID: 585740202927493650}
@@ -274,27 +273,6 @@ MonoBehaviour:
   MaxHealth: 100
   CurrentHealth: 100
   canHit: 1
---- !u!114 &3376862937905474728
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6751623942994812979}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3c801007a760bba488f1ef723f0f5ecb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  damageCircle: {fileID: 412943358276715803}
-  damageRange: 1.5
-  enemyLayers:
-    serializedVersion: 2
-    m_Bits: 128
-  enemyDetectionCircle: {fileID: 1765833900443105214}
-  detectionRange: 20
-  aggroTime: 5
-  currentState: 0
 --- !u!114 &2374200490685813400
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -357,11 +335,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damageCircle: {fileID: 412943358276715803}
-  damageRange: 0.5
+  damageRange: 1.5
   enemyLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 128
   enemyDetectionCircle: {fileID: 1765833900443105214}
-  detectionRange: 0.5
+  detectionRange: 20
   aggroTime: 5
   currentState: 0
+  attackScript: {fileID: 0}

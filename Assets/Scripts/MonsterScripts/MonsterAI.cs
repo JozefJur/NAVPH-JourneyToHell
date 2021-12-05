@@ -17,19 +17,22 @@ public class MonsterAI : MonoBehaviour
 
     public MY_STATE currentState = MY_STATE.IDLE;
 
-    private MeleeMonsterAtackScript attackScript;
+    public MeleeMonsterAtackScript attackScript;
 
+    protected Animator animator;
 
     // Start is called before the first frame update
     protected virtual void Start()
     {
         attackScript = gameObject.GetComponent<MeleeMonsterAtackScript>();
+        animator = gameObject.GetComponent<Animator>();
     }
 
     // Update is called once per frame
     protected virtual void Update()
     {
         //Debug.Log(attackScript.currectAttackState);
+        Debug.Log(this.attackScript);
         if (!attackScript.currectAttackState.Equals(MeleeMonsterAtackScript.AttackState.ATTACKING)){
 
              detectEnemies();

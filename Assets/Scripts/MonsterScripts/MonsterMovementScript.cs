@@ -6,6 +6,7 @@ public class MonsterMovementScript : MonoBehaviour
 {
 
     public float orientation = 1;
+    public float baseMovementSpeed;
     public float movementSpeed;
     public Transform player;
     public float distance = 5f;
@@ -14,7 +15,7 @@ public class MonsterMovementScript : MonoBehaviour
     private Vector2 currentVelocity;
     private Rigidbody2D monsterRigidBody;
     private float scaleX;
-    private Animator monsterAnimator;
+    protected Animator monsterAnimator;
 
     public bool hitting;
 

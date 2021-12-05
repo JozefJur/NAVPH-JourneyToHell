@@ -86,7 +86,7 @@ public class PlayerMovement : MonoBehaviour
         {
             if (hit.transform.tag.Equals("Ground"))
             {
-                Debug.Log("Player " + hit.transform.gameObject.GetInstanceID());
+                //Debug.Log("Player " + hit.transform.gameObject.GetInstanceID());
                 platformHit = hit.transform.gameObject;
                 return;
             }
