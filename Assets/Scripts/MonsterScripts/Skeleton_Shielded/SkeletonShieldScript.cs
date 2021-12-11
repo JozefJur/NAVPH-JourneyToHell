@@ -10,6 +10,8 @@ public class SkeletonShieldScript : MonoBehaviour
 
     public float baseShieldCooldown;
     public float currentShieldCoolDown;
+    public float shieldDetectionRange;
+    public Transform shieldDetectionPoint;
 
     public SHIELD_STATE currentShieldState = SHIELD_STATE.READY;
 
@@ -49,9 +51,15 @@ public class SkeletonShieldScript : MonoBehaviour
     {
         if (!monsterBrain.IsShielded && currentShieldState.Equals(SHIELD_STATE.READY) && monsterBrain.currentState.Equals(MonsterAI.MY_STATE.CLOSING_DISTANCE))
         {
-            return true;
+            return isEnemyInShieldDistance();
         }
         return false;
+    }
+
+    public bool isEnemyInShieldDistance()
+    {
+        Collider2D[] enemyInRange = Physics2D.OverlapCircleAll(shieldDetectionPoint.position, shieldDetectionRange, monsterBrain.enemyLayers);
+        return enemyInRange != null && enemyInRange.Length > 0;
     }
 
     public void setCoolDown()

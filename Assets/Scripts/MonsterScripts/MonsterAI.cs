@@ -32,7 +32,6 @@ public class MonsterAI : MonoBehaviour
     protected virtual void Update()
     {
         //Debug.Log(attackScript.currectAttackState);
-        Debug.Log(this.attackScript);
         if (!attackScript.currectAttackState.Equals(MeleeMonsterAtackScript.AttackState.ATTACKING)){
 
              detectEnemies();

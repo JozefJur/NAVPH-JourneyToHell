@@ -63,6 +63,7 @@ public class MonsterHealth : MonoBehaviour
     {
         GameObject item = itemGiver.getRandomItem();
         Vector3 oldPosition = gameObject.transform.position;
+        GameObject.FindGameObjectWithTag("Director").GetComponent<Narrator>().removeMonster(gameObject);
         Destroy(gameObject);
         if(item != null)
         {

@@ -17,15 +17,17 @@ public class PlayerJump : MonoBehaviour
 
     private CharacterMovementController Player;
     private Rigidbody2D rigidBody;
+    private PlayerDash playerDash;
     private int currJumpLeft = 1;
 
-    private bool jumped = false;
+    public bool jumped = false;
 
     // Start is called before the first frame update
     void Start()
     {
         Player = gameObject.GetComponent<CharacterMovementController>();
         rigidBody = gameObject.GetComponent<Rigidbody2D>();
+        playerDash = gameObject.GetComponent<PlayerDash>();
     }
 
     // Update is called once per frame
@@ -39,6 +41,10 @@ public class PlayerJump : MonoBehaviour
         else
         {
             jumpState = JUMP_STATE.READY;
+            if(rigidBody.velocity.y == 0 && !playerDash.isDashing())
+            {
+                resetJumps();
+            }
         }
 
         if (Input.GetKeyDown(KeyCode.Space) && currJumpLeft > 0)
@@ -59,6 +65,13 @@ public class PlayerJump : MonoBehaviour
         }
     }
 
+    private void resetJumps()
+    {
+        jumped = false;
+        currJumpLeft = jumpNumber;
+        Player.jumpNum.SetJumpNumber(currJumpLeft);
+    }
+
     void OnCollisionEnter2D(Collision2D col)
     {
         //Debug.Log("Collision" + " " + col.gameObject.tag + " "+ col.gameObject.name);
@@ -69,10 +82,11 @@ public class PlayerJump : MonoBehaviour
             //Debug.Log(direction);
             if(direction.y > 0)
             {
+                resetJumps();
                 //Debug.Log("Here");
-                jumped = false;
-                currJumpLeft = jumpNumber;
-                Player.jumpNum.SetJumpNumber(currJumpLeft);
+             //   jumped = false;
+            //    currJumpLeft = jumpNumber;
+             //   Player.jumpNum.SetJumpNumber(currJumpLeft);
                 //Debug.Log(currJumpLeft);
             }
         }

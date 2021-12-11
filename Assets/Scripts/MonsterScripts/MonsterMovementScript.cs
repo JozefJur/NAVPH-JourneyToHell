@@ -12,10 +12,12 @@ public class MonsterMovementScript : MonoBehaviour
     public float distance = 5f;
 
     private MonsterAI monsterBrain;
-    private Vector2 currentVelocity;
+    public Vector2 currentVelocity;
     private Rigidbody2D monsterRigidBody;
     private float scaleX;
     protected Animator monsterAnimator;
+
+    private MonsterIdle monsterIde;
 
     public bool hitting;
 
@@ -26,10 +28,11 @@ public class MonsterMovementScript : MonoBehaviour
         monsterRigidBody = gameObject.GetComponent<Rigidbody2D>();
         monsterAnimator = gameObject.GetComponent<Animator>();
         scaleX = gameObject.transform.localScale.x;
-        player = player = GameObject.FindGameObjectWithTag("Player").transform;
+        player = GameObject.FindGameObjectWithTag("Player").transform;
+        monsterIde = gameObject.GetComponent<MonsterIdle>();
     }
     
-    private bool hittingGround(RaycastHit2D[] groundInfo)
+    public bool hittingGround(RaycastHit2D[] groundInfo)
     {
         foreach(RaycastHit2D hit in groundInfo)
         {
@@ -74,13 +77,17 @@ public class MonsterMovementScript : MonoBehaviour
             }
             else
            {
-               currentVelocity = new Vector2(orientation * movementSpeed * -1, 0);
-           }
+                currentVelocity = new Vector2(orientation * movementSpeed * -1, 0);
+               //currentVelocity = new Vector2(0, 0);
+            }
 
         }
         else
         {
-            currentVelocity = new Vector2(0, 0);
+            if(monsterIde == null || !monsterIde.myIdleMode.Equals(MonsterIdle.IDLE_MODE.WALKING))
+            {
+                currentVelocity = new Vector2(0, 0);
+            }
         }
         gameObject.transform.localScale = new Vector2(orientation * scaleX, gameObject.transform.localScale.y);
         monsterAnimator.SetFloat("movementSpeed", Mathf.Abs(currentVelocity.x));

@@ -8,7 +8,11 @@ public class Spawn : MonoBehaviour
     private bool spawned = false;
     private GameObject[] monsters;
 
+    public GameObject stageDirector;
 
+    private Narrator narrator;
+
+    private bool isRegistered = false;
 
     private void getAllMonsters()
     {
@@ -21,12 +25,14 @@ public class Spawn : MonoBehaviour
     {
         getAllMonsters();
         cam = UnityEngine.Camera.main;
+        stageDirector = GameObject.FindGameObjectWithTag("Director");
+        narrator = stageDirector.GetComponent<Narrator>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        if(checkVisibility()&&!spawned)
+        /*if(checkVisibility()&&!spawned)
         {
             spawned = true;
             double timeSinceStartup = Time.realtimeSinceStartup;
@@ -36,7 +42,25 @@ public class Spawn : MonoBehaviour
                 Instantiate(monsters[Random.Range(0, monsters.Length - 1)], transform.position, Quaternion.identity);
             }
             Delete();
+        }*/
+
+        if (checkVisibility())
+        {
+            if (!isRegistered)
+            {
+                isRegistered = true;
+                narrator.registerSpawnPoint(gameObject);
+            }
         }
+        else
+        {
+            if (isRegistered)
+            {
+                isRegistered = false;
+                narrator.removeSpawnPoint(gameObject);
+            }
+        }
+
     }
     bool checkVisibility(){
          Vector3 viewPos = cam.WorldToViewportPoint(transform.position);

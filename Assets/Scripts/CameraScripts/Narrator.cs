@@ -5,24 +5,29 @@ using UnityEngine;
 public class Narrator : MonoBehaviour
 {
 
+    public GameObject spawnParticles;
+    
     public int numberOfPoints;
-    public Transform spawnPoint1;
-    public Transform spawnPoint2;
+
+    public List<GameObject> activeSpawnPoints;
+
+    public int maxNumberOfMonstersAtTheSameTime;
+    public List<GameObject> allActiveMonsters;
+
     public int creditGainMultiplier;
     public float creditGainTimeout;
     public NARRATOR_STATE currentState = NARRATOR_STATE.IDLE;
+
+    public int maxNumOfMonsterOnSpawnSequence;
 
     private float currentCreditGainTimeout;
 
     public float spawnTimeout;
     private float currentSpawnTimeout;
-    public float betweenSpawnTimeout = 2f;
-    private float currentBetweenSpawnTimeout = 2f;
+    public float betweenSpawnTimeout = 5f;
+    private float currentBetweenSpawnTimeout = 5f;
 
     public bool canSpawn;
-
-    private Vector3 currentFirstSpawnPoint;
-    private Vector3 currentSecondSpawnPoint;
 
     private GameObject[] monsters;
 
@@ -65,7 +70,7 @@ public class Narrator : MonoBehaviour
         return false;
     }
 
-    private bool validSpawnLocation()
+    /*private bool validSpawnLocation()
     {
         bool atLeastOne = false;
         currentFirstSpawnPoint = Vector3.zero;
@@ -83,19 +88,24 @@ public class Narrator : MonoBehaviour
         }
 
         return atLeastOne;
-    }
+    }*/
 
     private void spawnMonsters()
     {
         if (!currentState.Equals(NARRATOR_STATE.SPAWNING))
         {
             currentSpawnTimeout -= Time.deltaTime;
-            if (canSpawn && currentSpawnTimeout <=0 && validSpawnLocation())
+            if (canSpawn && currentSpawnTimeout <=0 && activeSpawnPoints.Count > 0 && allActiveMonsters.Count < maxNumberOfMonstersAtTheSameTime)
             {
-                monstersRemainingSpawn = 2;
+                monstersRemainingSpawn = maxNumberOfMonstersAtTheSameTime - allActiveMonsters.Count >= maxNumOfMonsterOnSpawnSequence ? maxNumOfMonsterOnSpawnSequence : maxNumberOfMonstersAtTheSameTime - allActiveMonsters.Count;
                 currentState = NARRATOR_STATE.SPAWNING;
             }
         }
+    }
+    
+    public void removeMonster(GameObject monster)
+    {
+        allActiveMonsters.Remove(monster);
     }
 
     private void calcucateCredit()
@@ -108,35 +118,53 @@ public class Narrator : MonoBehaviour
         }
     }
 
+    public void registerSpawnPoint(GameObject spawnPoint)
+    {
+        activeSpawnPoints.Add(spawnPoint);
+    }
+
+    public void removeSpawnPoint(GameObject spawnPoint)
+    {
+        activeSpawnPoints.Remove(spawnPoint);
+    }
+
     void FixedUpdate()
     {
-        /*if (currentState.Equals(NARRATOR_STATE.SPAWNING))
+        if (currentState.Equals(NARRATOR_STATE.SPAWNING))
         {
             currentBetweenSpawnTimeout -= Time.deltaTime;
             if(currentBetweenSpawnTimeout <= 0)
             {
-                currentBetweenSpawnTimeout = betweenSpawnTimeout;
-                currentSpawnTimeout = spawnTimeout;
-                if (!currentFirstSpawnPoint.Equals(Vector3.zero))
+                if(activeSpawnPoints.Count > 0)
                 {
-                    Instantiate(monsters[Random.Range(0, monsters.Length - 1)], currentFirstSpawnPoint, Quaternion.identity);
+                    currentBetweenSpawnTimeout = betweenSpawnTimeout;
+                    currentSpawnTimeout = spawnTimeout;
+                    Transform currentSpawnPoint = activeSpawnPoints[Random.Range(0, activeSpawnPoints.Count)].transform;
+                    Vector2 newP = new Vector2(currentSpawnPoint.position.x, currentSpawnPoint.position.y + 3);
+                    GameObject portal = Instantiate(spawnParticles, newP, Quaternion.identity);
+                    StartCoroutine(spawnEnemy(currentSpawnPoint, portal));
+                    //allActiveMonsters.Add(Instantiate(monsters[Random.Range(0, monsters.Length)], currentSpawnPoint.position, Quaternion.identity));
                     monstersRemainingSpawn--;
-                }
-                if (!currentSecondSpawnPoint.Equals(Vector3.zero))
-                {
-                    Instantiate(monsters[Random.Range(0, monsters.Length - 1)], currentSecondSpawnPoint, Quaternion.identity);
-                    monstersRemainingSpawn--;
-                }
 
-                //Random.Range(0, monsters.Length -1);
-                if(monstersRemainingSpawn == 0)
-                {
-                    currentState = NARRATOR_STATE.IDLE;
-                    currentBetweenSpawnTimeout = 0;
+                    //Random.Range(0, monsters.Length -1);
+                    if(monstersRemainingSpawn == 0)
+                    {
+                        currentState = NARRATOR_STATE.IDLE;
+                        currentBetweenSpawnTimeout = 0;
+                    }
+
                 }
             }
-        }*/
+        }
     }
+
+    IEnumerator spawnEnemy(Transform point, GameObject  portal)
+    {
+        yield return new WaitForSeconds(5f);
+        Destroy(portal);
+        allActiveMonsters.Add(Instantiate(monsters[Random.Range(0, monsters.Length)], point.position, Quaternion.identity));
+    }
+
 
     public enum NARRATOR_STATE
     {

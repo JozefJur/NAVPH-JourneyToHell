@@ -23,7 +23,7 @@ public class SkeletonAI : MonsterAI
 
         if (IsShielded)
         {
-            if (currentState.Equals(MY_STATE.IDLE))
+            if (currentState.Equals(MY_STATE.IDLE) || !shieldScript.isEnemyInShieldDistance())
             {
                 IsShielded = false;
                 animator.SetBool("shield", false);
@@ -33,12 +33,12 @@ public class SkeletonAI : MonsterAI
             {
                 movement.movementSpeed = movement.baseMovementSpeed / 2;
             }
-            Shield.GetComponent<BoxCollider2D>().enabled = true;
+            Shield.GetComponent<BoxCollider2D>().isTrigger = false;
             base.Update();
         }
         else
         {
-            Shield.GetComponent<BoxCollider2D>().enabled = false;
+            Shield.GetComponent<BoxCollider2D>().isTrigger = true;
             movement.movementSpeed = movement.baseMovementSpeed;
             base.Update();
         }

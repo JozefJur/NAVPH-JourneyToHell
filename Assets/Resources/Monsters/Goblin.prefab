@@ -24,7 +24,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 473618009553825326}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.03, y: -0.15, z: 0}
+  m_LocalPosition: {x: 0.246, y: -0.165, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1384534361615237774}
@@ -118,6 +118,7 @@ GameObject:
   - component: {fileID: 3372822191362162292}
   - component: {fileID: 585740202927493650}
   - component: {fileID: 3270438914561418395}
+  - component: {fileID: 428197184}
   m_Layer: 6
   m_Name: Goblin
   m_TagString: Enemy
@@ -290,6 +291,7 @@ MonoBehaviour:
   currentAttackSpeed: 1
   baseAttackSpeed: 1
   lightAttackDuration: 1.5
+  lightAttackCoolDown: 1
   currectAttackState: 0
 --- !u!114 &3372822191362162292
 MonoBehaviour:
@@ -304,9 +306,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   orientation: -1
+  baseMovementSpeed: 0
   movementSpeed: 13
   player: {fileID: 0}
   distance: 2
+  currentVelocity: {x: 0, y: 0}
   hitting: 0
 --- !u!114 &585740202927493650
 MonoBehaviour:
@@ -344,3 +348,19 @@ MonoBehaviour:
   aggroTime: 5
   currentState: 0
   attackScript: {fileID: 0}
+--- !u!114 &428197184
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6751623942994812979}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0d9b80ba07f58f94f970ad8918821013, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  walkingTime: 4
+  walkingTimeout: 8
+  myIdleMode: 0
+  directionChangeTime: 0
