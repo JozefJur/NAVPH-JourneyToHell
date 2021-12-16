@@ -10,7 +10,11 @@ public class HealthBarController : MonoBehaviour
 
     private void Update()
     {
-        health.text = HealthSlider.value + " / " + HealthSlider.maxValue;
+
+        if(health != null)
+        {
+            health.text = HealthSlider.value + " / " + HealthSlider.maxValue;
+        }
     }
 
 

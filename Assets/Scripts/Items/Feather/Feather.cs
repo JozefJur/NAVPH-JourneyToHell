@@ -90,4 +90,9 @@ public class Feather : PassiveItemTemplate
     {
         return ItemAssetsHolder.Instance.featherSprite;
     }
+
+    public string getItemDescr()
+    {
+        return "Good Effects: Each stack adds one jump\n";
+    }
 }

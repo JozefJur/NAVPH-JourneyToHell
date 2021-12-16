@@ -4,7 +4,7 @@ using UnityEngine;
 using System.Reflection;
 using System;
 
-public class RedBullPickUp : ItemPickupScript, ItemPickupInterface
+public class RedBullPickUp : ItemPickupScript
 {
     void Update()
     {
@@ -14,7 +14,7 @@ public class RedBullPickUp : ItemPickupScript, ItemPickupInterface
         }
     }
 
-    public ItemTemplate getInstanceOfTemplate()
+    public override ItemTemplate getInstanceOfTemplate()
     {
         return Activator.CreateInstance<RedBull>();
     }

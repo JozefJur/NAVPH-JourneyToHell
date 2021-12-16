@@ -22,6 +22,8 @@ public class BossBrain : MonoBehaviour
     public float BaseSwitchTime = 5f;
     public float CurrentswitchTime = 5f;
 
+    public HealthBarController bossHealthBar;
+
     private PlayerMovement playerMovement;
     private PlayerJump playerJump;
     private BossMovement bossMovement;
@@ -93,8 +95,8 @@ public class BossBrain : MonoBehaviour
         if (currentPhase.Equals(MY_PHASE.MELEE_PHASE) && !CurrentStateMelee.Equals(MELEE_PHASE_STATE.CLOSING_DISTANCE_TELEPORTING) && !CurrentStateMelee.Equals(MELEE_PHASE_STATE.ATTACKING_MELEE))
         {
             monsterHealth.canHit = true;
-            Debug.Log(playerJump.HasJumped());
-            Debug.Log((playerMovement.platformHit != null && playerMovement.platformHit.GetInstanceID().Equals(bossMovement.BossPlatform.GetInstanceID())));
+            //Debug.Log(playerJump.HasJumped());
+            //Debug.Log((playerMovement.platformHit != null && playerMovement.platformHit.GetInstanceID().Equals(bossMovement.BossPlatform.GetInstanceID())));
             if (playerJump.HasJumped() || (playerMovement.platformHit != null && playerMovement.platformHit.GetInstanceID().Equals(bossMovement.BossPlatform.GetInstanceID())))
             {
                 CurrentStateMelee = MELEE_PHASE_STATE.CLOSING_DISTANCE_WALKING;

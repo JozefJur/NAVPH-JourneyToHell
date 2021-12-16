@@ -101,4 +101,10 @@ public class FirstAidKit : PassiveItemTemplate
     {
         return ItemAssetsHolder.Instance.firstAidSprite;
     }
+
+    public string getItemDescr()
+    {
+        return "This item heals Player for " + hp + " health";
+    }
+
 }

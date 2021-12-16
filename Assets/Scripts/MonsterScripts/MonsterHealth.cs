@@ -13,6 +13,8 @@ public class MonsterHealth : MonoBehaviour
 
     private ItemGiver itemGiver;
 
+    public HealthBarController monsterHealthBar;
+
 
     // Start is called before the first frame update
     protected virtual void Start()
@@ -20,6 +22,8 @@ public class MonsterHealth : MonoBehaviour
         RigidBody = gameObject.GetComponent<Rigidbody2D>();
         monsterAnimator = gameObject.GetComponent<Animator>();
         itemGiver = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<ItemGiver>();
+        monsterHealthBar.setMaxHealth(MaxHealth);
+        monsterHealthBar.setCurrentHealth(MaxHealth);
         CurrentHealth = MaxHealth;
     }
 
@@ -56,7 +60,7 @@ public class MonsterHealth : MonoBehaviour
                 monsterAnimator.SetBool("isDead", true);
             }
         }
-
+        monsterHealthBar.setCurrentHealth(CurrentHealth);
     }
 
     void DeleteMonster()
@@ -71,9 +75,10 @@ public class MonsterHealth : MonoBehaviour
         }
     }
 
-    public void HealObject(float health)
+    public virtual void HealObject(float health)
     {
         CurrentHealth = (CurrentHealth + health > MaxHealth) ? CurrentHealth : CurrentHealth + health;
+        monsterHealthBar.setCurrentHealth(CurrentHealth);
     }
 
 }

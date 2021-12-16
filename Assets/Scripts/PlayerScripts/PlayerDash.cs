@@ -60,7 +60,7 @@ public class PlayerDash : MonoBehaviour
                 if (currentDashTimer >= dashDuration)
                 {
                     playerAnimator.SetBool("IsDash", false);
-                    rigidBody.velocity = new Vector2(0, 0); ;
+                    rigidBody.velocity = new Vector2(0, rigidBody.velocity.y);
                     dash = DashState.ON_COOLDOWN;
                     dashCooldown = 1f;
                 }

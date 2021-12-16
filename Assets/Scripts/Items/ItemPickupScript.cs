@@ -4,11 +4,13 @@ using UnityEngine;
 using System;
 using System.Reflection;
 using System.Text;
+using TMPro;
 
-public class ItemPickupScript : MonoBehaviour
+public class ItemPickupScript : MonoBehaviour, ItemPickupInterface
 {
     
     protected bool canPickUp = false;
+    public Canvas itemDescr;
 
     // Start is called before the first frame update
     void Start()
@@ -21,6 +23,11 @@ public class ItemPickupScript : MonoBehaviour
         if (collision.gameObject.tag.Equals("Player"))
         {
             canPickUp = true;
+            if(itemDescr != null)
+            {
+                itemDescr.transform.gameObject.SetActive(true);
+
+            }
         }
     }
 
@@ -29,6 +36,12 @@ public class ItemPickupScript : MonoBehaviour
         if (collision.gameObject.tag.Equals("Player"))
         {
             canPickUp = false;
+            itemDescr.transform.gameObject.SetActive(false);
         }
+    }
+
+    public virtual ItemTemplate getInstanceOfTemplate()
+    {
+        throw new NotImplementedException();
     }
 }

@@ -4,7 +4,7 @@ using UnityEngine;
 using System.Reflection;
 using System;
 
-public class SteroidsPickUp : ItemPickupScript, ItemPickupInterface
+public class SteroidsPickUp : ItemPickupScript
 {
 
     void Update()
@@ -15,7 +15,7 @@ public class SteroidsPickUp : ItemPickupScript, ItemPickupInterface
         }
     }
 
-    public ItemTemplate getInstanceOfTemplate()
+    public override ItemTemplate getInstanceOfTemplate()
     {
         return Activator.CreateInstance<Steroids>();
     }

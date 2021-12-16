@@ -28,7 +28,7 @@ public class InventoryHandler : MonoBehaviour
     {
 
         int num = 0;
-        float size = 50f;
+        float size = 40f;
         float space = 10f;
 
         foreach(Transform invItem in iconList)
