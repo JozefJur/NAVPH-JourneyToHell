@@ -69,10 +69,12 @@ public class PlayerMovement : MonoBehaviour
         hittingGround(groundInfo);
         checkSprint();
 
-        if (Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.D))
+       /* if (Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.D))
         {
             orientation = Input.GetKeyDown(KeyCode.A) ? -1 : 1;
-        }
+        }*/
+
+        orientation = movementAxis > 0 ? 1 : -1;
 
         //Debug.Log(orientation);
 
