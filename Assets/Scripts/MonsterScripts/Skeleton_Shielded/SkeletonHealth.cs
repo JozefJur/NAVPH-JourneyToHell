@@ -33,6 +33,9 @@ public class SkeletonHealth : MonsterHealth
             {
                 monsterAnimator.SetBool("isDead", true);
             }
+
+            monsterHealthBar.setCurrentHealth(CurrentHealth);
+
         }
 
     }

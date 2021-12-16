@@ -4,7 +4,7 @@ using UnityEngine;
 using System.Reflection;
 using System;
 
-public class FirstAidKitPickup : ItemPickupScript, ItemPickupInterface
+public class FirstAidKitPickup : ItemPickupScript
 {
 
     // Update is called once per frame
@@ -16,7 +16,7 @@ public class FirstAidKitPickup : ItemPickupScript, ItemPickupInterface
         }
     }
 
-    public ItemTemplate getInstanceOfTemplate()
+    public override ItemTemplate getInstanceOfTemplate()
     {
         return Activator.CreateInstance<FirstAidKit>();
     }

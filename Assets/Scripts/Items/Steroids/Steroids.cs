@@ -96,4 +96,10 @@ public class Steroids : PassiveItemTemplate
     {
         return ItemAssetsHolder.Instance.steroidsSprite;
     }
+
+    public string getItemDescr()
+    {
+        return "Good Effects: Each stack adds " + (40 * attackDamageBoost) + " damage\n" +
+        "Bad Effects: Each stack removes " + attackSpeedPenalty  + " attack speed";
+    }
 }

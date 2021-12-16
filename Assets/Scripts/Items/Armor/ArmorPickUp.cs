@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 
-public class ArmorPickUp : ItemPickupScript, ItemPickupInterface
+public class ArmorPickUp : ItemPickupScript
 {
     void Update()
     {
@@ -13,7 +13,7 @@ public class ArmorPickUp : ItemPickupScript, ItemPickupInterface
         }
     }
 
-    public ItemTemplate getInstanceOfTemplate()
+    public override ItemTemplate getInstanceOfTemplate()
     {
         return Activator.CreateInstance<ArmorScript>();
     }

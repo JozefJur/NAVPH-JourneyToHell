@@ -93,4 +93,10 @@ public class RedBull : PassiveItemTemplate
     {
         return ItemAssetsHolder.Instance.redbullSprite;
     }
+
+    public string getItemDescr()
+    {
+        return "Good Effects: Each stack adds " + movementSpeedBoost + " movement speed\n" +
+            "Bad Effects: Each stack removes " + healthPenalty + " health";
+    }
 }
