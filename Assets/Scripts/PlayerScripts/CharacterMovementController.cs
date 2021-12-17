@@ -17,6 +17,7 @@ public class CharacterMovementController : MonoBehaviour
     public CoolDownController sprintCoolDown;
     public CoolDownController jumpCoolDown;
     public JumpNumberController jumpNum;
+    public CoolDownController heavyAttackCoolDown;
     //private float dashCooldown = 0;
 
     private Rigidbody2D rigidBody;  // rigid body instance
