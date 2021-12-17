@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using System.Linq;
 public class Narrator : MonoBehaviour
 {
 
@@ -11,6 +11,8 @@ public class Narrator : MonoBehaviour
 
     public List<GameObject> activeSpawnPoints;
 
+    private List<GameObject> currentSpawnPoints;
+    
     public int maxNumberOfMonstersAtTheSameTime;
     public List<GameObject> allActiveMonsters;
 
@@ -27,6 +29,10 @@ public class Narrator : MonoBehaviour
     public float betweenSpawnTimeout = 5f;
     private float currentBetweenSpawnTimeout = 5f;
 
+    public int numOfPortalsAtTheSameTime = 3;
+
+    public Hashtable unitVariation;
+
     public bool canSpawn;
 
     private GameObject[] monsters;
@@ -36,6 +42,14 @@ public class Narrator : MonoBehaviour
     private void getAllMonsters()
     {
         monsters = Resources.LoadAll<GameObject>("Monsters");
+
+        Debug.Log(monsters.Length);
+
+        monsters = monsters.OrderBy(o => o.GetComponent<MonsterTemplate>().spawnChance()).ToList().ToArray();
+
+        Debug.Log(monsters.Length);
+
+        currentSpawnPoints = new List<GameObject>();
     }
 
     // Start is called before the first frame update
@@ -97,8 +111,20 @@ public class Narrator : MonoBehaviour
             currentSpawnTimeout -= Time.deltaTime;
             if (canSpawn && currentSpawnTimeout <=0 && activeSpawnPoints.Count > 0 && allActiveMonsters.Count < maxNumberOfMonstersAtTheSameTime)
             {
+                currentSpawnPoints.Clear();
                 monstersRemainingSpawn = maxNumberOfMonstersAtTheSameTime - allActiveMonsters.Count >= maxNumOfMonsterOnSpawnSequence ? maxNumOfMonsterOnSpawnSequence : maxNumberOfMonstersAtTheSameTime - allActiveMonsters.Count;
                 currentState = NARRATOR_STATE.SPAWNING;
+                List<int> indexes = new List<int>();
+                for(int i =0;i< activeSpawnPoints.Count; i++)
+                {
+                    indexes.Add(i);
+                }
+                indexes = indexes.OrderBy(tvz => System.Guid.NewGuid()).ToList();
+                for (int i= 0; i < ((activeSpawnPoints.Count < monstersRemainingSpawn) ? activeSpawnPoints.Count : monstersRemainingSpawn); i++)
+                {
+                    currentSpawnPoints.Add(activeSpawnPoints[indexes[i]]);
+                }
+
             }
         }
     }
@@ -139,7 +165,8 @@ public class Narrator : MonoBehaviour
                 {
                     currentBetweenSpawnTimeout = betweenSpawnTimeout;
                     currentSpawnTimeout = spawnTimeout;
-                    Transform currentSpawnPoint = activeSpawnPoints[Random.Range(0, activeSpawnPoints.Count)].transform;
+                    Transform currentSpawnPoint = currentSpawnPoints[0].transform;
+                    currentSpawnPoints.RemoveAt(0);
                     Vector2 newP = new Vector2(currentSpawnPoint.position.x, currentSpawnPoint.position.y + 3);
                     GameObject portal = Instantiate(spawnParticles, newP, Quaternion.identity);
                     StartCoroutine(spawnEnemy(currentSpawnPoint, portal));
@@ -147,7 +174,7 @@ public class Narrator : MonoBehaviour
                     monstersRemainingSpawn--;
 
                     //Random.Range(0, monsters.Length -1);
-                    if(monstersRemainingSpawn == 0)
+                    if(currentSpawnPoints.Count == 0)
                     {
                         currentState = NARRATOR_STATE.IDLE;
                         currentBetweenSpawnTimeout = 0;
@@ -161,10 +188,35 @@ public class Narrator : MonoBehaviour
     IEnumerator spawnEnemy(Transform point, GameObject  portal)
     {
         yield return new WaitForSeconds(5f);
-        Destroy(portal);
-        allActiveMonsters.Add(Instantiate(monsters[Random.Range(0, monsters.Length)], point.position, Quaternion.identity));
-    }
 
+        int chance = Random.Range(0, 100);
+
+        GameObject monster = null;
+        foreach(GameObject monsterArr in monsters)
+        {
+            MonsterTemplate tempList = monsterArr.GetComponent<MonsterTemplate>();
+            //Debug.Log(tempList.spawnChance() + " " + chance);
+            if(tempList.spawnChance() > chance)
+            {
+                monster = monsterArr;
+                break;
+            }
+        }
+
+        MonsterTemplate temp = monster.GetComponent<MonsterTemplate>();
+
+        for(int i=0; i< temp.numPerSpawn(); i++)
+        {
+            yield return new WaitForSeconds(1f);
+            allActiveMonsters.Add(Instantiate(monster, point.position, Quaternion.identity));
+        }
+
+        yield return new WaitForSeconds(temp.numPerSpawn());
+
+        Destroy(portal);
+
+        //allActiveMonsters.Add(Instantiate(monsters[Random.Range(0, monsters.Length)], point.position, Quaternion.identity));
+    }
 
     public enum NARRATOR_STATE
     {

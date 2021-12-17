@@ -7,6 +7,7 @@ public class GoblinScript : MonoBehaviour, MonsterTemplate
 
     public GameObject goblin;
     public int price;
+    public int numberPerSpawn;
 
     public GameObject getMonster()
     {
@@ -16,6 +17,16 @@ public class GoblinScript : MonoBehaviour, MonsterTemplate
     public int monsterCost()
     {
         return price;
+    }
+
+    public int numPerSpawn()
+    {
+        return numberPerSpawn;
+    }
+
+    public float spawnChance()
+    {
+        return 100;
     }
 
     // Start is called before the first frame update
