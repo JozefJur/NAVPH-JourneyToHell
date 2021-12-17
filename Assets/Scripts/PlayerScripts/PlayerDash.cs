@@ -47,6 +47,7 @@ public class PlayerDash : MonoBehaviour
             case DashState.READY:
                 if (Input.GetKeyDown(KeyCode.LeftControl) || Input.GetKeyDown(KeyCode.RightControl))
                 {
+                    Physics2D.IgnoreLayerCollision(5, 7, true);
                     playerAnimator.SetBool("IsDash", true);
                     dash = DashState.IN_PROGRESS;
                     //accVelocity = rigidBody.velocity;
@@ -59,6 +60,7 @@ public class PlayerDash : MonoBehaviour
                 currentDashTimer += Time.deltaTime;
                 if (currentDashTimer >= dashDuration)
                 {
+                    Physics2D.IgnoreLayerCollision(5, 7, false);
                     playerAnimator.SetBool("IsDash", false);
                     rigidBody.velocity = new Vector2(0, rigidBody.velocity.y);
                     dash = DashState.ON_COOLDOWN;
