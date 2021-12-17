@@ -682,6 +682,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   goblin: {fileID: 6751623942994812979}
   price: 20
+  numberPerSpawn: 2
 --- !u!114 &3270438914561418395
 MonoBehaviour:
   m_ObjectHideFlags: 0

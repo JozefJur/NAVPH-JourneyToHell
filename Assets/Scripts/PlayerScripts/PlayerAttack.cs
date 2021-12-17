@@ -14,8 +14,8 @@ public class PlayerAttack : MonoBehaviour
     public float lightAttackDuration = 0.5f;
     public float heavyAttackDuration = 3f;
 
-    private float lightAttackCoolDown = 1;
-    private float heavyAttackCoolDown = 5f;
+    private float lightAttackCoolDown = 1f;
+    private float heavyAttackCoolDown = 3f;
 
     private AttackState lightAttackState = AttackState.READY;
     private AttackState heavyAttackState = AttackState.READY;

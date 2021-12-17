@@ -572,6 +572,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   skeleton: {fileID: 0}
   price: 0
+  numberPerSpawn: 1
 --- !u!95 &1721960388920962522
 Animator:
   serializedVersion: 3

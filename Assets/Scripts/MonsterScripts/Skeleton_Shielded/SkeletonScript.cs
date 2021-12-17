@@ -7,6 +7,7 @@ public class SkeletonScript : MonoBehaviour, MonsterTemplate
 
     public GameObject skeleton;
     public int price;
+    public int numberPerSpawn;
 
     public GameObject getMonster()
     {
@@ -17,6 +18,17 @@ public class SkeletonScript : MonoBehaviour, MonsterTemplate
     {
         return price;
     }
+
+    public int numPerSpawn()
+    {
+        return numberPerSpawn;
+    }
+
+    public float spawnChance()
+    {
+        return 40;
+    }
+
     // Start is called before the first frame update
     void Start()
     {
