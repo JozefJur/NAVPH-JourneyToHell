@@ -53,7 +53,7 @@ public class MeleeMonsterAtackScript : MonoBehaviour
                     //monsterAnimator.SetLayerWeight(1, 1);
                     currectAttackState = AttackState.ATTACKING;
                     lightAttackD = lightAttackDuration;
-
+                    gameObject.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
 
                 }
 

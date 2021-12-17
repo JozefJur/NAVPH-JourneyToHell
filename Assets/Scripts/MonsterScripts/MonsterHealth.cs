@@ -28,7 +28,7 @@ public class MonsterHealth : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    protected virtual void Update()
     {
        /* if(CurrentHealth <= 0)
         {

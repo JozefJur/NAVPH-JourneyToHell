@@ -43,7 +43,7 @@ public class Narrator : MonoBehaviour
     {
         monsters = Resources.LoadAll<GameObject>("Monsters");
 
-        Debug.Log(monsters.Length);
+        //Debug.Log(monsters.Length);
 
         monsters = monsters.OrderBy(o => o.GetComponent<MonsterTemplate>().spawnChance()).ToList().ToArray();
 
@@ -216,6 +216,15 @@ public class Narrator : MonoBehaviour
         Destroy(portal);
 
         //allActiveMonsters.Add(Instantiate(monsters[Random.Range(0, monsters.Length)], point.position, Quaternion.identity));
+    }
+
+    public void destroyAllEnemies()
+    {
+        foreach(GameObject enemy in allActiveMonsters)
+        {
+            Destroy(enemy);
+        }
+        allActiveMonsters.Clear();
     }
 
     public enum NARRATOR_STATE

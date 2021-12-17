@@ -16,6 +16,15 @@ public class BossHealth : MonsterHealth
         bossBrain.bossHealthBar.setCurrentHealth(MaxHealth);
     }
 
+    protected override void Update()
+    {
+        base.Update();
+        if(CurrentHealth < (MaxHealth / 2))
+        {
+            bossBrain.isEnraged = true;
+        }
+    }
+
     public override void TakeDamage(float dmg)
     {
 

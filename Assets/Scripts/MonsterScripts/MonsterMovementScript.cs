@@ -21,6 +21,8 @@ public class MonsterMovementScript : MonoBehaviour
 
     public bool hitting;
 
+    public bool knockback = false;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -51,7 +53,7 @@ public class MonsterMovementScript : MonoBehaviour
     {
 
         //float distanceToPlayer = Vector2.Distance(gameObject.transform.position, player.position);
-        if (monsterBrain.currentState.Equals(MonsterAI.MY_STATE.CLOSING_DISTANCE))
+        if (monsterBrain.currentState.Equals(MonsterAI.MY_STATE.CLOSING_DISTANCE) && !knockback)
         {
 
             RaycastHit2D[] groundInfo = Physics2D.RaycastAll(monsterBrain.enemyDetectionCircle.position, Vector2.down, distance);
@@ -65,28 +67,28 @@ public class MonsterMovementScript : MonoBehaviour
                     if (gameObject.transform.position.x < player.position.x)
                     {
                         orientation = 1;
-                        currentVelocity = new Vector2(orientation * movementSpeed, 0);
+                        currentVelocity = new Vector2(orientation * movementSpeed, monsterRigidBody.velocity.y);
                     }
                     else
                     {
                         orientation = -1;
-                        currentVelocity = new Vector2(orientation * movementSpeed, 0);
+                        currentVelocity = new Vector2(orientation * movementSpeed, monsterRigidBody.velocity.y);
                     }
                 }
 
             }
             else
            {
-                currentVelocity = new Vector2(orientation * movementSpeed * -1, 0);
+                currentVelocity = new Vector2(orientation * movementSpeed * -1, monsterRigidBody.velocity.y);
                //currentVelocity = new Vector2(0, 0);
             }
 
         }
         else
         {
-            if(monsterIde == null || !monsterIde.myIdleMode.Equals(MonsterIdle.IDLE_MODE.WALKING))
+            if(monsterIde == null || !monsterIde.myIdleMode.Equals(MonsterIdle.IDLE_MODE.WALKING) && !knockback)
             {
-                currentVelocity = new Vector2(0, 0);
+                currentVelocity = new Vector2(0, monsterRigidBody.velocity.y);
             }
         }
         gameObject.transform.localScale = new Vector2(orientation * scaleX, gameObject.transform.localScale.y);
@@ -95,6 +97,7 @@ public class MonsterMovementScript : MonoBehaviour
 
     void FixedUpdate()
     {
+        //Debug.Log(currentVelocity);
         monsterRigidBody.velocity = currentVelocity;
     }
 }

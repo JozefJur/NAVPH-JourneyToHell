@@ -17,7 +17,7 @@ public class PlayerDash : MonoBehaviour
     private float dashCooldown = 0;
     private float currentDashTimer = 0;
     private Animator playerAnimator;
-
+    private PlayerHealth playerHealth;
     private Vector2 appliedVelocity;
     
     
@@ -28,6 +28,7 @@ public class PlayerDash : MonoBehaviour
         rigidBody = gameObject.GetComponent<Rigidbody2D>();
         PlayerMovement = gameObject.GetComponent<PlayerMovement>();
         playerAnimator = gameObject.GetComponent<Animator>();
+        playerHealth = gameObject.GetComponent<PlayerHealth>();
     }
 
     private void FixedUpdate()
@@ -54,6 +55,7 @@ public class PlayerDash : MonoBehaviour
                     rigidBody.velocity = new Vector2(0, 0);
                     appliedVelocity = new Vector2(PlayerMovement.getOrientation() * dodgeForce, rigidBody.velocity.y);
                     Player.dashCoolDown.setCooldown(dashDuration + 1f);
+                    playerHealth.canHit = false;
                 }
                 break;
             case DashState.IN_PROGRESS:
@@ -65,6 +67,7 @@ public class PlayerDash : MonoBehaviour
                     rigidBody.velocity = new Vector2(0, rigidBody.velocity.y);
                     dash = DashState.ON_COOLDOWN;
                     dashCooldown = 1f;
+                    playerHealth.canHit = true;
                 }
                 break;
             case DashState.ON_COOLDOWN:

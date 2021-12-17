@@ -6,6 +6,8 @@ public class PlayerClimb : MonoBehaviour
 {
     public bool canClimb = false;
     public float movementSpeed = 15f;
+    public float gravityScale;
+
 
     private CharacterMovementController Player;
     private PlayerJump playerJump;
@@ -19,6 +21,7 @@ public class PlayerClimb : MonoBehaviour
         Player = gameObject.GetComponent<CharacterMovementController>();
         rigidBody = gameObject.GetComponent<Rigidbody2D>();
         playerJump = gameObject.GetComponent<PlayerJump>();
+        gravityScale = rigidBody.gravityScale;
     }
 
     // Update is called once per frame
@@ -48,7 +51,7 @@ public class PlayerClimb : MonoBehaviour
         }
         else
         {
-            rigidBody.gravityScale = 1;
+            rigidBody.gravityScale = gravityScale;
             if(isClimbing && !canClimb)
             {
                 isClimbing = false;
