@@ -57,6 +57,7 @@ public class RedBull : PassiveItemTemplate
             PlayerMovement scriptM = x.GetComponent<PlayerMovement>();
 
             scriptM.movementSpeed = scriptM.baseMovementSpeed + ((getStacks() * movementSpeedBoost) * scriptM.baseMovementSpeed);
+
         };
     }
 

@@ -11,6 +11,7 @@ public class InventoryHandler : MonoBehaviour
     private List<Transform> iconList = new List<Transform>();
     private Transform inventoryContainer;
     private Transform itemTemplate;
+    private float beginOffset = 37f;
 
     void Awake()
     {
@@ -29,7 +30,7 @@ public class InventoryHandler : MonoBehaviour
 
         int num = 0;
         float size = 40f;
-        float space = 10f;
+        float space = 20f;
 
         foreach(Transform invItem in iconList)
         {
@@ -49,7 +50,7 @@ public class InventoryHandler : MonoBehaviour
             RectTransform itemSlot = obj.GetComponent<RectTransform>();
 
             itemSlot.gameObject.SetActive(true);
-            itemSlot.anchoredPosition = new Vector2(num * (size + space), 0);
+            itemSlot.anchoredPosition = new Vector2(beginOffset + num * (size + space), 0);
             Image img = itemSlot.Find("ItemImage").GetComponent<Image>();
             img.sprite = item.getSprite();
             TextMeshProUGUI imgText = itemSlot.Find("AmountText").GetComponent<TextMeshProUGUI>();

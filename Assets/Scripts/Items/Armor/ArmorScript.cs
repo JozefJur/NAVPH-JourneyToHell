@@ -7,7 +7,7 @@ public class ArmorScript : PassiveItemTemplate
 {
     public float coolDownTime = 0f;
 
-    public float maxHealthBoost = 0.1f;
+    public float maxHealthBoost = 0.2f;
     public float movementSpeedPenalty = 0.05f;
 
     private float currentCoolDownTime = 0f;
@@ -67,7 +67,7 @@ public class ArmorScript : PassiveItemTemplate
 
             PlayerMovement scriptM = x.GetComponent<PlayerMovement>();
 
-            scriptM.movementSpeed -= ((getStacks() * movementSpeedPenalty) * scriptM.baseMovementSpeed);
+            scriptM.movementSpeed *= (float)( Math.Pow((1-movementSpeedPenalty), getStacks()));
         };
     }
 

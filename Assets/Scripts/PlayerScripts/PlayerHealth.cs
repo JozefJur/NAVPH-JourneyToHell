@@ -57,7 +57,7 @@ public class PlayerHealth : MonoBehaviour
 
     public void SetMaxHealth(float newHealth)
     {
-        MaxHealth = newHealth;
+        MaxHealth = newHealth < 20f ? 20f : newHealth;
     }
 
     public void HealObject(float health)
