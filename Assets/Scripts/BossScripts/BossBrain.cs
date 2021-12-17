@@ -22,6 +22,8 @@ public class BossBrain : MonoBehaviour
     public float BaseSwitchTime = 5f;
     public float CurrentswitchTime = 5f;
 
+    public bool isEnraged = false;
+    
     public HealthBarController bossHealthBar;
 
     private PlayerMovement playerMovement;
@@ -140,6 +142,7 @@ public class BossBrain : MonoBehaviour
         {
             currentPhase = MY_PHASE.TOTEM_PHASE;
             CurrentStateTotem = TOTEM_PHASE_STATES.INITIALIZING;
+            CurrentStateMelee = MELEE_PHASE_STATE.CLOSING_DISTANCE_WALKING;
         }
     }
 

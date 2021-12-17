@@ -32,7 +32,7 @@ public class SpellController : MonoBehaviour
         Collider2D[] enemyToHit = Physics2D.OverlapAreaAll(top_right_corner, bottom_left_corner, enemyLayers);
         if (enemyToHit != null && enemyToHit.Length > 0)
         {
-            enemyToHit[0].gameObject.GetComponent<PlayerHealth>().takeDamage(10);
+            enemyToHit[0].gameObject.GetComponent<PlayerHealth>().takeDamage(damage);
         }
 
     }

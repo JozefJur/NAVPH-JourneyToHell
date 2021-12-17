@@ -11,6 +11,7 @@ public class BossTotemPhase : MonoBehaviour
     public GameObject totem;
 
     private BossBrain bossBrain;
+    private BossCasting castingController;
     private Vector2 currentVelocity;
     private Rigidbody2D bossRigidBody;
     private float scaleX;
@@ -24,6 +25,7 @@ public class BossTotemPhase : MonoBehaviour
         bossAnimator = gameObject.GetComponent<Animator>();
         scaleX = gameObject.transform.localScale.x;
         player = player = GameObject.FindGameObjectWithTag("Player").transform;
+        castingController = gameObject.GetComponent<BossCasting>();
     }
 
     // Update is called once per frame
@@ -81,6 +83,7 @@ public class BossTotemPhase : MonoBehaviour
     {
         Debug.Log("HERE ATER CAST?");
         bossBrain.CurrentStateTotem = BossBrain.TOTEM_PHASE_STATES.CASTING;
+        castingController.CurrentCastPhase = BossCasting.CASTING_PHASE.READY;
     }
 
 }

@@ -9,7 +9,7 @@ public class PlayerHealth : MonoBehaviour
     public float baseMaxHealth = 100;
 
     public float CurrentHealth = 100;
-    
+    public bool canHit = true;
     
     private CharacterMovementController Player;
     private Rigidbody2D rigidBody;
@@ -42,15 +42,19 @@ public class PlayerHealth : MonoBehaviour
 
     public void takeDamage(float dmg)
     {
-        playerAnimator.SetTrigger("takeHit");
-        CurrentHealth -= dmg;
-        Player.healthBar.setCurrentHealth(CurrentHealth);
 
-        if (CurrentHealth <= 0)
+        if (canHit)
         {
-            playerAnimator.SetBool("isDead", true);
-            Debug.Log("DEAD");
-            //TODO IMPLEMENT DEATH !!! (mozeme pridat item, ktory napr zabrani smrti a zmizne)
+            playerAnimator.SetTrigger("takeHit");
+            CurrentHealth -= dmg;
+            Player.healthBar.setCurrentHealth(CurrentHealth);
+
+            if (CurrentHealth <= 0)
+            {
+                playerAnimator.SetBool("isDead", true);
+                Debug.Log("DEAD");
+                //TODO IMPLEMENT DEATH !!! (mozeme pridat item, ktory napr zabrani smrti a zmizne)
+            }
         }
 
     }
