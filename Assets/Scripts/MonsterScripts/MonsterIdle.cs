@@ -66,7 +66,7 @@ public class MonsterIdle : MonoBehaviour
             directionChangeTime = Random.Range(3, 8);
         }
 
-        monsterMovement.currentVelocity = new Vector2(monsterMovement.orientation * monsterMovement.movementSpeed, 0);
+        monsterMovement.currentVelocity = new Vector2(monsterMovement.orientation * monsterMovement.movementSpeed, gameObject.GetComponent<Rigidbody2D>().velocity.y);
 
     }
 

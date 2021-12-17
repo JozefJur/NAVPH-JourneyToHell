@@ -467,12 +467,12 @@ GameObject:
   - component: {fileID: 8636107609260720154}
   - component: {fileID: 8047981317472209099}
   - component: {fileID: 8789654271007344776}
-  - component: {fileID: 567254775779353622}
   - component: {fileID: 2374200490685813400}
   - component: {fileID: 3372822191362162292}
   - component: {fileID: 585740202927493650}
   - component: {fileID: 3270438914561418395}
   - component: {fileID: 428197184}
+  - component: {fileID: 1331193247}
   m_Layer: 6
   m_Name: Goblin
   m_TagString: Enemy
@@ -537,8 +537,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 3
-  m_Sprite: {fileID: 4723107735738678597, guid: c1cdd26cc09ad224884556bc4d8296ae,
-    type: 3}
+  m_Sprite: {fileID: 4723107735738678597, guid: c1cdd26cc09ad224884556bc4d8296ae, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -583,12 +582,12 @@ Rigidbody2D:
   m_Mass: 1
   m_LinearDrag: 0
   m_AngularDrag: 0.05
-  m_GravityScale: 1
+  m_GravityScale: 5
   m_Material: {fileID: 0}
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 1
-  m_Constraints: 0
+  m_Constraints: 4
 --- !u!61 &8789654271007344776
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -615,22 +614,6 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.3, y: 0.36}
   m_EdgeRadius: 0
---- !u!114 &567254775779353622
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6751623942994812979}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 07d4b7f784e8ef3409b958ce8f2b717d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  MaxHealth: 100
-  CurrentHealth: 100
-  canHit: 1
-  monsterHealthBar: {fileID: 1480574978}
 --- !u!114 &2374200490685813400
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -669,6 +652,7 @@ MonoBehaviour:
   distance: 2
   currentVelocity: {x: 0, y: 0}
   hitting: 0
+  knockback: 0
 --- !u!114 &585740202927493650
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -722,3 +706,20 @@ MonoBehaviour:
   walkingTimeout: 8
   myIdleMode: 0
   directionChangeTime: 0
+--- !u!114 &1331193247
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6751623942994812979}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9f0717400ed917340979c7bd7faa2738, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  MaxHealth: 100
+  CurrentHealth: 100
+  canHit: 1
+  monsterHealthBar: {fileID: 1480574978}
+  KnockBackPower: 5
