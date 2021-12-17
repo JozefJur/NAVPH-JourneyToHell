@@ -171,6 +171,7 @@ public class PlayerAttack : MonoBehaviour
                     playerAnimator.SetTrigger("hardAttack");
                     heavyAttackState = AttackState.ATTACKING;
                     heavyAttackD = heavyAttackDuration;
+                    controller.heavyAttackCoolDown.setCooldown((heavyAttackCoolDown - currentAttackSpeed) + heavyAttackDuration);
                 }
 
                 break;
