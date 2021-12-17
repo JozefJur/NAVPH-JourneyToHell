@@ -62,15 +62,15 @@ public class ItemGiver : MonoBehaviour
                 switch (rarity)
                 {
                     case ItemTemplate.Rarity.COMMON:
-                        return itemsCommon[UnityEngine.Random.Range(0, itemsCommon.Count -1)];
+                        return itemsCommon[UnityEngine.Random.Range(0, itemsCommon.Count)];
                     case ItemTemplate.Rarity.UNCOMMON:
-                        return itemsCommon[UnityEngine.Random.Range(0, itemsCommon.Count - 1)];
+                        return itemsCommon[UnityEngine.Random.Range(0, itemsCommon.Count)];
                     // return itemsUncommon[UnityEngine.Random.Range(0, itemsCommon.Count -1)];
                     case ItemTemplate.Rarity.RARE:
-                        return itemsCommon[UnityEngine.Random.Range(0, itemsCommon.Count - 1)];
+                        return itemsCommon[UnityEngine.Random.Range(0, itemsCommon.Count)];
                     // return itemsRare[UnityEngine.Random.Range(0, itemsCommon.Count-1)];
                     case ItemTemplate.Rarity.LEGENDARY:
-                        return itemsCommon[UnityEngine.Random.Range(0, itemsCommon.Count - 1)];
+                        return itemsCommon[UnityEngine.Random.Range(0, itemsCommon.Count)];
                         // return itemsLegendary[UnityEngine.Random.Range(0, itemsCommon.Count-1)];
                 }
             }

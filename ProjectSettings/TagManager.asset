@@ -22,7 +22,7 @@ TagManager:
   - Enemy
   - Player
   - Background
-  - 
+  - Items
   - 
   - 
   - 
@@ -48,4 +48,10 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: Enemy
+    uniqueID: 386799665
+    locked: 0
+  - name: Items
+    uniqueID: 585961777
     locked: 0

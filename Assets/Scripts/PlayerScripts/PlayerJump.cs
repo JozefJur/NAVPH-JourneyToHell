@@ -77,8 +77,7 @@ public class PlayerJump : MonoBehaviour
         //Debug.Log("Collision" + " " + col.gameObject.tag + " "+ col.gameObject.name);
         if (col.gameObject.tag == "Ground")
         {
-            //Debug.Log("Reset");
-            Vector3 direction = transform.position - col.gameObject.transform.position;
+            Vector3 direction = transform.position - (col.gameObject.transform.position + col.gameObject.transform.localScale);
             //Debug.Log(direction);
             if(direction.y > 0)
             {

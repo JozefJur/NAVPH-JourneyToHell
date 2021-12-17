@@ -73,9 +73,9 @@ public class PlayerMovement : MonoBehaviour
         {
             orientation = Input.GetKeyDown(KeyCode.A) ? -1 : 1;
         }*/
-
-        orientation = movementAxis > 0 ? 1 : -1;
-
+        if (movementAxis!=0f){
+            orientation = movementAxis > 0 ? 1 : -1;
+        }
         //Debug.Log(orientation);
 
         transform.localScale = new Vector2(orientation * scale, transform.localScale.y);

@@ -12,10 +12,10 @@ public class PlayerAttack : MonoBehaviour
     public float baseAttackSpeed = 1f;
 
     public float lightAttackDuration = 0.5f;
-    public float heavyAttackDuration = 3f;
+    public float heavyAttackDuration = 0.8f;
 
-    private float lightAttackCoolDown = 1;
-    private float heavyAttackCoolDown = 5f;
+    public float lightAttackCoolDown = 1;
+    public float heavyAttackCoolDown = 3f;
 
     private AttackState lightAttackState = AttackState.READY;
     private AttackState heavyAttackState = AttackState.READY;
@@ -138,6 +138,18 @@ public class PlayerAttack : MonoBehaviour
         }
     }
 
+    void HardAttackMultiple()
+    {
+        Collider2D[] enemiesToHit = Physics2D.OverlapCircleAll(sword.position, attackRange, enemyLayers);
+        if (enemiesToHit != null && enemiesToHit.Length > 0)
+        {
+            foreach (var enemyToHit in enemiesToHit)
+            {
+                enemyToHit.gameObject.GetComponent<MonsterHealth>().TakeDamage(currentDmg);
+            }
+        }
+    }
+
     void OnDrawGizmosSelected()
     {
         if(sword == null)
@@ -156,6 +168,7 @@ public class PlayerAttack : MonoBehaviour
 
                 if (Input.GetMouseButtonDown(1) && canAttack())
                 {
+                    playerAnimator.SetTrigger("hardAttack");
                     heavyAttackState = AttackState.ATTACKING;
                     heavyAttackD = heavyAttackDuration;
                 }
@@ -174,7 +187,7 @@ public class PlayerAttack : MonoBehaviour
                 if (heavyAttackD <= 0)
                 {
                     heavyAttackState = AttackState.ON_COOLDOWN;
-                    heavyAttackC = lightAttackCoolDown;
+                    heavyAttackC = heavyAttackCoolDown - currentAttackSpeed;
                 }
                 break;
         }

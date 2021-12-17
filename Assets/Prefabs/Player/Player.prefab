@@ -174,7 +174,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 3
   m_Sprite: {fileID: 4723107735738678597, guid: 174209194dbf2fb44aef1ea1ba76a2f1, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -221,7 +221,7 @@ Rigidbody2D:
   m_LinearDrag: 0
   m_AngularDrag: 0.05
   m_GravityScale: 1
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 6200000, guid: 32c27659b6a9c4942b0b6d56187a51b3, type: 2}
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 1
@@ -290,7 +290,9 @@ MonoBehaviour:
   currentAttackSpeed: 1
   baseAttackSpeed: 1
   lightAttackDuration: 0.8
-  heavyAttackDuration: 3
+  heavyAttackDuration: 0.8
+  lightAttackCoolDown: 1
+  heavyAttackCoolDown: 3
   sword: {fileID: 8001031293326334795}
   attackRange: 2.5
   enemyLayers:
@@ -377,6 +379,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 41b564c15198e244a810f54b66820e88, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  canClimb: 0
+  movementSpeed: 15
 --- !u!1001 &7365080106230603077
 PrefabInstance:
   m_ObjectHideFlags: 0
