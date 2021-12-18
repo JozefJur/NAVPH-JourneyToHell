@@ -171,7 +171,7 @@ public class Narrator : MonoBehaviour
                     currentSpawnTimeout = SpawnTimeout;
                     Transform currentSpawnPoint = currentSpawnPoints[0].transform;
                     currentSpawnPoints.RemoveAt(0);
-                    Vector2 newP = new Vector2(currentSpawnPoint.position.x, currentSpawnPoint.position.y + 3);
+                    Vector3 newP = new Vector3(currentSpawnPoint.position.x, currentSpawnPoint.position.y + 3, -2.3f);
                     // Create portal
                     GameObject portal = Instantiate(SpawnParticles, newP, Quaternion.identity);
                     // Start spawning routine

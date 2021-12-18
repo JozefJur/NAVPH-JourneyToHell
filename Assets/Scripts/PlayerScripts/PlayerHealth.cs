@@ -50,7 +50,7 @@ public class PlayerHealth : MonoBehaviour
 
             if (CurrentHealth <= 0)
             {
-                canHit = false;
+                CanHit = false;
                 rigidBody.constraints = RigidbodyConstraints2D.FreezeAll;
                 playerAnimator.SetBool("isDead", true);
             }
@@ -74,9 +74,12 @@ public class PlayerHealth : MonoBehaviour
         MaxHealth = BaseMaxHealth;
     }
 
-    public void Die(){
-        
+    public bool IsAlive()
+    {
+        return CurrentHealth > 0 ? true : false;
+    }
+    public void Die()
+    {    
         SceneManager.LoadSceneAsync("YouDied");
-
     }
 }

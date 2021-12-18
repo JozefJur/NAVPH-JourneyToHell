@@ -17,7 +17,7 @@ public class PlayerAttack : MonoBehaviour
 
     public float LightAttackCoolDown = 1;
     public float HeavyAttackCoolDown = 3f;
-
+    
     private AttackState LightAttackState = AttackState.READY;
     private AttackState HeavyAttackState = AttackState.READY;
 
@@ -31,6 +31,7 @@ public class PlayerAttack : MonoBehaviour
     private PlayerDash playerDash;
     private PlayerJump playerJump;
     private PlayerMovement playerMov;
+    private PlayerHealth playerHealth;
     private Rigidbody2D rigidBody;
     private CharacterMovementController controller;
 
@@ -45,6 +46,7 @@ public class PlayerAttack : MonoBehaviour
         playerAnimator = gameObject.GetComponent<Animator>();
         playerDash = gameObject.GetComponent<PlayerDash>();
         playerJump = gameObject.GetComponent<PlayerJump>();
+        playerHealth = gameObject.GetComponent<PlayerHealth>();
         playerMov = gameObject.GetComponent<PlayerMovement>();
         rigidBody = gameObject.GetComponent<Rigidbody2D>();
         controller = gameObject.GetComponent<CharacterMovementController>();
@@ -64,7 +66,7 @@ public class PlayerAttack : MonoBehaviour
     // Player cant attack while jumping, falling, dashing or sprinting
     private bool canAttack()
     {
-        return !playerDash.IsDashing() && !playerJump.HasJumped() && rigidBody.velocity.y == 0 && !playerMov.MovementState.Equals(PlayerMovement.MOVEMENT_STATE.SPRINTING);
+        return !playerDash.IsDashing() && !playerJump.HasJumped() && rigidBody.velocity.y == 0 && !playerMov.MovementState.Equals(PlayerMovement.MOVEMENT_STATE.SPRINTING) && playerHealth.IsAlive();
     }
     //&& rigidBody.velocity.x == 0
 

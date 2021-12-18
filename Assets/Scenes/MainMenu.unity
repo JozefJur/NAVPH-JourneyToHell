@@ -202,7 +202,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 24300002, guid: 9095ec6dbdd3f124280d2a4db5dbd55e, type: 2}
-  m_audioClip: {fileID: 8300000, guid: b49633ca64c6a824c859addee27d1b3e, type: 3}
+  m_audioClip: {fileID: 8300000, guid: e8ece552377c69d42bb089e13bc4f356, type: 3}
   m_PlayOnAwake: 1
   m_Volume: 0.05
   m_Pitch: 1
@@ -462,11 +462,8 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas ante
-    orci, fermentum a volutpat in, ultricies porttitor magna. Nullam eu ultrices
-    dui, at luctus sem. Nullam aliquet, tortor ut consectetur tempus, urna nibh volutpat
-    sapien, eu ornare ipsum urna ut ligula. Integer sollicitudin, massa dapibus finibus
-    semper
+  m_text: "WASD\tplayer movement\nSPACE\tjump\nSHIFT\tsprint\nCTRL\t\tdash\nE\t\tpick
+    up item\nM1\t\tlight attack(one enemy)\nM2\t\theavy attack(multiple)\n\n"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -529,7 +526,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 0, y: 0, z: 0, w: 0}
+  m_margin: {x: 0, y: 68.64972, z: 0, w: 0}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
@@ -815,7 +812,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: How To play
+  m_text: How To Play
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}

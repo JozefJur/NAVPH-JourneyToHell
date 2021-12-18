@@ -12,6 +12,7 @@ TagManager:
   - TotemSpawn
   - Boss
   - Director
+  - LevelController
   layers:
   - Default
   - TransparentFX

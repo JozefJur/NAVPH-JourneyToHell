@@ -36,11 +36,14 @@ public class Stone : MonoBehaviour
         }
     }
 
-    public void NextLevel(){
-        player.transform.position = NextStartPoint.transform.position;
-        gameObject.SetActive(false);
+    public void NextLevel()
+    {
+        //player.transform.position = NextStartPoint.transform.position;
+        //gameObject.SetActive(false);
+        GameObject.FindGameObjectWithTag("LevelController").GetComponent<LevelControllerScript>().InstantiateLevel(1, player);
         player.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.None;
         player.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeRotation;
+        
     }
     public void ExitGame(){
         SceneManager.LoadSceneAsync("MainMenu");

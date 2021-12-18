@@ -72,6 +72,7 @@ public class SettingsMenuScript : MonoBehaviour
     public void SetVolume(float volume)
     {
         volumeToSave = volume;
+        Debug.Log(volume);
         //audioMixer.SetFloat("volume", volume);
     }
 

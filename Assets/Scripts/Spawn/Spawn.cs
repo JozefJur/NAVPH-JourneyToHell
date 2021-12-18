@@ -27,6 +27,7 @@ public class Spawn : MonoBehaviour
         GetAllMonsters();
         cam = UnityEngine.Camera.main;
         stageDirector = GameObject.FindGameObjectWithTag("Director");
+        Debug.Log("Directors" + GameObject.FindGameObjectsWithTag("Director").Length);
         narrator = stageDirector.GetComponent<Narrator>();
     }
 
