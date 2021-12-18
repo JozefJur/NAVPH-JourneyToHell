@@ -32,6 +32,7 @@ public class LevelControllerScript : MonoBehaviour
         }
         CurrLevel = Instantiate(Levels[index], position?LevelPosition2.transform.position:LevelPosition1.transform.position, Quaternion.identity);
         player.transform.position = CurrLevel.transform.Find("StartPoint").transform.position;
+        player.GetComponent<PlayerHealth>().HealMax();
         player.transform.position= new Vector3(player.transform.position.x,player.transform.position.y,-2.5f);
         
         position = !position;

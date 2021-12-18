@@ -14,7 +14,7 @@ public class FirstAidKit : PassiveItemTemplate
 
     private int stacks = 0;
 
-    private int hp = 10;
+    private int hp = 30;
 
     //private bool canPickUp = false;
     

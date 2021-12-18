@@ -73,7 +73,10 @@ public class PlayerHealth : MonoBehaviour
     {
         MaxHealth = BaseMaxHealth;
     }
-
+    public void HealMax()
+    {
+        CurrentHealth = MaxHealth;
+    }
     public bool IsAlive()
     {
         return CurrentHealth > 0 ? true : false;

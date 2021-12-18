@@ -97,6 +97,6 @@ public class ArmorScript : PassiveItemTemplate
     public string getItemDescr()
     {
         return "Good Effects: Each stack adds " + (100 * maxHealthBoost) + " max health\n" +
-        "Bad Effects: Each stack removes " + (movementSpeedPenalty * 15) + " movement speed";
+        "Bad Effects: Each stack removes " + (movementSpeedPenalty * 100) + "% of movement speed";
     }
 }

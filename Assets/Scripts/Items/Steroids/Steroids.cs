@@ -101,6 +101,6 @@ public class Steroids : PassiveItemTemplate
     public string getItemDescr()
     {
         return "Good Effects: Each stack adds " + (40 * attackDamageBoost) + " damage\n" +
-        "Bad Effects: Each stack removes " + attackSpeedPenalty  + " attack speed";
+        "Bad Effects: Each stack removes " + (attackSpeedPenalty * 100)  + "% attack speed";
     }
 }
