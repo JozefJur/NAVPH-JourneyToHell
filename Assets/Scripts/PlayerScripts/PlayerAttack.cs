@@ -66,7 +66,7 @@ public class PlayerAttack : MonoBehaviour
     // Player cant attack while jumping, falling, dashing or sprinting
     private bool canAttack()
     {
-        return !playerDash.IsDashing() && !playerJump.HasJumped() && rigidBody.velocity.y == 0 && !playerMov.MovementState.Equals(PlayerMovement.MOVEMENT_STATE.SPRINTING) && playerHealth.IsAlive();
+        return !playerDash.IsDashing() && !playerJump.HasJumped() && rigidBody.velocity.y == 0 && !playerMov.MovementState.Equals(PlayerMovement.MOVEMENT_STATE.SPRINTING) && playerHealth.IsAlive() && !PauseMenuScript.GameIsPaused;
     }
     //&& rigidBody.velocity.x == 0
 

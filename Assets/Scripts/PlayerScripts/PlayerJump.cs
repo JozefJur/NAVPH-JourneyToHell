@@ -20,6 +20,7 @@ public class PlayerJump : MonoBehaviour
     private CharacterMovementController Player;
     private Rigidbody2D rigidBody;
     private PlayerDash playerDash;
+    private PlayerHealth playerHealth;
     private int currJumpLeft = 1;
 
 
@@ -29,6 +30,7 @@ public class PlayerJump : MonoBehaviour
         Player = gameObject.GetComponent<CharacterMovementController>();
         rigidBody = gameObject.GetComponent<Rigidbody2D>();
         playerDash = gameObject.GetComponent<PlayerDash>();
+        playerHealth = gameObject.GetComponent<PlayerHealth>();
     }
 
 
@@ -52,7 +54,7 @@ public class PlayerJump : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Space) && currJumpLeft > 0)
         {
             // Handle jump on space press
-            if (JumpState.Equals(JUMP_STATE.READY))
+            if (JumpState.Equals(JUMP_STATE.READY) && playerHealth.IsAlive() && !PauseMenuScript.GameIsPaused)
             {
                 rigidBody.velocity = new Vector2(rigidBody.velocity.x, 0);
                 rigidBody.AddForce(new Vector2(0, JumpForce), ForceMode2D.Impulse);

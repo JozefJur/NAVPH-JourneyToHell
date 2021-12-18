@@ -7,6 +7,7 @@ public class YouDiedScript : MonoBehaviour
 {
     public void StartGame()
     {
+        PauseMenuScript.GameIsPaused = false;
         SceneManager.LoadSceneAsync("Game");
     }
     public void BackToMenu()

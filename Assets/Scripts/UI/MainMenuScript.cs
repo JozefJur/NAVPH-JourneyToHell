@@ -8,6 +8,8 @@ public class MainMenuScript : MonoBehaviour
 
     public void StartGame()
     {
+        PauseMenuScript.GameIsPaused = false;
+        Time.timeScale = 1f;
         SceneManager.LoadSceneAsync("Game");
     }
 

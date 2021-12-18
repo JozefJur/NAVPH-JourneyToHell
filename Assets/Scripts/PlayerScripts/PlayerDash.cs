@@ -46,7 +46,7 @@ public class PlayerDash : MonoBehaviour
         switch (Dash)
         {
             case DashState.READY:
-                if ((Input.GetKeyDown(KeyCode.LeftControl) || Input.GetKeyDown(KeyCode.RightControl)) && playerHealth.IsAlive())
+                if ((Input.GetKeyDown(KeyCode.LeftControl) || Input.GetKeyDown(KeyCode.RightControl)) && playerHealth.IsAlive() && !PauseMenuScript.GameIsPaused)
                 {
                     // While in dash, player can not be damaged, set dash animation, remove collision with skeleton layer
                     Physics2D.IgnoreLayerCollision(5, 7, true);
