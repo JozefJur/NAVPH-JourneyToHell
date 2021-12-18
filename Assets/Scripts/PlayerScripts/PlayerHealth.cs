@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PlayerHealth : MonoBehaviour
 {
@@ -28,12 +29,8 @@ public class PlayerHealth : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(CurrentHealth <= 0)
-        {
-            Debug.Log("DEAD");
-            //TODO IMPLEMENT DEATH !!! (mozeme pridat item, ktory napr zabrani smrti a zmizne)
+        if(CurrentHealth <= 0){
         }
-
         if(CurrentHealth > MaxHealth)
         {
             CurrentHealth = MaxHealth;
@@ -51,9 +48,9 @@ public class PlayerHealth : MonoBehaviour
 
             if (CurrentHealth <= 0)
             {
+                canHit = false;
+                rigidBody.constraints = RigidbodyConstraints2D.FreezeAll;
                 playerAnimator.SetBool("isDead", true);
-                Debug.Log("DEAD");
-                //TODO IMPLEMENT DEATH !!! (mozeme pridat item, ktory napr zabrani smrti a zmizne)
             }
         }
 
@@ -73,5 +70,11 @@ public class PlayerHealth : MonoBehaviour
     public void resetStats()
     {
         MaxHealth = baseMaxHealth;
+    }
+
+    public void Die(){
+        
+        SceneManager.LoadSceneAsync("YouDied");
+
     }
 }

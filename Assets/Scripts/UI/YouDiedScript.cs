@@ -3,26 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class MainMenuScript : MonoBehaviour
+public class YouDiedScript : MonoBehaviour
 {
-
     public void StartGame()
     {
         SceneManager.LoadSceneAsync("Game");
     }
-
-    /*public void ShowOptions()
+    public void BackToMenu()
     {
-
-    }
-
-    public void ShowHowToPlay()
-    {
-
-    }*/
-
-    public void ExitGame()
-    {
-        Application.Quit();
+        SceneManager.LoadSceneAsync("MainMenu");
     }
 }

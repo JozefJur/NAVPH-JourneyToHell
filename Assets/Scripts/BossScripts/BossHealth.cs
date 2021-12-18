@@ -5,6 +5,7 @@ using UnityEngine;
 public class BossHealth : MonsterHealth
 {
 
+    public Stone LevelStone;
     private BossBrain bossBrain;
     
     // Start is called before the first frame update
@@ -22,6 +23,10 @@ public class BossHealth : MonsterHealth
         if(CurrentHealth < (MaxHealth / 2))
         {
             bossBrain.isEnraged = true;
+        }
+        if(CurrentHealth <= 0)
+        {
+            Die();
         }
     }
 
@@ -45,5 +50,9 @@ public class BossHealth : MonsterHealth
     {
         CurrentHealth = (CurrentHealth + health > MaxHealth) ? CurrentHealth : CurrentHealth + health;
         bossBrain.bossHealthBar.setCurrentHealth(CurrentHealth);
+    }
+    public void Die(){
+         LevelStone.transform.gameObject.SetActive(true);
+         Destroy(gameObject);
     }
 }
