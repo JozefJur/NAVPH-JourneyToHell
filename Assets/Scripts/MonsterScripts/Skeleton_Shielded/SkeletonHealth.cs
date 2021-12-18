@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+// Custom implementation of MonsterHealth for skeleton
 public class SkeletonHealth : MonsterHealth
 {
 
@@ -16,17 +17,19 @@ public class SkeletonHealth : MonsterHealth
     public override void TakeDamage(float dmg)
     {
 
-        if (canHit)
+        // Absorb damage when sielded
+
+        if (CanHit)
         {
             monsterAnimator.SetTrigger("takeHit");
-            if (!shieldScript.currentShieldState.Equals(SkeletonShieldScript.SHIELD_STATE.SHIELDED))
+            if (!shieldScript.CurrentShieldState.Equals(SkeletonShieldScript.SHIELD_STATE.SHIELDED))
             {
                 CurrentHealth -= dmg;
             }
             else
             {
                 monsterAnimator.SetBool("shield", false);
-                shieldScript.setCoolDown();
+                shieldScript.SetCoolDown();
 
             }
             if (CurrentHealth <= 0)
@@ -34,7 +37,7 @@ public class SkeletonHealth : MonsterHealth
                 monsterAnimator.SetBool("isDead", true);
             }
 
-            monsterHealthBar.setCurrentHealth(CurrentHealth);
+            MonsterHealthBar.setCurrentHealth(CurrentHealth);
 
         }
 

@@ -59,7 +59,7 @@ public class Steroids : PassiveItemTemplate
             PlayerAttack script = x.GetComponent<PlayerAttack>();
 
             //script.currentDmg = script.baseDmg + (script.baseDmg * getStacks() * attackDamageBoost);
-            script.currentDmg = script.baseDmg * (float)(Math.Pow((1 + attackDamageBoost),getStacks()));
+            script.CurrentDmg = script.BaseDmg * (float)(Math.Pow((1 + attackDamageBoost),getStacks()));
 
         };
     }
@@ -71,7 +71,7 @@ public class Steroids : PassiveItemTemplate
             PlayerAttack script = x.GetComponent<PlayerAttack>();
 
             //script.currentAttackSpeed -= (script.baseAttackSpeed * getStacks() * attackSpeedPenalty);
-            script.currentAttackSpeed *= (float)( Math.Pow((1-attackSpeedPenalty), getStacks()));
+            script.CurrentAttackSpeed *= (float)( Math.Pow((1-attackSpeedPenalty), getStacks()));
         };
     }
 

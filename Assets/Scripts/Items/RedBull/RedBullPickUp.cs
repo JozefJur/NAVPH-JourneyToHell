@@ -22,7 +22,7 @@ public class RedBullPickUp : ItemPickupScript
     {
         Destroy(gameObject);
         GameObject player = GameObject.FindGameObjectsWithTag("Player")[0];
-        player.GetComponent<CharacterMovementController>().addItem(Activator.CreateInstance<RedBull>());
+        player.GetComponent<CharacterMovementController>().AddItem(Activator.CreateInstance<RedBull>());
     }
 
 }

@@ -2,20 +2,22 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+// Skeleton shield handler
 public class SkeletonShieldScript : MonoBehaviour
 {
+
+
+    public float BaseShieldCooldown;
+    public float CurrentShieldCoolDown;
+    public float ShieldDetectionRange;
+    public Transform ShieldDetectionPoint;
+
+    public SHIELD_STATE CurrentShieldState = SHIELD_STATE.READY;
 
     private SkeletonAI monsterBrain;
     private Animator monsterAnimator;
 
-    public float baseShieldCooldown;
-    public float currentShieldCoolDown;
-    public float shieldDetectionRange;
-    public Transform shieldDetectionPoint;
-
-    public SHIELD_STATE currentShieldState = SHIELD_STATE.READY;
-
-    // Start is called before the first frame update
+    // Base initialization
     void Start()
     {
         monsterBrain = gameObject.GetComponent<SkeletonAI>();
@@ -23,50 +25,53 @@ public class SkeletonShieldScript : MonoBehaviour
 
     }
 
-    // Update is called once per frame
     void Update()
     {
-        if(currentShieldCoolDown >= 0)
+        if(CurrentShieldCoolDown >= 0)
         {
-            currentShieldCoolDown -= Time.deltaTime;
+            CurrentShieldCoolDown -= Time.deltaTime;
         }
         else
         {
-            if (currentShieldState.Equals(SHIELD_STATE.ON_COOLDOWN))
+            if (CurrentShieldState.Equals(SHIELD_STATE.ON_COOLDOWN))
             {
-                currentShieldState = SHIELD_STATE.READY;
+                CurrentShieldState = SHIELD_STATE.READY;
             }
         }
 
-        if (canShield())
+        if (CanShield())
         {
-            currentShieldState = SHIELD_STATE.SHIELDED;
+            // Start shield animation and set state
+            CurrentShieldState = SHIELD_STATE.SHIELDED;
             monsterBrain.IsShielded = true;
             monsterAnimator.SetBool("shield", true);
         }
 
     }
 
-    private bool canShield()
+    // Check if player is close enough and cooldown is zero
+    private bool CanShield()
     {
-        if (!monsterBrain.IsShielded && currentShieldState.Equals(SHIELD_STATE.READY) && monsterBrain.currentState.Equals(MonsterAI.MY_STATE.CLOSING_DISTANCE))
+        if (!monsterBrain.IsShielded && CurrentShieldState.Equals(SHIELD_STATE.READY) && monsterBrain.currentState.Equals(MonsterAI.MY_STATE.CLOSING_DISTANCE))
         {
-            return isEnemyInShieldDistance();
+            return IsEnemyInShieldDistance();
         }
         return false;
     }
 
-    public bool isEnemyInShieldDistance()
+
+    // Check if player is close enough
+    public bool IsEnemyInShieldDistance()
     {
-        Collider2D[] enemyInRange = Physics2D.OverlapCircleAll(shieldDetectionPoint.position, shieldDetectionRange, monsterBrain.enemyLayers);
+        Collider2D[] enemyInRange = Physics2D.OverlapCircleAll(ShieldDetectionPoint.position, ShieldDetectionRange, monsterBrain.enemyLayers);
         return enemyInRange != null && enemyInRange.Length > 0;
     }
 
-    public void setCoolDown()
+    public void SetCoolDown()
     {
         monsterBrain.IsShielded = false;
-        this.currentShieldCoolDown = baseShieldCooldown;
-        currentShieldState = SHIELD_STATE.ON_COOLDOWN;
+        this.CurrentShieldCoolDown = BaseShieldCooldown;
+        CurrentShieldState = SHIELD_STATE.ON_COOLDOWN;
     }
 
     public enum SHIELD_STATE

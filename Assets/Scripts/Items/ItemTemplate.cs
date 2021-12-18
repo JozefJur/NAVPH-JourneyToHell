@@ -1,6 +1,8 @@
 using System;
 using UnityEngine;
 
+
+// Interface is used to define all methods for items
 public interface ItemTemplate
 {
 
@@ -18,8 +20,10 @@ public interface ItemTemplate
 
     string getItemDescr();
 
+    // Function applies positive effect to player
     Action<GameObject> getPositiveEffectFunction();
 
+    // Function applies negative effect to player
     Action<GameObject> getNegativeEffectFunction();
 
     public enum Rarity

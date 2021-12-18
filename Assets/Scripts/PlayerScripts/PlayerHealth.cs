@@ -3,21 +3,22 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
+// Script handles player health
 public class PlayerHealth : MonoBehaviour
 {
 
     public float MaxHealth = 100;
-    public float baseMaxHealth = 100;
-
+    public float BaseMaxHealth = 100;
     public float CurrentHealth = 100;
-    public bool canHit = true;
+    public bool CanHit = true;
+
     
     private CharacterMovementController Player;
     private Rigidbody2D rigidBody;
 
     private Animator playerAnimator;
 
-    // Start is called before the first frame update
+    // Base initialization
     void Start()
     {
         Player = gameObject.GetComponent<CharacterMovementController>();
@@ -26,10 +27,11 @@ public class PlayerHealth : MonoBehaviour
         playerAnimator = gameObject.GetComponent<Animator>();
     }
 
-    // Update is called once per frame
     void Update()
     {
         if(CurrentHealth <= 0){
+
+            Debug.Log("DEAD");
         }
         if(CurrentHealth > MaxHealth)
         {
@@ -37,10 +39,10 @@ public class PlayerHealth : MonoBehaviour
         }
     }
 
-    public void takeDamage(float dmg)
+    public void TakeDamage(float dmg)
     {
 
-        if (canHit)
+        if (CanHit)
         {
             playerAnimator.SetTrigger("takeHit");
             CurrentHealth -= dmg;
@@ -67,9 +69,9 @@ public class PlayerHealth : MonoBehaviour
         Player.healthBar.setCurrentHealth(CurrentHealth);
     }
 
-    public void resetStats()
+    public void ResetStats()
     {
-        MaxHealth = baseMaxHealth;
+        MaxHealth = BaseMaxHealth;
     }
 
     public void Die(){

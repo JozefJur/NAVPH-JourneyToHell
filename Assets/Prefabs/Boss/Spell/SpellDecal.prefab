@@ -115,9 +115,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 84d616764ca7ef34ea07647ab1a0058b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage: 30
-  top_right_corner: {x: 3, y: 10}
-  bottom_left_corner: {x: 4, y: 1}
-  enemyLayers:
+  Damage: 30
+  Top_right_corner: {x: 3, y: 10}
+  Bottom_left_corner: {x: 4, y: 1}
+  EnemyLayers:
     serializedVersion: 2
     m_Bits: 128

@@ -2,28 +2,28 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+// Script handles all monster melee attacks
 public class MeleeMonsterAtackScript : MonoBehaviour
 {
+    public float BaseDmg = 10f;
+    public float CurrentDmg = 10f;
 
+    public float CurrentAttackSpeed = 1f;
+    public float BaseAttackSpeed = 1f;
 
-    public float baseDmg = 10f;
-    public float currentDmg = 10f;
+    public float LightAttackDuration = 0.5f;
 
-    public float currentAttackSpeed = 1f;
-    public float baseAttackSpeed = 1f;
+    public float LightAttackCoolDown = 1;
+    
+    public AttackState CurrectAttackState = AttackState.READY;
 
-    public float lightAttackDuration = 0.5f;
-
-    public float lightAttackCoolDown = 1;
+    protected MonsterAI monsterBrain;
+    protected Animator monsterAnimator;
     
     private float lightAttackC = 0f;
     private float lightAttackD = 0f;
 
-    public AttackState currectAttackState = AttackState.READY;
-    protected MonsterAI monsterBrain;
-    protected Animator monsterAnimator;
-
-    // Start is called before the first frame update
+    // Base initialization
     protected virtual void Start()
     {
         monsterBrain = gameObject.GetComponent<MonsterAI>();
@@ -33,26 +33,28 @@ public class MeleeMonsterAtackScript : MonoBehaviour
     // Update is called once per frame
     protected virtual void Update()
     {
-        checkAttack();
+        CheckAttack();
     }
 
-    private bool canAttack()
+    private bool CanAttack()
     {
         return true;
     }
 
-    private void checkAttack()
+    // Function checks if monster can attack
+    private void CheckAttack()
     {
-        switch (currectAttackState)
+        switch (CurrectAttackState)
         {
             case AttackState.READY:
 
-                if (monsterBrain.currentState.Equals(MonsterAI.MY_STATE.ATTACKING) && canAttack())
+                if (monsterBrain.currentState.Equals(MonsterAI.MY_STATE.ATTACKING) && CanAttack())
                 {
+                    // Set attack animation, and current state
                     monsterAnimator.SetTrigger("attack");
                     //monsterAnimator.SetLayerWeight(1, 1);
-                    currectAttackState = AttackState.ATTACKING;
-                    lightAttackD = lightAttackDuration;
+                    CurrectAttackState = AttackState.ATTACKING;
+                    lightAttackD = LightAttackDuration;
                     gameObject.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
 
                 }
@@ -63,7 +65,7 @@ public class MeleeMonsterAtackScript : MonoBehaviour
                 if (lightAttackC <= 0)
                 {
                     //monsterAnimator.SetLayerWeight(1, 0);
-                    currectAttackState = AttackState.READY;
+                    CurrectAttackState = AttackState.READY;
                 }
 
                 break;
@@ -72,19 +74,21 @@ public class MeleeMonsterAtackScript : MonoBehaviour
 
                 if (lightAttackD <= 0)
                 {
-                    currectAttackState = AttackState.ON_COOLDOWN;
-                    lightAttackC = (lightAttackCoolDown - currentAttackSpeed);
+                    CurrectAttackState = AttackState.ON_COOLDOWN;
+                    lightAttackC = (LightAttackCoolDown - CurrentAttackSpeed);
                 }
                 break;
         }
     }
 
+    // Function is called from animation
+    // Function detects players in radius and deals damage
     void Attack()
     {
         Collider2D[] enemyToHit = Physics2D.OverlapCircleAll(monsterBrain.damageCircle.position, monsterBrain.damageRange, monsterBrain.enemyLayers);
         if (enemyToHit != null && enemyToHit.Length > 0)
         {
-            enemyToHit[0].gameObject.GetComponent<PlayerHealth>().takeDamage(currentDmg);
+            enemyToHit[0].gameObject.GetComponent<PlayerHealth>().TakeDamage(CurrentDmg);
         }
     }
 

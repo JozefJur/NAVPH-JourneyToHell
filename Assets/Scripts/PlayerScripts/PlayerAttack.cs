@@ -2,23 +2,24 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+// Script handles player attack
 public class PlayerAttack : MonoBehaviour
 {
 
-    public float baseDmg = 10f;
-    public float currentDmg = 10f;
+    public float BaseDmg = 40f;
+    public float CurrentDmg = 40f;
 
-    public float currentAttackSpeed = 1f;
-    public float baseAttackSpeed = 1f;
+    public float CurrentAttackSpeed = 1f;
+    public float BaseAttackSpeed = 1f;
 
-    public float lightAttackDuration = 0.5f;
-    public float heavyAttackDuration = 0.8f;
+    public float LightAttackDuration = 0.5f;
+    public float HeavyAttackDuration = 0.8f;
 
-    public float lightAttackCoolDown = 1;
-    public float heavyAttackCoolDown = 3f;
+    public float LightAttackCoolDown = 1;
+    public float HeavyAttackCoolDown = 3f;
 
-    private AttackState lightAttackState = AttackState.READY;
-    private AttackState heavyAttackState = AttackState.READY;
+    private AttackState LightAttackState = AttackState.READY;
+    private AttackState HeavyAttackState = AttackState.READY;
 
     private float lightAttackC = 0f;
     private float heavyAttackC = 0f;
@@ -38,7 +39,7 @@ public class PlayerAttack : MonoBehaviour
     public float attackRange = 0.5f;
     public LayerMask enemyLayers;
 
-    // Start is called before the first frame update
+    // Base initialization
     void Start()
     {
         playerAnimator = gameObject.GetComponent<Animator>();
@@ -54,16 +55,20 @@ public class PlayerAttack : MonoBehaviour
     {
 
         //Debug.Log(lightAttackState + " " + heavyAttackState);
-        playerAnimator.SetFloat("attackSpeed", currentAttackSpeed);
+        playerAnimator.SetFloat("attackSpeed", CurrentAttackSpeed);
         lightAttack();
         heavyAttack();
     }
 
+    // Check if player can attack
+    // Player cant attack while jumping, falling, dashing or sprinting
     private bool canAttack()
     {
-        return !playerDash.isDashing() && !playerJump.HasJumped() && rigidBody.velocity.y == 0 && !playerMov.MovementState.Equals(PlayerMovement.MOVEMENT_STATE.SPRINTING);
+        return !playerDash.IsDashing() && !playerJump.HasJumped() && rigidBody.velocity.y == 0 && !playerMov.MovementState.Equals(PlayerMovement.MOVEMENT_STATE.SPRINTING);
     }
     //&& rigidBody.velocity.x == 0
+
+    // Function returns closest enemy
     private Collider2D findClosest(Collider2D[] enemiesInRange)
     {
         if(enemiesInRange.Length == 0)
@@ -84,17 +89,19 @@ public class PlayerAttack : MonoBehaviour
         return enemy;
     }
 
+
     private void lightAttack()
     {
-        switch (lightAttackState)
+        switch (LightAttackState)
         {
             case AttackState.READY:
 
                 if (Input.GetMouseButtonDown(0) && canAttack())
                 {
+                    // Set attack animation
                     playerAnimator.SetTrigger("attack");
-                    lightAttackState = AttackState.ATTACKING;
-                    lightAttackD = lightAttackDuration;
+                    LightAttackState = AttackState.ATTACKING;
+                    lightAttackD = LightAttackDuration;
                     controller.attackCoolDown.setCooldown(lightAttackD);
 
                 }
@@ -104,7 +111,7 @@ public class PlayerAttack : MonoBehaviour
                 lightAttackC -= Time.deltaTime;
                 if (lightAttackC <= 0)
                 {
-                    lightAttackState = AttackState.READY;
+                    LightAttackState = AttackState.READY;
                 }
 
                 break;
@@ -122,22 +129,26 @@ public class PlayerAttack : MonoBehaviour
 
                 if (lightAttackD <= 0)
                 {
-                    lightAttackState = AttackState.ON_COOLDOWN;
-                    lightAttackC = (lightAttackCoolDown - currentAttackSpeed);
+                    LightAttackState = AttackState.ON_COOLDOWN;
+                    lightAttackC = (LightAttackCoolDown - CurrentAttackSpeed);
                 }
                 break;
         }
     }
 
+    // Function is called from Animation
+    // Damage closest enemy
     void Attack()
     {
         Collider2D enemyToHit = findClosest(Physics2D.OverlapCircleAll(sword.position, attackRange, enemyLayers));
         if (enemyToHit != null)
         {
-            enemyToHit.gameObject.GetComponent<MonsterHealth>().TakeDamage(currentDmg);
+            enemyToHit.gameObject.GetComponent<MonsterHealth>().TakeDamage(CurrentDmg);
         }
     }
 
+    // Function is called from Animation
+    // Damage all enemies
     void HardAttackMultiple()
     {
         Collider2D[] enemiesToHit = Physics2D.OverlapCircleAll(sword.position, attackRange, enemyLayers);
@@ -145,7 +156,7 @@ public class PlayerAttack : MonoBehaviour
         {
             foreach (var enemyToHit in enemiesToHit)
             {
-                enemyToHit.gameObject.GetComponent<MonsterHealth>().TakeDamage(currentDmg);
+                enemyToHit.gameObject.GetComponent<MonsterHealth>().TakeDamage(CurrentDmg);
             }
         }
     }
@@ -162,16 +173,17 @@ public class PlayerAttack : MonoBehaviour
 
     private void heavyAttack()
     {
-        switch (heavyAttackState)
+        switch (HeavyAttackState)
         {
             case AttackState.READY:
 
                 if (Input.GetMouseButtonDown(1) && canAttack())
                 {
+                    // Set attack animation
                     playerAnimator.SetTrigger("hardAttack");
-                    heavyAttackState = AttackState.ATTACKING;
-                    heavyAttackD = heavyAttackDuration;
-                    controller.heavyAttackCoolDown.setCooldown((heavyAttackCoolDown - currentAttackSpeed) + heavyAttackDuration);
+                    HeavyAttackState = AttackState.ATTACKING;
+                    heavyAttackD = HeavyAttackDuration;
+                    controller.heavyAttackCoolDown.setCooldown((HeavyAttackCoolDown - CurrentAttackSpeed) + HeavyAttackDuration);
                 }
 
                 break;
@@ -179,7 +191,7 @@ public class PlayerAttack : MonoBehaviour
                 heavyAttackC -= Time.deltaTime;
                 if (heavyAttackC <= 0)
                 {
-                    heavyAttackState = AttackState.READY;
+                    HeavyAttackState = AttackState.READY;
                 }
 
                 break;
@@ -187,32 +199,32 @@ public class PlayerAttack : MonoBehaviour
                 heavyAttackD -= Time.deltaTime;
                 if (heavyAttackD <= 0)
                 {
-                    heavyAttackState = AttackState.ON_COOLDOWN;
-                    heavyAttackC = heavyAttackCoolDown - currentAttackSpeed;
+                    HeavyAttackState = AttackState.ON_COOLDOWN;
+                    heavyAttackC = HeavyAttackCoolDown - CurrentAttackSpeed;
                 }
                 break;
         }
     } 
 
-    public bool isLightAttacking()
+    public bool IsLightAttacking()
     {
-        return lightAttackState == AttackState.ATTACKING;
+        return LightAttackState == AttackState.ATTACKING;
     }
 
-    public bool isHeavyAttacking()
+    public bool IsHeavyAttacking()
     {
-        return heavyAttackState == AttackState.ATTACKING;
+        return HeavyAttackState == AttackState.ATTACKING;
     }
 
-    public bool isAttacking()
+    public bool IsAttacking()
     {
-        return isLightAttacking() || isHeavyAttacking();
+        return IsLightAttacking() || IsHeavyAttacking();
     }
 
-    public void resetStats()
+    public void ResetStats()
     {
-        currentDmg = baseDmg;
-        currentAttackSpeed = baseAttackSpeed;
+        CurrentDmg = BaseDmg;
+        CurrentAttackSpeed = BaseAttackSpeed;
     }
 
     public enum AttackState

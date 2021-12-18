@@ -28,7 +28,7 @@ public class SkeletonMeleeAttack : MeleeMonsterAtackScript
         Collider2D[] enemyToHit = Physics2D.OverlapCircleAll(monsterBrain.damageCircle.position, monsterBrain.damageRange, monsterBrain.enemyLayers);
         if (enemyToHit != null && enemyToHit.Length > 0)
         {
-            enemyToHit[0].gameObject.GetComponent<PlayerHealth>().takeDamage(currentDmg);
+            enemyToHit[0].gameObject.GetComponent<PlayerHealth>().TakeDamage(CurrentDmg);
 
         }
     }

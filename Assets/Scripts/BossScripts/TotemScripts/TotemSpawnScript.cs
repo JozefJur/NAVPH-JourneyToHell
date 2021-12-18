@@ -2,10 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+// Script is used to spawn Totem
 public class TotemSpawnScript : MonoBehaviour
 {
 
-    public GameObject totem;
+    public GameObject Totem;
     private Vector3 spawnPosition;
     // Start is called before the first frame update
     void Start()
@@ -21,6 +22,6 @@ public class TotemSpawnScript : MonoBehaviour
 
     public GameObject SpawnTotem()
     {
-        return Instantiate(totem, spawnPosition, Quaternion.identity);
+        return Instantiate(Totem, spawnPosition, Quaternion.identity);
     }
 }

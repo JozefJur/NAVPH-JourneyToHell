@@ -3,18 +3,19 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 
+// Script stores all items with their raritty
 public class ItemGiver : MonoBehaviour
 {
 
-    public List<GameObject> itemsCommon;
+    public List<GameObject> ItemsCommon;
 
-    public List<GameObject> itemsUncommon;
+    public List<GameObject> ItemsUncommon;
 
-    public List<GameObject> itemsRare;
+    public List<GameObject> ItemsRare;
 
-    public List<GameObject> itemsLegendary;
+    public List<GameObject> ItemsLegendary;
 
-    private void getAllItems()
+    private void GetAllItems()
     {
         GameObject[] items = Resources.LoadAll<GameObject>("Items");
 
@@ -25,24 +26,24 @@ public class ItemGiver : MonoBehaviour
             switch (itemInstance.getRarity())
             {
                 case ItemTemplate.Rarity.COMMON:
-                    itemsCommon.Add(item);
+                    ItemsCommon.Add(item);
                     break;
                 case ItemTemplate.Rarity.UNCOMMON:
-                    itemsUncommon.Add(item);
+                    ItemsUncommon.Add(item);
                     break;
                 case ItemTemplate.Rarity.RARE:
-                    itemsRare.Add(item);
+                    ItemsRare.Add(item);
                     break;
                 case ItemTemplate.Rarity.LEGENDARY:
-                    itemsLegendary.Add(item);
+                    ItemsLegendary.Add(item);
                     break;
             }
         }
     }
-    // Start is called before the first frame update
+    // Get all items from resources on start
     void Start()
     {
-        getAllItems();
+        GetAllItems();
     }
 
     // Update is called once per frame
@@ -51,7 +52,8 @@ public class ItemGiver : MonoBehaviour
         
     }
 
-    public GameObject getRandomItem()
+    // Function returns random item by their chance
+    public GameObject GetRandomItem()
     {
         int number = UnityEngine.Random.Range(0, 100);
         //Debug.Log(number);
@@ -62,15 +64,15 @@ public class ItemGiver : MonoBehaviour
                 switch (rarity)
                 {
                     case ItemTemplate.Rarity.COMMON:
-                        return itemsCommon[UnityEngine.Random.Range(0, itemsCommon.Count)];
+                        return ItemsCommon[UnityEngine.Random.Range(0, ItemsCommon.Count)];
                     case ItemTemplate.Rarity.UNCOMMON:
-                        return itemsCommon[UnityEngine.Random.Range(0, itemsCommon.Count)];
+                        return ItemsCommon[UnityEngine.Random.Range(0, ItemsCommon.Count)];
                     // return itemsUncommon[UnityEngine.Random.Range(0, itemsCommon.Count -1)];
                     case ItemTemplate.Rarity.RARE:
-                        return itemsCommon[UnityEngine.Random.Range(0, itemsCommon.Count)];
+                        return ItemsCommon[UnityEngine.Random.Range(0, ItemsCommon.Count)];
                     // return itemsRare[UnityEngine.Random.Range(0, itemsCommon.Count-1)];
                     case ItemTemplate.Rarity.LEGENDARY:
-                        return itemsCommon[UnityEngine.Random.Range(0, itemsCommon.Count)];
+                        return ItemsCommon[UnityEngine.Random.Range(0, ItemsCommon.Count)];
                         // return itemsLegendary[UnityEngine.Random.Range(0, itemsCommon.Count-1)];
                 }
             }

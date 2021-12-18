@@ -167,8 +167,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   MaxHealth: 200
   CurrentHealth: 200
-  canHit: 1
-  monsterHealthBar: {fileID: 8444445139742524664}
+  CanHit: 1
+  MonsterHealthBar: {fileID: 8444445139742524664}
 --- !u!1 &4356640517530901262
 GameObject:
   m_ObjectHideFlags: 0

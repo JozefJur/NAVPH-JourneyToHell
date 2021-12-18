@@ -286,14 +286,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ad0b8685f8b08c543a8712befe50aa0f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  baseDmg: 40
-  currentDmg: 10
-  currentAttackSpeed: 1
-  baseAttackSpeed: 1
-  lightAttackDuration: 0.8
-  heavyAttackDuration: 0.8
-  lightAttackCoolDown: 1
-  heavyAttackCoolDown: 3
+  BaseDmg: 40
+  CurrentDmg: 40
+  CurrentAttackSpeed: 1
+  BaseAttackSpeed: 1
+  LightAttackDuration: 0.8
+  HeavyAttackDuration: 0.8
+  LightAttackCoolDown: 1
+  HeavyAttackCoolDown: 3
   sword: {fileID: 8001031293326334795}
   attackRange: 2.5
   enemyLayers:
@@ -311,10 +311,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 634924ae2eec5354ba3a9ff0b9e5de82, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  baseDodgeForce: 60
-  dodgeForce: 60
-  dashDuration: 0.3
-  dash: 0
+  BaseDodgeForce: 60
+  DodgeForce: 60
+  DashDuration: 0.3
+  Dash: 0
 --- !u!114 &7365080105447013191
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -328,8 +328,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   MaxHealth: 100
-  baseMaxHealth: 100
+  BaseMaxHealth: 100
   CurrentHealth: 100
+  CanHit: 1
 --- !u!114 &7365080105447013192
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -342,14 +343,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2f0bc810e2971174eb57ae7c587d09cd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  jumpForce: 25
-  jumpNumber: 1
-  baseJumpForce: 25
-  baseJumpNumber: 1
-  jumpCoolDown: 0.4
-  currentJumpCoolDown: 0
-  jumpState: 0
-  jumped: 0
+  JumpForce: 25
+  JumpNumber: 1
+  BaseJumpForce: 25
+  BaseJumpNumber: 1
+  JumpCoolDown: 0.4
+  CurrentJumpCoolDown: 0
+  JumpState: 0
+  Jumped: 0
 --- !u!114 &7365080105447013193
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -362,12 +363,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4c05e27c7f4605440a01dd4325bdd3d4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  movementSpeed: 15
-  baseMovementSpeed: 15
-  sprintModifier: 15
+  MovementSpeed: 15
+  BaseMovementSpeed: 15
+  SprintModifier: 15
   MovementState: 0
   GroundChecker: {fileID: 548234183}
-  platformHit: {fileID: 0}
+  PlatformHit: {fileID: 0}
 --- !u!114 &8253611638166091529
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -380,9 +381,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 41b564c15198e244a810f54b66820e88, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  canClimb: 0
-  movementSpeed: 15
-  gravityScale: 0
+  CanClimb: 0
+  MovementSpeed: 15
+  GravityScale: 0
 --- !u!1001 &7365080106230603077
 PrefabInstance:
   m_ObjectHideFlags: 0

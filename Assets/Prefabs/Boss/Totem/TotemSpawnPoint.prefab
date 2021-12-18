@@ -43,4 +43,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 82ae68772571ebe4d83e4bdec9031dae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  totem: {fileID: 4183693933235205956, guid: 70e484c09cba4004dae90ccfe9e9a548, type: 3}
+  Totem: {fileID: 4183693933235205956, guid: 70e484c09cba4004dae90ccfe9e9a548, type: 3}

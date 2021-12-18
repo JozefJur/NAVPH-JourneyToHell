@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+// Script handles totem
 public class TotemController : MonoBehaviour
 {
 
@@ -18,6 +19,7 @@ public class TotemController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        // Destroy totem when on low health
         if(health.CurrentHealth <= 0)
         {
             Destroy(gameObject);

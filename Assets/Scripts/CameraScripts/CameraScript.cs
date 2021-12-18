@@ -2,21 +2,20 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+// Script handles camera movement with player
 public class CameraScript : MonoBehaviour
 {
 
-    public Transform player;
-    public Vector3 offset;
+    public Transform Player;
+    public Vector3 Offset; // 0 10 -64
 
-    // Start is called before the first frame update
     void Start()
     {
-        player = GameObject.FindGameObjectWithTag("Player").transform;
+        Player = GameObject.FindGameObjectWithTag("Player").transform;
     }
 
-    // Update is called once per frame
     void Update()
     {
-        transform.position = new Vector3(player.position.x + offset.x, player.position.y + offset.y, offset.z);
+        transform.position = new Vector3(Player.position.x + Offset.x, Player.position.y + Offset.y, Offset.z);
     }
 }

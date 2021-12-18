@@ -2,26 +2,26 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+// Script handles player dash
 public class PlayerDash : MonoBehaviour
 {
 
-    public float baseDodgeForce = 60f;
+    public float BaseDodgeForce = 60f;
+    public float DodgeForce = 60f; // player dodge force
+    public float DashDuration = 0.3f; // player dash duration
+    public DashState Dash = DashState.READY;
 
-    public float dodgeForce = 60f; // player dodge force
-    public float dashDuration = 0.3f; // player dash duration
-
-    private CharacterMovementController Player;
-    private Rigidbody2D rigidBody;
     private PlayerMovement PlayerMovement;
-    public DashState dash = DashState.READY;
     private float dashCooldown = 0;
     private float currentDashTimer = 0;
     private Animator playerAnimator;
     private PlayerHealth playerHealth;
     private Vector2 appliedVelocity;
+    private CharacterMovementController Player;
+    private Rigidbody2D rigidBody;
     
     
-    // Start is called before the first frame update
+    // Base initialization
     void Start()
     {
         Player = gameObject.GetComponent<CharacterMovementController>();
@@ -33,7 +33,7 @@ public class PlayerDash : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (isDashing())
+        if (IsDashing())
         {
             rigidBody.velocity = appliedVelocity;
         }
@@ -43,38 +43,39 @@ public class PlayerDash : MonoBehaviour
     void Update()
     {
         //Debug.Log(dash);
-        switch (dash)
+        switch (Dash)
         {
             case DashState.READY:
                 if (Input.GetKeyDown(KeyCode.LeftControl) || Input.GetKeyDown(KeyCode.RightControl))
                 {
+                    // While in dash, player can not be damaged, set dash animation, remove collision with skeleton layer
                     Physics2D.IgnoreLayerCollision(5, 7, true);
                     playerAnimator.SetBool("IsDash", true);
-                    dash = DashState.IN_PROGRESS;
+                    Dash = DashState.IN_PROGRESS;
                     //accVelocity = rigidBody.velocity;
                     rigidBody.velocity = new Vector2(0, 0);
-                    appliedVelocity = new Vector2(PlayerMovement.getOrientation() * dodgeForce, rigidBody.velocity.y);
-                    Player.dashCoolDown.setCooldown(dashDuration + 1f);
-                    playerHealth.canHit = false;
+                    appliedVelocity = new Vector2(PlayerMovement.GetOrientation() * DodgeForce, rigidBody.velocity.y);
+                    Player.dashCoolDown.setCooldown(DashDuration + 1f);
+                    playerHealth.CanHit = false;
                 }
                 break;
             case DashState.IN_PROGRESS:
                 currentDashTimer += Time.deltaTime;
-                if (currentDashTimer >= dashDuration)
+                if (currentDashTimer >= DashDuration)
                 {
                     Physics2D.IgnoreLayerCollision(5, 7, false);
                     playerAnimator.SetBool("IsDash", false);
                     rigidBody.velocity = new Vector2(0, rigidBody.velocity.y);
-                    dash = DashState.ON_COOLDOWN;
+                    Dash = DashState.ON_COOLDOWN;
                     dashCooldown = 1f;
-                    playerHealth.canHit = true;
+                    playerHealth.CanHit = true;
                 }
                 break;
             case DashState.ON_COOLDOWN:
                 dashCooldown -= Time.deltaTime;
                 if (dashCooldown <= 0)
                 {
-                    dash = DashState.READY;
+                    Dash = DashState.READY;
                     currentDashTimer = 0f;
                 }
                 break;
@@ -82,9 +83,9 @@ public class PlayerDash : MonoBehaviour
     }
 
 
-    public void resetStats()
+    public void ResetStats()
     {
-        dodgeForce = baseDodgeForce;
+        DodgeForce = BaseDodgeForce;
     }
 
     public enum DashState
@@ -94,9 +95,9 @@ public class PlayerDash : MonoBehaviour
         ON_COOLDOWN
     }
 
-    public bool isDashing()
+    public bool IsDashing()
     {
-        return dash.Equals(DashState.IN_PROGRESS);
+        return Dash.Equals(DashState.IN_PROGRESS);
     }
 
 }
