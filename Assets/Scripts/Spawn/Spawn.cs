@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+// Script handles spawn points
 public class Spawn : MonoBehaviour
 {
     private Camera cam;
@@ -14,7 +15,7 @@ public class Spawn : MonoBehaviour
 
     private bool isRegistered = false;
 
-    private void getAllMonsters()
+    private void GetAllMonsters()
     {
         monsters = Resources.LoadAll<GameObject>("Monsters");
     }
@@ -23,7 +24,7 @@ public class Spawn : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        getAllMonsters();
+        GetAllMonsters();
         cam = UnityEngine.Camera.main;
         stageDirector = GameObject.FindGameObjectWithTag("Director");
         narrator = stageDirector.GetComponent<Narrator>();
@@ -32,37 +33,27 @@ public class Spawn : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        /*if(checkVisibility()&&!spawned)
-        {
-            spawned = true;
-            double timeSinceStartup = Time.realtimeSinceStartup;
-            int length = (int)(timeSinceStartup / 300);
-            Debug.Log(length);
-            for(int i = 0; i < length + 1; i++){
-                Instantiate(monsters[Random.Range(0, monsters.Length - 1)], transform.position, Quaternion.identity);
-            }
-            Delete();
-        }*/
-
-        if (checkVisibility())
+        // When spawnpoint is in view of camera, register
+        if (CheckVisibility())
         {
             if (!isRegistered)
             {
                 isRegistered = true;
-                narrator.registerSpawnPoint(gameObject);
+                narrator.RegisterSpawnPoint(gameObject);
             }
         }
         else
         {
+            // Deregister
             if (isRegistered)
             {
                 isRegistered = false;
-                narrator.removeSpawnPoint(gameObject);
+                narrator.RemoveSpawnPoint(gameObject);
             }
         }
 
     }
-    bool checkVisibility(){
+    bool CheckVisibility(){
          Vector3 viewPos = cam.WorldToViewportPoint(transform.position);
         if (viewPos.x >= 0 && viewPos.x <= 1 && viewPos.y >= 0 && viewPos.y <= 1 && viewPos.z > 0)
         {

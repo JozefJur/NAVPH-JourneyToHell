@@ -626,13 +626,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 52fe4451000cf2b4d890c950b665eeef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  baseDmg: 10
-  currentDmg: 10
-  currentAttackSpeed: 1
-  baseAttackSpeed: 1
-  lightAttackDuration: 1.5
-  lightAttackCoolDown: 1
-  currectAttackState: 0
+  BaseDmg: 10
+  CurrentDmg: 10
+  CurrentAttackSpeed: 1
+  BaseAttackSpeed: 1
+  LightAttackDuration: 1.5
+  LightAttackCoolDown: 1
+  CurrectAttackState: 0
 --- !u!114 &3372822191362162292
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -645,14 +645,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 37dd6f0c7cd1bf4499bfde920eecba2d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  orientation: -1
-  baseMovementSpeed: 0
-  movementSpeed: 13
-  player: {fileID: 0}
-  distance: 2
-  currentVelocity: {x: 0, y: 0}
-  hitting: 0
-  knockback: 0
+  Orientation: -1
+  BaseMovementSpeed: 13
+  MovementSpeed: 13
+  Player: {fileID: 0}
+  Distance: 2
+  CurrentVelocity: {x: 0, y: 0}
+  Hitting: 0
+  Knockback: 0
 --- !u!114 &585740202927493650
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -702,10 +702,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0d9b80ba07f58f94f970ad8918821013, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  walkingTime: 4
-  walkingTimeout: 8
-  myIdleMode: 0
-  directionChangeTime: 0
+  WalkingTime: 4
+  DirectionChangeTime: 8
+  WalkingTimeout: 0
+  MyIdleMode: 0
 --- !u!114 &1331193247
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -720,6 +720,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   MaxHealth: 100
   CurrentHealth: 100
-  canHit: 1
-  monsterHealthBar: {fileID: 1480574978}
+  CanHit: 1
+  MonsterHealthBar: {fileID: 1480574978}
   KnockBackPower: 5

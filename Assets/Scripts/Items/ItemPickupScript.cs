@@ -6,6 +6,7 @@ using System.Reflection;
 using System.Text;
 using TMPro;
 
+// Script is used to handle item pickup, this script is then extended for each item to implement custom logic
 public class ItemPickupScript : MonoBehaviour, ItemPickupInterface
 {
     
@@ -18,6 +19,7 @@ public class ItemPickupScript : MonoBehaviour, ItemPickupInterface
 
     }
 
+    // Can pick up, when close to the item
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.tag.Equals("Player"))
@@ -31,6 +33,7 @@ public class ItemPickupScript : MonoBehaviour, ItemPickupInterface
         }
     }
 
+    // Remove the ability to pick up
     private void OnTriggerExit2D(Collider2D collision)
     {
         if (collision.gameObject.tag.Equals("Player"))

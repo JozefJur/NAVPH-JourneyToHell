@@ -25,7 +25,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &58126096899430430
 Transform:
   m_ObjectHideFlags: 0
@@ -172,20 +172,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7b1438044cf17bb4c8491993dcc245e3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damageCircle: {fileID: 58126097746372431}
-  damageRange: 10
-  enemyLayers:
+  DamageCircle: {fileID: 58126097746372431}
+  DamageRange: 10
+  EnemyLayers:
     serializedVersion: 2
     m_Bits: 128
-  player: {fileID: 0}
-  groundChecker: {fileID: 58126097796040057}
+  Player: {fileID: 0}
+  GroundChecker: {fileID: 58126097796040057}
   CurrentStateMelee: 1
   CurrentStateTotem: 0
-  currentPhase: 0
+  CurrentPhase: 0
   BaseSwitchTime: 20
   CurrentswitchTime: 20
   isEnraged: 0
-  bossHealthBar: {fileID: 1232573768648512080}
+  BossHealthBar: {fileID: 1232573768648512080}
 --- !u!114 &58126096899430429
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -198,15 +198,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 58984e12fdc33d548a98dd6da711ea67, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  orientation: 1
-  movementSpeed: 10
-  player: {fileID: 0}
-  distance: 5
+  Orientation: 1
+  MovementSpeed: 10
+  Player: {fileID: 0}
+  Distance: 5
   BossPlatform: {fileID: 0}
   PlayerPlatform: {fileID: 0}
-  teleportCoords: {x: 0, y: 0}
-  currentTeleportStage: 0
-  hitting: 0
+  Hitting: 0
+  TeleportCoords: {x: 0, y: 0}
+  CurrentTeleportStage: 0
 --- !u!114 &58126096899430424
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -219,12 +219,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3eec904a4b2eabb4bb3b0162f22ad0f7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  baseDmg: 40
-  currentDmg: 40
-  currentAttackSpeed: 0.5
-  baseAttackSpeed: 0.5
-  lightAttackDuration: 1
-  currectAttackState: 0
+  BaseDmg: 40
+  CurrentDmg: 40
+  CurrentAttackSpeed: 0.5
+  BaseAttackSpeed: 0.5
+  LightAttackDuration: 1
+  CurrectAttackState: 0
 --- !u!114 &58126096899430422
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -237,10 +237,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5732a34515eac9a4baba133a7b68e21c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 0}
-  totemPhasePlace: {fileID: 0}
-  originalPlace: {x: 0, y: 0, z: 0}
-  totem: {fileID: 4183693933235205956, guid: 70e484c09cba4004dae90ccfe9e9a548, type: 3}
+  Player: {fileID: 0}
+  TotemPhasePlace: {fileID: 0}
+  OriginalPlace: {x: 0, y: 0, z: 0}
+  Totem: {fileID: 4183693933235205956, guid: 70e484c09cba4004dae90ccfe9e9a548, type: 3}
 --- !u!114 &58126096899430423
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -257,9 +257,12 @@ MonoBehaviour:
   CurrentCastPhase: 0
   ChargesLeft: 0
   MaxChargesCasting: 3
+  MaxChargedCastingEnraged: 6
   MaxChargesEnraged: 3
   BetweenChargeCooldown: 1
+  BetweenChargeCooldownEnraged: 1
   BetweenCastCooldown: 3
+  BetweenCastCooldownEnraged: 3
 --- !u!114 &128975763321778617
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -274,8 +277,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   MaxHealth: 1000
   CurrentHealth: 1000
-  canHit: 1
-  monsterHealthBar: {fileID: 1232573768648512080}
+  CanHit: 1
+  MonsterHealthBar: {fileID: 1232573768648512080}
 --- !u!1 &58126097746372400
 GameObject:
   m_ObjectHideFlags: 0
@@ -648,7 +651,7 @@ RectTransform:
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
+  m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}

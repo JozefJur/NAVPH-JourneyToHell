@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+// Custom implementation of MonsterHealth for goblin
 public class GoblinHealth : MonsterHealth
 {
 
@@ -23,23 +24,24 @@ public class GoblinHealth : MonsterHealth
 
         base.TakeDamage(dmg);
 
-        if (canHit && CurrentHealth > 0)
+        // Add knockback on hit
+        if (CanHit && CurrentHealth > 0)
         {
-            float orientation = player.GetComponent<PlayerMovement>().getOrientation();
+            float orientation = player.GetComponent<PlayerMovement>().GetOrientation();
             Vector2 direction = new Vector2(orientation * 1, 1);
-            movement.currentVelocity = direction * KnockBackPower;
-            movement.knockback = true;
-            StartCoroutine(waitknockBack());
+            movement.CurrentVelocity = direction * KnockBackPower;
+            movement.Knockback = true;
+            StartCoroutine(WaitknockBack());
 
         }
 
     }
 
 
-    IEnumerator waitknockBack()
+    IEnumerator WaitknockBack()
     {
         yield return new WaitForSeconds(0.3f);
-        movement.knockback = false;
+        movement.Knockback = false;
     }
 
 }

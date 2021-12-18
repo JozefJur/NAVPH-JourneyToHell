@@ -500,8 +500,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 3
-  m_Sprite: {fileID: 4723107735738678597, guid: 1018b0ba13578bf459bd254ae1a2be99,
-    type: 3}
+  m_Sprite: {fileID: 4723107735738678597, guid: 1018b0ba13578bf459bd254ae1a2be99, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -629,13 +628,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 37dd6f0c7cd1bf4499bfde920eecba2d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  orientation: 1
-  baseMovementSpeed: 7
-  movementSpeed: 7
-  player: {fileID: 0}
-  distance: 5
-  currentVelocity: {x: 0, y: 0}
-  hitting: 0
+  Orientation: 1
+  BaseMovementSpeed: 7
+  MovementSpeed: 7
+  Player: {fileID: 0}
+  Distance: 5
+  CurrentVelocity: {x: 0, y: 0}
+  Hitting: 0
+  Knockback: 0
 --- !u!114 &1721960388920962524
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -650,8 +650,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   MaxHealth: 200
   CurrentHealth: 200
-  canHit: 1
-  monsterHealthBar: {fileID: 1640456732}
+  CanHit: 1
+  MonsterHealthBar: {fileID: 1640456732}
 --- !u!114 &1721960388920962517
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -664,11 +664,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5b2640bc877b24942939b5ac4a08534b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  baseShieldCooldown: 25
-  currentShieldCoolDown: 0
-  shieldDetectionRange: 10
-  shieldDetectionPoint: {fileID: 935389928}
-  currentShieldState: 0
+  BaseShieldCooldown: 25
+  CurrentShieldCoolDown: 0
+  ShieldDetectionRange: 10
+  ShieldDetectionPoint: {fileID: 935389928}
+  CurrentShieldState: 0
 --- !u!114 &1721960388920962516
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -681,13 +681,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3cd8373ab2dfbf3449defcee719c1ea8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  baseDmg: 15
-  currentDmg: 15
-  currentAttackSpeed: 0.2
-  baseAttackSpeed: 0.2
-  lightAttackDuration: 1
-  lightAttackCoolDown: 1
-  currectAttackState: 0
+  BaseDmg: 15
+  CurrentDmg: 15
+  CurrentAttackSpeed: 0.2
+  BaseAttackSpeed: 0.2
+  LightAttackDuration: 1
+  LightAttackCoolDown: 1
+  CurrectAttackState: 0
 --- !u!114 &2101350917
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -700,10 +700,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0d9b80ba07f58f94f970ad8918821013, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  walkingTime: 12
-  walkingTimeout: 5
-  myIdleMode: 0
-  directionChangeTime: 0
+  WalkingTime: 12
+  DirectionChangeTime: 5
+  WalkingTimeout: 0
+  MyIdleMode: 0
 --- !u!1 &1721960388921028528
 GameObject:
   m_ObjectHideFlags: 0
@@ -806,8 +806,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 7482667652216324306, guid: 48e93eef0688c4a259cb0eddcd8661f7,
-    type: 3}
+  m_Sprite: {fileID: 7482667652216324306, guid: 48e93eef0688c4a259cb0eddcd8661f7, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0

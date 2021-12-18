@@ -2,44 +2,37 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
+
+// Script handles all monster spawning on stage
 public class Narrator : MonoBehaviour
 {
 
-    public GameObject spawnParticles;
-    
-    public int numberOfPoints;
+    public GameObject SpawnParticles;
+    public int NumberOfPoints;
+    public List<GameObject> ActiveSpawnPoints;
+    public int MaxNumberOfMonstersAtTheSameTime = 20;
+    public List<GameObject> AllActiveMonsters;
+    public int CreditGainMultiplier = 1;
+    public float CreditGainTimeout = 30;
+    public NARRATOR_STATE CurrentState = NARRATOR_STATE.IDLE;
+    public int MaxNumOfMonsterOnSpawnSequence = 2;
+    public float SpawnTimeout = 20f;
+    public float BetweenSpawnTimeout = 2f;
+    public bool CanSpawn;
+    public int NumOfPortalsAtTheSameTime = 3;
+    public Hashtable UnitVariation;
 
-    public List<GameObject> activeSpawnPoints;
 
-    private List<GameObject> currentSpawnPoints;
-    
-    public int maxNumberOfMonstersAtTheSameTime;
-    public List<GameObject> allActiveMonsters;
-
-    public int creditGainMultiplier;
-    public float creditGainTimeout;
-    public NARRATOR_STATE currentState = NARRATOR_STATE.IDLE;
-
-    public int maxNumOfMonsterOnSpawnSequence;
 
     private float currentCreditGainTimeout;
-
-    public float spawnTimeout;
     private float currentSpawnTimeout;
-    public float betweenSpawnTimeout = 5f;
     private float currentBetweenSpawnTimeout = 5f;
-
-    public int numOfPortalsAtTheSameTime = 3;
-
-    public Hashtable unitVariation;
-
-    public bool canSpawn;
-
     private GameObject[] monsters;
-
+    private List<GameObject> currentSpawnPoints;
     private int monstersRemainingSpawn;
 
-    private void getAllMonsters()
+    // Function loads all monsters from resources folder
+    private void GetAllMonsters()
     {
         monsters = Resources.LoadAll<GameObject>("Monsters");
 
@@ -52,24 +45,24 @@ public class Narrator : MonoBehaviour
         currentSpawnPoints = new List<GameObject>();
     }
 
-    // Start is called before the first frame update
+    // Base initialization
     void Start()
     {
-        getAllMonsters();
-        currentCreditGainTimeout = creditGainTimeout;
+        GetAllMonsters();
+        currentCreditGainTimeout = CreditGainTimeout;
         currentSpawnTimeout = 0;
-        numberOfPoints = 120;
-        canSpawn = true;
+        NumberOfPoints = 120;
+        CanSpawn = true;
     }
 
-    // Update is called once per frame
     void Update()
     {
-        calcucateCredit();
-        spawnMonsters();
+        CalcucateCredit();
+        SpawnMonsters();
     }
 
-    private bool hittingGround(Transform point)
+    // Utility function that checks if player is hitting ground
+    private bool HittingGround(Transform point)
     {
         RaycastHit2D[] groundInfo = Physics2D.RaycastAll(point.position, Vector2.down, 3f);
 
@@ -104,79 +97,92 @@ public class Narrator : MonoBehaviour
         return atLeastOne;
     }*/
 
-    private void spawnMonsters()
+    // Function is used to determine spawn locaions and number of monsters to spawn
+    private void SpawnMonsters()
     {
-        if (!currentState.Equals(NARRATOR_STATE.SPAWNING))
+        // check state
+        if (!CurrentState.Equals(NARRATOR_STATE.SPAWNING))
         {
             currentSpawnTimeout -= Time.deltaTime;
-            if (canSpawn && currentSpawnTimeout <=0 && activeSpawnPoints.Count > 0 && allActiveMonsters.Count < maxNumberOfMonstersAtTheSameTime)
+            if (CanSpawn && currentSpawnTimeout <=0 && ActiveSpawnPoints.Count > 0 && AllActiveMonsters.Count < MaxNumberOfMonstersAtTheSameTime)
             {
+                // Clear last spawnpoints location
                 currentSpawnPoints.Clear();
-                monstersRemainingSpawn = maxNumberOfMonstersAtTheSameTime - allActiveMonsters.Count >= maxNumOfMonsterOnSpawnSequence ? maxNumOfMonsterOnSpawnSequence : maxNumberOfMonstersAtTheSameTime - allActiveMonsters.Count;
-                currentState = NARRATOR_STATE.SPAWNING;
+                // Get number of monsters to spawn
+                monstersRemainingSpawn = MaxNumberOfMonstersAtTheSameTime - AllActiveMonsters.Count >= MaxNumOfMonsterOnSpawnSequence ? MaxNumOfMonsterOnSpawnSequence : MaxNumberOfMonstersAtTheSameTime - AllActiveMonsters.Count;
+                CurrentState = NARRATOR_STATE.SPAWNING;
                 List<int> indexes = new List<int>();
-                for(int i =0;i< activeSpawnPoints.Count; i++)
+                for(int i =0;i< ActiveSpawnPoints.Count; i++)
                 {
                     indexes.Add(i);
                 }
+                // Random order
                 indexes = indexes.OrderBy(tvz => System.Guid.NewGuid()).ToList();
-                for (int i= 0; i < ((activeSpawnPoints.Count < monstersRemainingSpawn) ? activeSpawnPoints.Count : monstersRemainingSpawn); i++)
+                for (int i= 0; i < ((ActiveSpawnPoints.Count < monstersRemainingSpawn) ? ActiveSpawnPoints.Count : monstersRemainingSpawn); i++)
                 {
-                    currentSpawnPoints.Add(activeSpawnPoints[indexes[i]]);
+                    currentSpawnPoints.Add(ActiveSpawnPoints[indexes[i]]);
                 }
 
             }
         }
     }
     
-    public void removeMonster(GameObject monster)
+    // Function is used to remove monster from active list
+    public void RemoveMonster(GameObject monster)
     {
-        allActiveMonsters.Remove(monster);
+        AllActiveMonsters.Remove(monster);
     }
 
-    private void calcucateCredit()
+    // Function adds credit to the pool
+    private void CalcucateCredit()
     {
         currentCreditGainTimeout -= Time.deltaTime;
         if (currentCreditGainTimeout <= 0)
         {
-            numberOfPoints += creditGainMultiplier * 40;
-            currentCreditGainTimeout = creditGainTimeout;
+            NumberOfPoints += CreditGainMultiplier * 40;
+            currentCreditGainTimeout = CreditGainTimeout;
         }
     }
 
-    public void registerSpawnPoint(GameObject spawnPoint)
+    // Function adds active spawn point to the pool
+    public void RegisterSpawnPoint(GameObject spawnPoint)
     {
-        activeSpawnPoints.Add(spawnPoint);
+        ActiveSpawnPoints.Add(spawnPoint);
     }
 
-    public void removeSpawnPoint(GameObject spawnPoint)
+    // Function removes spawn point from the pool
+    public void RemoveSpawnPoint(GameObject spawnPoint)
     {
-        activeSpawnPoints.Remove(spawnPoint);
+        ActiveSpawnPoints.Remove(spawnPoint);
     }
 
+    // Narrator spawns monsters whe possible
     void FixedUpdate()
     {
-        if (currentState.Equals(NARRATOR_STATE.SPAWNING))
+        if (CurrentState.Equals(NARRATOR_STATE.SPAWNING))
         {
             currentBetweenSpawnTimeout -= Time.deltaTime;
             if(currentBetweenSpawnTimeout <= 0)
             {
-                if(activeSpawnPoints.Count > 0)
+                if(ActiveSpawnPoints.Count > 0)
                 {
-                    currentBetweenSpawnTimeout = betweenSpawnTimeout;
-                    currentSpawnTimeout = spawnTimeout;
+                    // When spawnpoint is present start spawning
+                    currentBetweenSpawnTimeout = BetweenSpawnTimeout;
+                    currentSpawnTimeout = SpawnTimeout;
                     Transform currentSpawnPoint = currentSpawnPoints[0].transform;
                     currentSpawnPoints.RemoveAt(0);
                     Vector2 newP = new Vector2(currentSpawnPoint.position.x, currentSpawnPoint.position.y + 3);
-                    GameObject portal = Instantiate(spawnParticles, newP, Quaternion.identity);
-                    StartCoroutine(spawnEnemy(currentSpawnPoint, portal));
+                    // Create portal
+                    GameObject portal = Instantiate(SpawnParticles, newP, Quaternion.identity);
+                    // Start spawning routine
+                    StartCoroutine(SpawnEnemy(currentSpawnPoint, portal));
                     //allActiveMonsters.Add(Instantiate(monsters[Random.Range(0, monsters.Length)], currentSpawnPoint.position, Quaternion.identity));
                     monstersRemainingSpawn--;
 
                     //Random.Range(0, monsters.Length -1);
                     if(currentSpawnPoints.Count == 0)
                     {
-                        currentState = NARRATOR_STATE.IDLE;
+                        CurrentState = NARRATOR_STATE.IDLE;
                         currentBetweenSpawnTimeout = 0;
                     }
 
@@ -185,7 +191,8 @@ public class Narrator : MonoBehaviour
         }
     }
 
-    IEnumerator spawnEnemy(Transform point, GameObject  portal)
+    // Coroutine that removes portal and spawns enemies
+    IEnumerator SpawnEnemy(Transform point, GameObject  portal)
     {
         yield return new WaitForSeconds(5f);
 
@@ -208,7 +215,7 @@ public class Narrator : MonoBehaviour
         for(int i=0; i< temp.numPerSpawn(); i++)
         {
             yield return new WaitForSeconds(1f);
-            allActiveMonsters.Add(Instantiate(monster, point.position, Quaternion.identity));
+            AllActiveMonsters.Add(Instantiate(monster, point.position, Quaternion.identity));
         }
 
         yield return new WaitForSeconds(temp.numPerSpawn());
@@ -218,13 +225,14 @@ public class Narrator : MonoBehaviour
         //allActiveMonsters.Add(Instantiate(monsters[Random.Range(0, monsters.Length)], point.position, Quaternion.identity));
     }
 
-    public void destroyAllEnemies()
+    // Function destroys all registered enemies present in the stage
+    public void DestroyAllEnemies()
     {
-        foreach(GameObject enemy in allActiveMonsters)
+        foreach(GameObject enemy in AllActiveMonsters)
         {
             Destroy(enemy);
         }
-        allActiveMonsters.Clear();
+        AllActiveMonsters.Clear();
     }
 
     public enum NARRATOR_STATE

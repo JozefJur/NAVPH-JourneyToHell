@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+// Skeleton AI implementation
 public class SkeletonAI : MonsterAI
 {
 
@@ -21,17 +22,19 @@ public class SkeletonAI : MonsterAI
     protected override void Update()
     {
 
+        // Check if shielded
         if (IsShielded)
         {
-            if (currentState.Equals(MY_STATE.IDLE) || !shieldScript.isEnemyInShieldDistance())
+            if (currentState.Equals(MY_STATE.IDLE) || !shieldScript.IsEnemyInShieldDistance())
             {
                 IsShielded = false;
                 animator.SetBool("shield", false);
-                shieldScript.currentShieldState = SkeletonShieldScript.SHIELD_STATE.READY;
+                shieldScript.CurrentShieldState = SkeletonShieldScript.SHIELD_STATE.READY;
             }
             else
             {
-                movement.movementSpeed = movement.baseMovementSpeed / 2;
+                // When shielded, skeleton is 2 times slower
+                movement.MovementSpeed = movement.BaseMovementSpeed / 2;
             }
             Shield.GetComponent<BoxCollider2D>().isTrigger = false;
             base.Update();
@@ -39,7 +42,7 @@ public class SkeletonAI : MonsterAI
         else
         {
             Shield.GetComponent<BoxCollider2D>().isTrigger = true;
-            movement.movementSpeed = movement.baseMovementSpeed;
+            movement.MovementSpeed = movement.BaseMovementSpeed;
             base.Update();
         }
         

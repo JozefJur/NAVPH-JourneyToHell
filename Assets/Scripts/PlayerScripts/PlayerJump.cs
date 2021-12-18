@@ -2,27 +2,28 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+// Script handles player jumps
 public class PlayerJump : MonoBehaviour
 {
 
-    public float jumpForce = 10f;
-    public int jumpNumber = 1;
-    public float baseJumpForce = 10f;
-    public int baseJumpNumber = 1;
+    public float JumpForce = 10f;
+    public int JumpNumber = 1;
+    public float BaseJumpForce = 10f;
+    public int BaseJumpNumber = 1;
+    public float JumpCoolDown;
+    public float CurrentJumpCoolDown;
+    public JUMP_STATE JumpState = JUMP_STATE.READY;
+    public bool Jumped = false;
 
-    public float jumpCoolDown;
-    public float currentJumpCoolDown;
 
-    public JUMP_STATE jumpState = JUMP_STATE.READY;
 
     private CharacterMovementController Player;
     private Rigidbody2D rigidBody;
     private PlayerDash playerDash;
     private int currJumpLeft = 1;
 
-    public bool jumped = false;
 
-    // Start is called before the first frame update
+    // Base initialization
     void Start()
     {
         Player = gameObject.GetComponent<CharacterMovementController>();
@@ -30,63 +31,57 @@ public class PlayerJump : MonoBehaviour
         playerDash = gameObject.GetComponent<PlayerDash>();
     }
 
-    // Update is called once per frame
+
     void Update()
     {
 
-        if(currentJumpCoolDown >= 0)
+        if(CurrentJumpCoolDown >= 0)
         {
-            currentJumpCoolDown -= Time.deltaTime;
+            CurrentJumpCoolDown -= Time.deltaTime;
         }
         else
         {
-            jumpState = JUMP_STATE.READY;
-            if(rigidBody.velocity.y == 0 && !playerDash.isDashing())
+            JumpState = JUMP_STATE.READY;
+            // Reset jumps when not falling or jumping
+            if(rigidBody.velocity.y == 0 && !playerDash.IsDashing())
             {
-                resetJumps();
+                ResetJumps();
             }
         }
 
         if (Input.GetKeyDown(KeyCode.Space) && currJumpLeft > 0)
         {
-
-            if (jumpState.Equals(JUMP_STATE.READY))
+            // Handle jump on space press
+            if (JumpState.Equals(JUMP_STATE.READY))
             {
                 rigidBody.velocity = new Vector2(rigidBody.velocity.x, 0);
-                rigidBody.AddForce(new Vector2(0, jumpForce), ForceMode2D.Impulse);
+                rigidBody.AddForce(new Vector2(0, JumpForce), ForceMode2D.Impulse);
                 currJumpLeft--;
-                jumped = true;
-                currentJumpCoolDown = jumpCoolDown;
-                Player.jumpCoolDown.setCooldown(jumpCoolDown);
-                jumpState = JUMP_STATE.ON_COOLDOWN;
+                Jumped = true;
+                CurrentJumpCoolDown = JumpCoolDown;
+                Player.jumpCoolDown.setCooldown(JumpCoolDown);
+                JumpState = JUMP_STATE.ON_COOLDOWN;
                 Player.jumpNum.SetJumpNumber(currJumpLeft);
             }
 
         }
     }
 
-    private void resetJumps()
+    private void ResetJumps()
     {
-        jumped = false;
-        currJumpLeft = jumpNumber;
+        Jumped = false;
+        currJumpLeft = JumpNumber;
         Player.jumpNum.SetJumpNumber(currJumpLeft);
     }
 
     void OnCollisionEnter2D(Collision2D col)
     {
-        //Debug.Log("Collision" + " " + col.gameObject.tag + " "+ col.gameObject.name);
         if (col.gameObject.tag == "Ground")
         {
             Vector3 direction = transform.position - (col.gameObject.transform.position + col.gameObject.transform.localScale);
-            //Debug.Log(direction);
             if(direction.y > 0)
             {
-                resetJumps();
-                //Debug.Log("Here");
-             //   jumped = false;
-            //    currJumpLeft = jumpNumber;
-             //   Player.jumpNum.SetJumpNumber(currJumpLeft);
-                //Debug.Log(currJumpLeft);
+                ResetJumps();
             }
         }
         
@@ -94,7 +89,7 @@ public class PlayerJump : MonoBehaviour
 
     public bool HasJumped()
     {
-        return jumped;
+        return Jumped;
     }
 
     public void SetJumpNumber(int jumpNumber)
@@ -102,12 +97,12 @@ public class PlayerJump : MonoBehaviour
 
         //Debug.Log(HasJumped() + " " + currJumpLeft + " - " + jumpNumber);
 
-        if (!jumped)
+        if (!Jumped)
         {
             currJumpLeft = jumpNumber;
         }
 
-        this.jumpNumber = jumpNumber;
+        this.JumpNumber = jumpNumber;
         Player.jumpNum.SetJumpNumber(currJumpLeft);
     }
 
@@ -117,9 +112,9 @@ public class PlayerJump : MonoBehaviour
         ON_COOLDOWN
     }
 
-    public void resetStats()
+    public void ResetStats()
     {
-        jumpForce = baseJumpForce;
-        jumpNumber = baseJumpNumber;
+        JumpForce = BaseJumpForce;
+        JumpNumber = BaseJumpNumber;
     }
 }

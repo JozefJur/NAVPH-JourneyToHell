@@ -24,7 +24,7 @@ public class SteroidsPickUp : ItemPickupScript
     {
         Destroy(gameObject);
         GameObject player = GameObject.FindGameObjectsWithTag("Player")[0];
-        player.GetComponent<CharacterMovementController>().addItem(Activator.CreateInstance<Steroids>());
+        player.GetComponent<CharacterMovementController>().AddItem(Activator.CreateInstance<Steroids>());
     }
 
 }

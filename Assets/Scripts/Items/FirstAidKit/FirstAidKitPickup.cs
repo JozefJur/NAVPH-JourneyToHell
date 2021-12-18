@@ -25,6 +25,6 @@ public class FirstAidKitPickup : ItemPickupScript
     {
         Destroy(gameObject);
         GameObject player = GameObject.FindGameObjectsWithTag("Player")[0];
-        player.GetComponent<CharacterMovementController>().addItem(Activator.CreateInstance<FirstAidKit>());
+        player.GetComponent<CharacterMovementController>().AddItem(Activator.CreateInstance<FirstAidKit>());
     }
 }

@@ -2,75 +2,83 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+// Script handles monster idle movement
 public class MonsterIdle : MonoBehaviour
 {
     // Start is called before the first frame update
 
+    public float WalkingTime;
+    public float DirectionChangeTime;
+    public float WalkingTimeout;
+    public IDLE_MODE MyIdleMode = IDLE_MODE.STANDING;
+
+
+    private float currentWalkingTimeout;
+    private float currentWalkingTime;
     private MonsterAI monsterBrain;
     private MonsterMovementScript monsterMovement;
-    public float walkingTime;
-    private float currentWalkingTime;
-    public float walkingTimeout;
-    private float currentWalkingTimeout;
 
-    public IDLE_MODE myIdleMode = IDLE_MODE.STANDING;
-
-    public float directionChangeTime;
+    // Base initialization
     void Start()
     {
         monsterBrain = gameObject.GetComponent<MonsterAI>();
         monsterMovement = gameObject.GetComponent<MonsterMovementScript>();
     }
 
-    // Update is called once per frame
+    // Update handles idle movement
     void Update()
     {
        if (monsterBrain.currentState.Equals(MonsterAI.MY_STATE.IDLE))
         {
-            switch (myIdleMode)
+            switch (MyIdleMode)
             {
                 case IDLE_MODE.STANDING:
-                    simulateStanding();
+                    SimulateStanding();
                     break;
                 case IDLE_MODE.WALKING:
-                    simulateWalking();
+                    SimulateWalking();
                     break;
             }
         }
         else
         {
-            myIdleMode = IDLE_MODE.STANDING;
+            MyIdleMode = IDLE_MODE.STANDING;
         }
     }
 
-    private void simulateWalking()
+    // Function tries to generate random movement patters for monster
+    // Monster walks for random amount time and then changes direction
+    // Direction is also changed, when monster hits a wall
+    private void SimulateWalking()
     {
         currentWalkingTime -= Time.deltaTime;
-        directionChangeTime -= Time.deltaTime;
+        DirectionChangeTime -= Time.deltaTime;
         if (currentWalkingTime <= 0)
         {
-            myIdleMode = IDLE_MODE.STANDING;
-            currentWalkingTimeout = walkingTimeout;
+            MyIdleMode = IDLE_MODE.STANDING;
+            currentWalkingTimeout = WalkingTimeout;
         }
 
-        RaycastHit2D[] groundInfo = Physics2D.RaycastAll(monsterBrain.enemyDetectionCircle.position, Vector2.down, monsterMovement.distance);
-        if (!monsterMovement.hittingGround(groundInfo) || hittingWall())
+        RaycastHit2D[] groundInfo = Physics2D.RaycastAll(monsterBrain.enemyDetectionCircle.position, Vector2.down, monsterMovement.Distance);
+        // When not hitting ground or hitting wall, change orientation
+        if (!monsterMovement.HittingGround(groundInfo) || HittingWall())
         {
-            monsterMovement.orientation *= -1;
-            directionChangeTime = Random.Range(3, 8);
+            monsterMovement.Orientation *= -1;
+            DirectionChangeTime = Random.Range(3, 8);
         }
 
-        if (directionChangeTime <= 0)
+        if (DirectionChangeTime <= 0)
         {
-            monsterMovement.orientation *= -1;
-            directionChangeTime = Random.Range(3, 8);
+            monsterMovement.Orientation *= -1;
+            DirectionChangeTime = Random.Range(3, 8);
         }
 
-        monsterMovement.currentVelocity = new Vector2(monsterMovement.orientation * monsterMovement.movementSpeed, gameObject.GetComponent<Rigidbody2D>().velocity.y);
+        monsterMovement.CurrentVelocity = new Vector2(monsterMovement.Orientation * monsterMovement.MovementSpeed, gameObject.GetComponent<Rigidbody2D>().velocity.y);
 
     }
 
-    public bool hittingWall()
+    // Utility function to check if monster is hitting a wall
+    public bool HittingWall()
     {
         RaycastHit2D[] groundInfo = Physics2D.RaycastAll(monsterBrain.enemyDetectionCircle.position, Vector2.right, 0.1f);
         foreach (RaycastHit2D hit in groundInfo)
@@ -83,13 +91,13 @@ public class MonsterIdle : MonoBehaviour
         return false;
     }
 
-    private void simulateStanding()
+    private void SimulateStanding()
     {
         currentWalkingTimeout -= Time.deltaTime;
         if(currentWalkingTimeout <= 0)
         {
-            myIdleMode = IDLE_MODE.WALKING;
-            currentWalkingTime = walkingTime;
+            MyIdleMode = IDLE_MODE.WALKING;
+            currentWalkingTime = WalkingTime;
         }
     }
 

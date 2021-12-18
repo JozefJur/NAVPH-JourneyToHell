@@ -32,7 +32,7 @@ public class MonsterAI : MonoBehaviour
     protected virtual void Update()
     {
         //Debug.Log(attackScript.currectAttackState);
-        if (!attackScript.currectAttackState.Equals(MeleeMonsterAtackScript.AttackState.ATTACKING)){
+        if (!attackScript.CurrectAttackState.Equals(MeleeMonsterAtackScript.AttackState.ATTACKING)){
 
              detectEnemies();
         }
@@ -68,7 +68,7 @@ public class MonsterAI : MonoBehaviour
         else
         {
             aggroTimeLeft -= Time.deltaTime;
-            if (aggroTimeLeft > 0 && !attackScript.currectAttackState.Equals(MeleeMonsterAtackScript.AttackState.ATTACKING))
+            if (aggroTimeLeft > 0 && !attackScript.CurrectAttackState.Equals(MeleeMonsterAtackScript.AttackState.ATTACKING))
             {
                 currentState = MY_STATE.CLOSING_DISTANCE;
             }

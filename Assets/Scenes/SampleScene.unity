@@ -135,7 +135,7 @@ PrefabInstance:
       value: Bringer-of-Death
       objectReference: {fileID: 0}
     - target: {fileID: 58126096899430422, guid: 0465faedac9d71e48a87bcae27279d0a, type: 3}
-      propertyPath: totemPhasePlace
+      propertyPath: TotemPhasePlace
       value: 
       objectReference: {fileID: 2112726382}
     - target: {fileID: 58126096899430430, guid: 0465faedac9d71e48a87bcae27279d0a, type: 3}
@@ -182,6 +182,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 128975763321778617, guid: 0465faedac9d71e48a87bcae27279d0a, type: 3}
+      propertyPath: MaxHealth
+      value: 1000
+      objectReference: {fileID: 0}
+    - target: {fileID: 128975763321778617, guid: 0465faedac9d71e48a87bcae27279d0a, type: 3}
+      propertyPath: MonsterHealthBar
+      value: 
+      objectReference: {fileID: 370929967}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0465faedac9d71e48a87bcae27279d0a, type: 3}
 --- !u!1001 &60378202
@@ -758,6 +766,17 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 43
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &370929967 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1232573768648512080, guid: 0465faedac9d71e48a87bcae27279d0a, type: 3}
+  m_PrefabInstance: {fileID: 27470924}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d12a62b475dd09d4383d9c4a742ff1e8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &379761485
 GameObject:
   m_ObjectHideFlags: 0
@@ -893,7 +912,6 @@ GameObject:
   - component: {fileID: 519420031}
   - component: {fileID: 519420029}
   - component: {fileID: 519420030}
-  - component: {fileID: 519420033}
   - component: {fileID: 519420034}
   m_Layer: 0
   m_Name: Main Camera
@@ -922,8 +940,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 58b718b370eea4742853e804cfa3e4e6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 7365080105447013194, guid: 43f48f60f273d644b80250ed1a59da78, type: 3}
-  offset: {x: 0, y: 10, z: -64}
+  Player: {fileID: 0}
+  Offset: {x: 0, y: 10, z: -64}
 --- !u!20 &519420031
 Camera:
   m_ObjectHideFlags: 0
@@ -981,31 +999,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 41
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &519420033
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 519420028}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 741dcf82f89049243b7c078f2dcb3ebf, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  spawnParticles: {fileID: 0}
-  numberOfPoints: 0
-  activeSpawnPoints: []
-  maxNumberOfMonstersAtTheSameTime: 0
-  allActiveMonsters: []
-  creditGainMultiplier: 1
-  creditGainTimeout: 30
-  currentState: 1
-  maxNumOfMonsterOnSpawnSequence: 0
-  spawnTimeout: 20
-  betweenSpawnTimeout: 2
-  numOfPortalsAtTheSameTime: 3
-  canSpawn: 0
 --- !u!114 &519420034
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1018,10 +1011,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2de2981e36dc65848873e81d06ee1fd9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  itemsCommon: []
-  itemsUncommon: []
-  itemsRare: []
-  itemsLegendary: []
+  ItemsCommon: []
+  ItemsUncommon: []
+  ItemsRare: []
+  ItemsLegendary: []
 --- !u!1 &524945167
 GameObject:
   m_ObjectHideFlags: 0
@@ -1065,19 +1058,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 741dcf82f89049243b7c078f2dcb3ebf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  spawnParticles: {fileID: 190036, guid: 03f85cf5678193b49a79b1ffc56367d7, type: 3}
-  numberOfPoints: 0
-  activeSpawnPoints: []
-  maxNumberOfMonstersAtTheSameTime: 20
-  allActiveMonsters: []
-  creditGainMultiplier: 1
-  creditGainTimeout: 30
-  currentState: 1
-  maxNumOfMonsterOnSpawnSequence: 2
-  spawnTimeout: 20
-  betweenSpawnTimeout: 2
-  numOfPortalsAtTheSameTime: 3
-  canSpawn: 0
+  SpawnParticles: {fileID: 190036, guid: 03f85cf5678193b49a79b1ffc56367d7, type: 3}
+  NumberOfPoints: 0
+  ActiveSpawnPoints: []
+  MaxNumberOfMonstersAtTheSameTime: 20
+  AllActiveMonsters: []
+  CreditGainMultiplier: 1
+  CreditGainTimeout: 30
+  CurrentState: 1
+  MaxNumOfMonsterOnSpawnSequence: 2
+  SpawnTimeout: 20
+  BetweenSpawnTimeout: 2
+  CanSpawn: 0
+  NumOfPortalsAtTheSameTime: 3
 --- !u!1001 &558469547
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3101,6 +3094,10 @@ PrefabInstance:
       propertyPath: Boss
       value: 
       objectReference: {fileID: 1710455565}
+    - target: {fileID: 2903460050582779589, guid: 85f2415681cbe834d8e25ccc3f52aa3a, type: 3}
+      propertyPath: Wall
+      value: 
+      objectReference: {fileID: 7507422956428676348}
     - target: {fileID: 4786476788101395524, guid: 85f2415681cbe834d8e25ccc3f52aa3a, type: 3}
       propertyPath: m_RootOrder
       value: 39
@@ -3151,3 +3148,8 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 85f2415681cbe834d8e25ccc3f52aa3a, type: 3}
+--- !u!1 &7507422956428676348 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 941461318785046164, guid: 85f2415681cbe834d8e25ccc3f52aa3a, type: 3}
+  m_PrefabInstance: {fileID: 7507422956428676347}
+  m_PrefabAsset: {fileID: 0}

@@ -15,21 +15,24 @@ public class Ladder : MonoBehaviour
     {
         
     }
+
+    // Set player canClimb flag to true
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.tag.Equals("Player"))
         {
             GameObject player = collision.gameObject;
-            player.GetComponent<PlayerClimb>().canClimb = true;
+            player.GetComponent<PlayerClimb>().CanClimb = true;
         }
     }
 
+    // Set player canClimb flag to false
     private void OnTriggerExit2D(Collider2D collision)
     {
         if (collision.gameObject.tag.Equals("Player"))
         {
             GameObject player = collision.gameObject;
-            player.GetComponent<PlayerClimb>().canClimb = false;
+            player.GetComponent<PlayerClimb>().CanClimb = false;
         }
     }
 }

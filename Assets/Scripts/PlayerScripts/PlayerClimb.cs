@@ -2,11 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+// Script handles player climbing
 public class PlayerClimb : MonoBehaviour
 {
-    public bool canClimb = false;
-    public float movementSpeed = 15f;
-    public float gravityScale;
+    public bool CanClimb = false;
+    public float MovementSpeed = 15f;
+    public float GravityScale;
 
 
     private CharacterMovementController Player;
@@ -21,7 +22,7 @@ public class PlayerClimb : MonoBehaviour
         Player = gameObject.GetComponent<CharacterMovementController>();
         rigidBody = gameObject.GetComponent<Rigidbody2D>();
         playerJump = gameObject.GetComponent<PlayerJump>();
-        gravityScale = rigidBody.gravityScale;
+        GravityScale = rigidBody.gravityScale;
     }
 
     // Update is called once per frame
@@ -31,32 +32,26 @@ public class PlayerClimb : MonoBehaviour
     }
     void FixedUpdate() 
     {   
-        climbing();
+        Climbing();
     }
-    void climbing(){
-        if (canClimb && !playerJump.HasJumped())
+    void Climbing(){
+        // Climb only when not jumping
+        if (CanClimb && !playerJump.HasJumped())
         {
+            // While climing remove gravity and add velocity
             isClimbing = true;
             movementAxis = Input.GetAxis("Vertical");
             rigidBody.gravityScale = 0;
-            rigidBody.velocity = new Vector2( rigidBody.velocity.x, movementAxis*movementSpeed);
-          /*  if(Input.GetKeyDown(KeyCode.W))
-            {
-                Debug.Log("Up");
-            }
-            else if(Input.GetKeyDown(KeyCode.S))
-            {
-                Debug.Log("Down");
-            }*/
+            rigidBody.velocity = new Vector2( rigidBody.velocity.x, movementAxis*MovementSpeed);
         }
         else
         {
-            rigidBody.gravityScale = gravityScale;
-            if(isClimbing && !canClimb)
+            rigidBody.gravityScale = GravityScale;
+            if(isClimbing && !CanClimb)
             {
                 isClimbing = false;
                 movementAxis = 0;
-                rigidBody.velocity = new Vector2( rigidBody.velocity.x, movementAxis*movementSpeed);
+                rigidBody.velocity = new Vector2( rigidBody.velocity.x, movementAxis*MovementSpeed);
             }
         }
     }

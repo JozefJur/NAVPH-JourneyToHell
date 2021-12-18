@@ -2,21 +2,23 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+// Script is used for spell casted by boss entity
 public class SpellController : MonoBehaviour
 {
 
-    public float damage = 20;
+    public float Damage = 20; // 30
     //public Vector3 boxSize = new Vector3(5,10,1);
-    public Vector2 top_right_corner;
-    public Vector2 bottom_left_corner;
-    public LayerMask enemyLayers;
+    public Vector2 Top_right_corner; // 3 10
+    public Vector2 Bottom_left_corner; // 4 1
+    public LayerMask EnemyLayers;
 
-    // Start is called before the first frame update
+
+
     void Start()
     {
 
-        top_right_corner = new Vector2(gameObject.transform.position.x + top_right_corner.x, gameObject.transform.position.y + top_right_corner.y);
-        bottom_left_corner = new Vector2(gameObject.transform.position.x - bottom_left_corner.x, gameObject.transform.position.y - bottom_left_corner.y);
+        Top_right_corner = new Vector2(gameObject.transform.position.x + Top_right_corner.x, gameObject.transform.position.y + Top_right_corner.y);
+        Bottom_left_corner = new Vector2(gameObject.transform.position.x - Bottom_left_corner.x, gameObject.transform.position.y - Bottom_left_corner.y);
 
     }
 
@@ -26,13 +28,14 @@ public class SpellController : MonoBehaviour
         
     }
 
+    // Method is called from animation and deals damage to player if present in collider area
     void DealDamage()
     {
 
-        Collider2D[] enemyToHit = Physics2D.OverlapAreaAll(top_right_corner, bottom_left_corner, enemyLayers);
+        Collider2D[] enemyToHit = Physics2D.OverlapAreaAll(Top_right_corner, Bottom_left_corner, EnemyLayers);
         if (enemyToHit != null && enemyToHit.Length > 0)
         {
-            enemyToHit[0].gameObject.GetComponent<PlayerHealth>().takeDamage(damage);
+            enemyToHit[0].gameObject.GetComponent<PlayerHealth>().TakeDamage(Damage);
         }
 
     }
@@ -42,19 +45,11 @@ public class SpellController : MonoBehaviour
         Destroy(gameObject);
     }
 
+    // Utility function used to visualize collision area in editor
     void OnDrawGizmos()
     {
-
-            //Vector2 top_right_corner_copy = new Vector2(top_right_corner.x + 1943.99f , top_right_corner.y + -973.79f);
-           // Vector2 bottom_left_corner_copy = new Vector2( 1943.99f - bottom_left_corner.x,  -973.79f - bottom_left_corner.y);
-
-/*            top_right_corner.x += 1943.99f;
-            top_right_corner.y += -973.79f;
-            bottom_left_corner.x -= 1943.99f;
-            bottom_left_corner.y -= -973.79f;*/
-
-            Vector2 center_offset = (top_right_corner + bottom_left_corner) * 0.5f;
-            Vector2 displ = top_right_corner - bottom_left_corner;
+            Vector2 center_offset = (Top_right_corner + Bottom_left_corner) * 0.5f;
+            Vector2 displ = Top_right_corner - Bottom_left_corner;
             float x_p = Vector2.Dot(displ, Vector2.right);
             float y_p = Vector2.Dot(displ, Vector2.up);
 
@@ -62,11 +57,10 @@ public class SpellController : MonoBehaviour
             Vector2 bottom_r_c = new Vector2(x_p * 0.5f, -y_p * 0.5f) + center_offset;
 
 
-            Gizmos.DrawLine(top_right_corner, top_left_corner);
-            Gizmos.DrawLine(top_left_corner, bottom_left_corner);
-            Gizmos.DrawLine(bottom_left_corner, bottom_r_c);
-            Gizmos.DrawLine(bottom_r_c, top_right_corner);
-        
+            Gizmos.DrawLine(Top_right_corner, top_left_corner);
+            Gizmos.DrawLine(top_left_corner, Bottom_left_corner);
+            Gizmos.DrawLine(Bottom_left_corner, bottom_r_c);
+            Gizmos.DrawLine(bottom_r_c, Top_right_corner);
 
     }
 

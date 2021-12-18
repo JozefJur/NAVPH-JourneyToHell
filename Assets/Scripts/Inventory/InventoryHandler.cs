@@ -4,6 +4,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
+// Script handles inventory UI
 public class InventoryHandler : MonoBehaviour
 {
 
@@ -19,12 +20,14 @@ public class InventoryHandler : MonoBehaviour
         itemTemplate = inventoryContainer.Find("ItemContainerTemplate");
     }
 
-    public void setItems(List<ItemTemplate> items)
+    // Set player items
+    public void SetItems(List<ItemTemplate> items)
     {
         this.playerItems = items;
         DrawInventory();
     }
 
+    // Function draws all items in inventory to the UI screen
     private void DrawInventory()
     {
 
@@ -37,8 +40,10 @@ public class InventoryHandler : MonoBehaviour
             Destroy(invItem.gameObject);
         }
 
+        // Clear current icon list
         iconList.Clear();
 
+        // Create image for each item type and add number of stacks
         foreach (ItemTemplate item in playerItems)
         {
             if(item is FirstAidKit)

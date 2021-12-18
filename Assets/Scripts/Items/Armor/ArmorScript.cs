@@ -56,7 +56,7 @@ public class ArmorScript : PassiveItemTemplate
 
             PlayerHealth scriptH = x.GetComponent<PlayerHealth>();
 
-            scriptH.SetMaxHealth(scriptH.baseMaxHealth + ((getStacks() * maxHealthBoost) * scriptH.baseMaxHealth));
+            scriptH.SetMaxHealth(scriptH.BaseMaxHealth + ((getStacks() * maxHealthBoost) * scriptH.BaseMaxHealth));
         };
     }
 
@@ -67,7 +67,7 @@ public class ArmorScript : PassiveItemTemplate
 
             PlayerMovement scriptM = x.GetComponent<PlayerMovement>();
 
-            scriptM.movementSpeed *= (float)( Math.Pow((1-movementSpeedPenalty), getStacks()));
+            scriptM.MovementSpeed *= (float)( Math.Pow((1-movementSpeedPenalty), getStacks()));
         };
     }
 

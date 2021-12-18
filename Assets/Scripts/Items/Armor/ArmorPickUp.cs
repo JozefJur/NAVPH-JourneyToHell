@@ -22,6 +22,6 @@ public class ArmorPickUp : ItemPickupScript
     {
         Destroy(gameObject);
         GameObject player = GameObject.FindGameObjectsWithTag("Player")[0];
-        player.GetComponent<CharacterMovementController>().addItem(Activator.CreateInstance<ArmorScript>());
+        player.GetComponent<CharacterMovementController>().AddItem(Activator.CreateInstance<ArmorScript>());
     }
 }
