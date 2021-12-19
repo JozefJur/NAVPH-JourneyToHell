@@ -86,4 +86,13 @@ public class Feather : PassiveItemTemplate
         return ItemTemplate.Rarity.COMMON;
     }
 
+    public Sprite getSprite()
+    {
+        return ItemAssetsHolder.Instance.featherSprite;
+    }
+
+    public string getItemDescr()
+    {
+        return "Good Effects: Each stack adds one jump\n";
+    }
 }

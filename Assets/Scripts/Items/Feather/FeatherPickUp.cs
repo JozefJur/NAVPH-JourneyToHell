@@ -15,11 +15,16 @@ public class FeatherPickUp : ItemPickupScript
         }
     }
 
+    public override ItemTemplate getInstanceOfTemplate()
+    {
+        return Activator.CreateInstance<Feather>();
+    }
+
     public void pickItem()
     {
         Destroy(gameObject);
         GameObject player = GameObject.FindGameObjectsWithTag("Player")[0];
-        player.GetComponent<CharacterMovementController>().addItem(Activator.CreateInstance<Feather>());
+        player.GetComponent<CharacterMovementController>().AddItem(Activator.CreateInstance<Feather>());
     }
 
 }

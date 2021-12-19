@@ -15,11 +15,16 @@ public class FirstAidKitPickup : ItemPickupScript
             pickItem();
         }
     }
-    
+
+    public override ItemTemplate getInstanceOfTemplate()
+    {
+        return Activator.CreateInstance<FirstAidKit>();
+    }
+
     public void pickItem()
     {
         Destroy(gameObject);
         GameObject player = GameObject.FindGameObjectsWithTag("Player")[0];
-        player.GetComponent<CharacterMovementController>().addItem(Activator.CreateInstance<FirstAidKit>());
+        player.GetComponent<CharacterMovementController>().AddItem(Activator.CreateInstance<FirstAidKit>());
     }
 }

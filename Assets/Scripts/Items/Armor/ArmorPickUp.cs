@@ -13,10 +13,15 @@ public class ArmorPickUp : ItemPickupScript
         }
     }
 
+    public override ItemTemplate getInstanceOfTemplate()
+    {
+        return Activator.CreateInstance<ArmorScript>();
+    }
+
     public void pickItem()
     {
         Destroy(gameObject);
         GameObject player = GameObject.FindGameObjectsWithTag("Player")[0];
-        player.GetComponent<CharacterMovementController>().addItem(Activator.CreateInstance<ArmorScript>());
+        player.GetComponent<CharacterMovementController>().AddItem(Activator.CreateInstance<ArmorScript>());
     }
 }

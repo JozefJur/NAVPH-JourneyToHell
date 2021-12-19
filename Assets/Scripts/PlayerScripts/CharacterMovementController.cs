@@ -3,13 +3,20 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 
+// Script handles all player actions
 public class CharacterMovementController : MonoBehaviour
 {
 
-    public List<ItemTemplate> allItems = new List<ItemTemplate>();
-    public int maxHealth = 100;
-    public int currHealth;
+    public List<ItemTemplate> AllItems = new List<ItemTemplate>();
 
+    public HealthBarController healthBar;
+    public InventoryHandler inventory;
+    public CoolDownController attackCoolDown;
+    public CoolDownController dashCoolDown;
+    public CoolDownController sprintCoolDown;
+    public CoolDownController jumpCoolDown;
+    public JumpNumberController jumpNum;
+    public CoolDownController heavyAttackCoolDown;
     //private float dashCooldown = 0;
 
     private Rigidbody2D rigidBody;  // rigid body instance
@@ -21,6 +28,7 @@ public class CharacterMovementController : MonoBehaviour
     private PlayerAttack playerAttack;
 
    
+    // Base initialization
     void Start()
     {
         rigidBody = GetComponent<Rigidbody2D>();
@@ -29,35 +37,13 @@ public class CharacterMovementController : MonoBehaviour
         playerMov = GetComponent<PlayerMovement>();
         playerJump = GetComponent<PlayerJump>();
         playerAttack = GetComponent<PlayerAttack>();
-        /* var items = FindObjectsOfType<Object>().OfType<ItemTemplate>();
-         foreach (ItemTemplate item in items)
-         {
-             allItems.Add(item);
-         }
-         //Debug.Log(allItems[0].getStacks());
-         allItems[0].addStack();*/
-        //Debug.Log(allItems[0].getStacks());
+
     }
 
-
-    /*private void CalculateOnHitEffects()
+    // Function applies all positive effects from gathered items to player
+    private void ApplyPositivePassiveEffects()
     {
-        foreach (ItemTemplate item in allItems)
-        {
-            if(item is OnHitItemTemplate)
-            {
-                if (item.isReady())
-                {
-                    var func = item.getEffectFunction();
-                    func(gameObject);
-                }
-            }
-        }
-    }*/
-
-    private void applyPositivePassiveEffects()
-    {
-        foreach (ItemTemplate item in allItems.ToList())
+        foreach (ItemTemplate item in AllItems.ToList())
         {
             if (item is PassiveItemTemplate)
             {
@@ -68,10 +54,10 @@ public class CharacterMovementController : MonoBehaviour
             }
         }
     }
-
-    private void applyNegavitvePassiveEffects()
+    // Function applies all negative effects from gathered items to player
+    private void ApplyNegavitvePassiveEffects()
     {
-        foreach (ItemTemplate item in allItems.ToList())
+        foreach (ItemTemplate item in AllItems.ToList())
         {
             if (item is PassiveItemTemplate)
             {
@@ -82,10 +68,10 @@ public class CharacterMovementController : MonoBehaviour
             }
         }
     }
-
-    private void applyOtherEffects()
+    // Function applies all positive effects from gathered items to player
+    private void ApplyOtherEffects()
     {
-        foreach (ItemTemplate item in allItems.ToList())
+        foreach (ItemTemplate item in AllItems.ToList())
         {
             if (!(item is PassiveItemTemplate))
             {
@@ -98,32 +84,35 @@ public class CharacterMovementController : MonoBehaviour
         }
     }
 
-    private void resetStats()
+    // Function resets all stats to base value
+    private void ResetStats()
     {
-        playerDash.resetStats();
-        playerHealth.resetStats();
-        playerJump.resetStats();
-        playerMov.resetStats();
-        playerAttack.resetStats();
+        playerDash.ResetStats();
+        playerHealth.ResetStats();
+        playerJump.ResetStats();
+        playerMov.ResetStats();
+        playerAttack.ResetStats();
     }
 
-
+    // Reset all stats and apply effects from items
     void FixedUpdate()
     {
 
-        resetStats();
+        ResetStats();
 
-        applyPositivePassiveEffects();
-        applyNegavitvePassiveEffects();
+        ApplyPositivePassiveEffects();
+        ApplyNegavitvePassiveEffects();
 
-        applyOtherEffects();
-
+        ApplyOtherEffects();
+        healthBar.setMaxHealth(playerHealth.MaxHealth);
+        healthBar.setCurrentHealth(playerHealth.CurrentHealth);
+        //Debug.Log(allItems.Count);
     }
 
     void Update()
     {
 
-        foreach (ItemTemplate item in allItems)
+        foreach (ItemTemplate item in AllItems)
         {
             if (!item.isReady())
             {
@@ -132,23 +121,14 @@ public class CharacterMovementController : MonoBehaviour
         }
     }
 
-/*    private void performSprint(){
-        if(Input.GetKey(KeyCode.LeftShift) && (currSpeed == movementSpeed) && (!inJump)){
-            currSpeed = movementSpeed;
-            movementSpeed += 25f;
-        }
-        else{
-            movementSpeed = currSpeed;
-        }
-    }*/
-
-    public void addItem(ItemTemplate item)
+    // Function adds item to inventory
+    public void AddItem(ItemTemplate item)
     {
         //Debug.Log(item is Feather);
 
         bool containsItem = false;
 
-        foreach (ItemTemplate itemC in allItems)
+        foreach (ItemTemplate itemC in AllItems)
         {
             if (itemC.GetType().Equals(item.GetType()))
             {
@@ -160,43 +140,29 @@ public class CharacterMovementController : MonoBehaviour
         if (!containsItem)
         {
             item.addStack();
-            allItems.Add(item);
+            AllItems.Add(item);
         }
-    }
 
- //TRANSFER TO SEPARATE FILE
-    public void getDamage(int dmg){
-        currHealth -= dmg;
-        if (currHealth <= 0){
-            currHealth = 0;
-        }
-    }
-
-    public void heal(int hp){
-        currHealth += hp;
-        if (currHealth > maxHealth){
-            currHealth = maxHealth;
-        }
-        Debug.Log($"Curr health - {currHealth}, max health - {maxHealth}");
-    }
-
-    public void maxHealthUp(int hp){
-        maxHealth += hp;
+        inventory.SetItems(AllItems);
 
     }
 
+    // Function removes item from inventory
     public void RemoveItem(ItemTemplate item)
     {
-        foreach (ItemTemplate itemC in allItems.ToList())
+        foreach (ItemTemplate itemC in AllItems.ToList())
         {
             if (itemC.GetType().Equals(item.GetType()))
             {
                 itemC.removeStack();
                 if(itemC.getStacks() == 0)
                 {
-                    allItems.Remove(itemC);
+                    AllItems.Remove(itemC);
                 }
             }
         }
+
+        inventory.SetItems(AllItems);
+
     }
 }

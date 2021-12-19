@@ -1,59 +1,88 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
+// Script handles player health
 public class PlayerHealth : MonoBehaviour
 {
 
     public float MaxHealth = 100;
-    public float baseMaxHealth = 100;
-
+    public float BaseMaxHealth = 100;
     public float CurrentHealth = 100;
-    
+    public bool CanHit = true;
+
     
     private CharacterMovementController Player;
     private Rigidbody2D rigidBody;
 
-    // Start is called before the first frame update
+    private Animator playerAnimator;
+
+    // Base initialization
     void Start()
     {
         Player = gameObject.GetComponent<CharacterMovementController>();
         rigidBody = gameObject.GetComponent<Rigidbody2D>();
         CurrentHealth = MaxHealth;
+        playerAnimator = gameObject.GetComponent<Animator>();
     }
 
-    // Update is called once per frame
     void Update()
     {
-        if(CurrentHealth <= 0)
-        {
-            Debug.Log("DEAD");
-            //TODO IMPLEMENT DEATH !!! (mozeme pridat item, ktory napr zabrani smrti a zmizne)
-        }
+        if(CurrentHealth <= 0){
 
+            Debug.Log("DEAD");
+        }
         if(CurrentHealth > MaxHealth)
         {
             CurrentHealth = MaxHealth;
         }
     }
 
-    public void takeDamage(float dmg)
+    public void TakeDamage(float dmg)
     {
-        CurrentHealth -= dmg;
+
+        if (CanHit)
+        {
+            playerAnimator.SetTrigger("takeHit");
+            CurrentHealth -= dmg;
+            Player.healthBar.setCurrentHealth(CurrentHealth);
+
+            if (CurrentHealth <= 0)
+            {
+                CanHit = false;
+                rigidBody.constraints = RigidbodyConstraints2D.FreezeAll;
+                playerAnimator.SetBool("isDead", true);
+            }
+        }
+
     }
 
     public void SetMaxHealth(float newHealth)
     {
-        MaxHealth = newHealth;
+        MaxHealth = newHealth < 20f ? 20f : newHealth;
     }
 
     public void HealObject(float health)
     {
-        CurrentHealth = (CurrentHealth + health > MaxHealth) ? CurrentHealth : CurrentHealth + health;
+        CurrentHealth = (CurrentHealth + health > MaxHealth) ? MaxHealth : CurrentHealth + health;
+        Player.healthBar.setCurrentHealth(CurrentHealth);
     }
 
-    public void resetStats()
+    public void ResetStats()
     {
-        MaxHealth = baseMaxHealth;
+        MaxHealth = BaseMaxHealth;
+    }
+    public void HealMax()
+    {
+        CurrentHealth = MaxHealth;
+    }
+    public bool IsAlive()
+    {
+        return CurrentHealth > 0 ? true : false;
+    }
+    public void Die()
+    {    
+        SceneManager.LoadSceneAsync("YouDied");
     }
 }

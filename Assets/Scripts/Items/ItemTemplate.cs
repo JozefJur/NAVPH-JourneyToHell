@@ -1,6 +1,8 @@
 using System;
 using UnityEngine;
 
+
+// Interface is used to define all methods for items
 public interface ItemTemplate
 {
 
@@ -14,16 +16,22 @@ public interface ItemTemplate
 
     State getState();
 
+    Sprite getSprite();
+
+    string getItemDescr();
+
+    // Function applies positive effect to player
     Action<GameObject> getPositiveEffectFunction();
 
+    // Function applies negative effect to player
     Action<GameObject> getNegativeEffectFunction();
 
     public enum Rarity
     {
-        COMMON = 33,
-        UNCOMMON = 20,
+        COMMON = 60,
+        UNCOMMON = 25,
         RARE = 10,
-        LEGENDARY = 3
+        LEGENDARY = 2
     }
 
     public enum State

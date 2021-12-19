@@ -7,7 +7,7 @@ public class ArmorScript : PassiveItemTemplate
 {
     public float coolDownTime = 0f;
 
-    public float maxHealthBoost = 0.1f;
+    public float maxHealthBoost = 0.2f;
     public float movementSpeedPenalty = 0.05f;
 
     private float currentCoolDownTime = 0f;
@@ -56,7 +56,7 @@ public class ArmorScript : PassiveItemTemplate
 
             PlayerHealth scriptH = x.GetComponent<PlayerHealth>();
 
-            scriptH.SetMaxHealth(scriptH.baseMaxHealth + ((getStacks() * maxHealthBoost) * scriptH.baseMaxHealth));
+            scriptH.SetMaxHealth(scriptH.BaseMaxHealth + ((getStacks() * maxHealthBoost) * scriptH.BaseMaxHealth));
         };
     }
 
@@ -67,7 +67,7 @@ public class ArmorScript : PassiveItemTemplate
 
             PlayerMovement scriptM = x.GetComponent<PlayerMovement>();
 
-            scriptM.movementSpeed -= ((getStacks() * movementSpeedPenalty) * scriptM.baseMovementSpeed);
+            scriptM.MovementSpeed *= (float)( Math.Pow((1-movementSpeedPenalty), getStacks()));
         };
     }
 
@@ -87,5 +87,16 @@ public class ArmorScript : PassiveItemTemplate
     public ItemTemplate.Rarity getRarity()
     {
         return ItemTemplate.Rarity.COMMON;
+    }
+
+    public Sprite getSprite()
+    {
+        return ItemAssetsHolder.Instance.armorSprite;
+    }
+
+    public string getItemDescr()
+    {
+        return "Good Effects: Each stack adds " + (100 * maxHealthBoost) + " max health\n" +
+        "Bad Effects: Each stack removes " + (movementSpeedPenalty * 100) + "% of movement speed";
     }
 }

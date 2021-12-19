@@ -56,7 +56,8 @@ public class RedBull : PassiveItemTemplate
 
             PlayerMovement scriptM = x.GetComponent<PlayerMovement>();
 
-            scriptM.movementSpeed = scriptM.baseMovementSpeed + ((getStacks() * movementSpeedBoost) * scriptM.baseMovementSpeed);
+            scriptM.MovementSpeed = scriptM.BaseMovementSpeed + ((getStacks() * movementSpeedBoost) * scriptM.BaseMovementSpeed);
+
         };
     }
 
@@ -67,7 +68,7 @@ public class RedBull : PassiveItemTemplate
 
             PlayerHealth scriptH = x.GetComponent<PlayerHealth>();
 
-            scriptH.SetMaxHealth(scriptH.MaxHealth - ((getStacks() * healthPenalty) * scriptH.baseMaxHealth));
+            scriptH.SetMaxHealth(scriptH.MaxHealth - ((getStacks() * healthPenalty) * scriptH.BaseMaxHealth));
         };
     }
 
@@ -87,5 +88,16 @@ public class RedBull : PassiveItemTemplate
     public ItemTemplate.Rarity getRarity()
     {
         return ItemTemplate.Rarity.COMMON;
+    }
+
+    public Sprite getSprite()
+    {
+        return ItemAssetsHolder.Instance.redbullSprite;
+    }
+
+    public string getItemDescr()
+    {
+        return "Good Effects: Each stack adds " + movementSpeedBoost + " movement speed\n" +
+            "Bad Effects: Each stack removes " + healthPenalty + " health";
     }
 }

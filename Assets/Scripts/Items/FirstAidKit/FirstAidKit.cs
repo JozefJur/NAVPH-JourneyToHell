@@ -14,7 +14,7 @@ public class FirstAidKit : PassiveItemTemplate
 
     private int stacks = 0;
 
-    private int hp = 10;
+    private int hp = 30;
 
     //private bool canPickUp = false;
     
@@ -96,4 +96,15 @@ public class FirstAidKit : PassiveItemTemplate
     {
         return ItemTemplate.Rarity.COMMON;
     }
+
+    public Sprite getSprite()
+    {
+        return ItemAssetsHolder.Instance.firstAidSprite;
+    }
+
+    public string getItemDescr()
+    {
+        return "This item heals Player for " + hp + " health";
+    }
+
 }

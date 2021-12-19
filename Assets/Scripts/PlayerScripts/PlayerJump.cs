@@ -2,53 +2,96 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+// Script handles player jumps
 public class PlayerJump : MonoBehaviour
 {
 
-    public float jumpForce = 10f;
-    public int jumpNumber = 1;
-    public float baseJumpForce = 10f;
-    public int baseJumpNumber = 1;
+    public float JumpForce = 10f;
+    public int JumpNumber = 1;
+    public float BaseJumpForce = 10f;
+    public int BaseJumpNumber = 1;
+    public float JumpCoolDown;
+    public float CurrentJumpCoolDown;
+    public JUMP_STATE JumpState = JUMP_STATE.READY;
+    public bool Jumped = false;
+
+
 
     private CharacterMovementController Player;
     private Rigidbody2D rigidBody;
+    private PlayerDash playerDash;
+    private PlayerHealth playerHealth;
     private int currJumpLeft = 1;
 
-    private bool jumped = false;
 
-    // Start is called before the first frame update
+    // Base initialization
     void Start()
     {
         Player = gameObject.GetComponent<CharacterMovementController>();
         rigidBody = gameObject.GetComponent<Rigidbody2D>();
+        playerDash = gameObject.GetComponent<PlayerDash>();
+        playerHealth = gameObject.GetComponent<PlayerHealth>();
     }
 
-    // Update is called once per frame
+
     void Update()
     {
+
+        if(CurrentJumpCoolDown >= 0)
+        {
+            CurrentJumpCoolDown -= Time.deltaTime;
+        }
+        else
+        {
+            JumpState = JUMP_STATE.READY;
+            // Reset jumps when not falling or jumping
+            if(rigidBody.velocity.y == 0 && !playerDash.IsDashing())
+            {
+                ResetJumps();
+            }
+        }
+
         if (Input.GetKeyDown(KeyCode.Space) && currJumpLeft > 0)
         {
+            // Handle jump on space press
+            if (JumpState.Equals(JUMP_STATE.READY) && playerHealth.IsAlive() && !PauseMenuScript.GameIsPaused)
+            {
+                rigidBody.velocity = new Vector2(rigidBody.velocity.x, 0);
+                rigidBody.AddForce(new Vector2(0, JumpForce), ForceMode2D.Impulse);
+                currJumpLeft--;
+                Jumped = true;
+                CurrentJumpCoolDown = JumpCoolDown;
+                Player.jumpCoolDown.setCooldown(JumpCoolDown);
+                JumpState = JUMP_STATE.ON_COOLDOWN;
+                Player.jumpNum.SetJumpNumber(currJumpLeft);
+            }
 
-            rigidBody.velocity = new Vector2(rigidBody.velocity.x, 0);
-            rigidBody.AddForce(new Vector2(0, jumpForce), ForceMode2D.Impulse);
-            currJumpLeft--;
-            jumped = true;
         }
+    }
+
+    private void ResetJumps()
+    {
+        Jumped = false;
+        currJumpLeft = JumpNumber;
+        Player.jumpNum.SetJumpNumber(currJumpLeft);
     }
 
     void OnCollisionEnter2D(Collision2D col)
     {
-
         if (col.gameObject.tag == "Ground")
         {
-            currJumpLeft = jumpNumber;
-            jumped = false;
+            Vector3 direction = transform.position - (col.gameObject.transform.position + col.gameObject.transform.localScale);
+            if(direction.y > 0)
+            {
+                ResetJumps();
+            }
         }
+        
     }
 
     public bool HasJumped()
     {
-        return jumped;
+        return Jumped;
     }
 
     public void SetJumpNumber(int jumpNumber)
@@ -56,17 +99,24 @@ public class PlayerJump : MonoBehaviour
 
         //Debug.Log(HasJumped() + " " + currJumpLeft + " - " + jumpNumber);
 
-        if (!jumped)
+        if (!Jumped)
         {
             currJumpLeft = jumpNumber;
         }
 
-        this.jumpNumber = jumpNumber;
+        this.JumpNumber = jumpNumber;
+        Player.jumpNum.SetJumpNumber(currJumpLeft);
     }
 
-    public void resetStats()
+    public enum JUMP_STATE
     {
-        jumpForce = baseJumpForce;
-        jumpNumber = baseJumpNumber;
+        READY,
+        ON_COOLDOWN
+    }
+
+    public void ResetStats()
+    {
+        JumpForce = BaseJumpForce;
+        JumpNumber = BaseJumpNumber;
     }
 }

@@ -10,7 +10,7 @@ public class Steroids : PassiveItemTemplate
 
     public float attackDamageBoost = 0.1f;
 
-    public float attackSpeedPenalty = 0.05f;
+    public float attackSpeedPenalty = 0.025f;
 
     private float currentCoolDownTime = 0f;
 
@@ -58,7 +58,8 @@ public class Steroids : PassiveItemTemplate
 
             PlayerAttack script = x.GetComponent<PlayerAttack>();
 
-            script.currentDmg = script.baseDmg + (script.baseDmg * getStacks() * attackDamageBoost);
+            //script.currentDmg = script.baseDmg + (script.baseDmg * getStacks() * attackDamageBoost);
+            script.CurrentDmg = script.BaseDmg * (float)(Math.Pow((1 + attackDamageBoost),getStacks()));
 
         };
     }
@@ -69,8 +70,8 @@ public class Steroids : PassiveItemTemplate
         {
             PlayerAttack script = x.GetComponent<PlayerAttack>();
 
-            script.currentAttackSpeed -= (script.baseAttackSpeed * getStacks() * attackSpeedPenalty);
-
+            //script.currentAttackSpeed -= (script.baseAttackSpeed * getStacks() * attackSpeedPenalty);
+            script.CurrentAttackSpeed *= (float)( Math.Pow((1-attackSpeedPenalty), getStacks()));
         };
     }
 
@@ -90,5 +91,16 @@ public class Steroids : PassiveItemTemplate
     public ItemTemplate.Rarity getRarity()
     {
         return ItemTemplate.Rarity.COMMON;
+    }
+
+    public Sprite getSprite()
+    {
+        return ItemAssetsHolder.Instance.steroidsSprite;
+    }
+
+    public string getItemDescr()
+    {
+        return "Good Effects: Each stack adds " + (40 * attackDamageBoost) + " damage\n" +
+        "Bad Effects: Each stack removes " + (attackSpeedPenalty * 100)  + "% attack speed";
     }
 }
