@@ -9,4 +9,4 @@ Sources of assets:
 - particles: https://assetstore.unity.com/packages/vfx/particles/fantasy-effect-50310
 - UI elements: https://assetstore.unity.com/packages/2d/gui/fantasy-wooden-gui-free-103811
 
-Special thanks go to Brackeys!
+Special thanks goes to Brackeys!
