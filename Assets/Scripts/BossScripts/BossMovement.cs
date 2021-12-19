@@ -40,7 +40,7 @@ public class BossMovement : MonoBehaviour
         {
             if (hit.transform.tag.Equals("Ground"))
             {
-                Debug.Log("Boss " + hit.transform.gameObject.GetInstanceID());
+                //Debug.Log("Boss " + hit.transform.gameObject.GetInstanceID());
                 BossPlatform = hit.transform.gameObject;
                 Hitting = true;
                 return true;

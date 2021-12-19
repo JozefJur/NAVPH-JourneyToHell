@@ -15,6 +15,10 @@ public class ItemGiver : MonoBehaviour
 
     public List<GameObject> ItemsLegendary;
 
+    private GameObject player;
+
+    private GameObject firstAidKit;
+
     private void GetAllItems()
     {
         GameObject[] items = Resources.LoadAll<GameObject>("Items");
@@ -44,6 +48,15 @@ public class ItemGiver : MonoBehaviour
     void Start()
     {
         GetAllItems();
+        player = GameObject.FindGameObjectWithTag("Player");
+        foreach(GameObject item in ItemsCommon)
+        {
+            if (item.name.Equals("FirstAidKit"))
+            {
+                firstAidKit = item;
+                break;
+            }
+        }
     }
 
     // Update is called once per frame
@@ -61,6 +74,12 @@ public class ItemGiver : MonoBehaviour
             //Debug.Log(number + " " + (int) rarity);
             if (number <= (int)rarity)
             {
+
+                if (player.GetComponent<PlayerHealth>().CurrentHealth <= 15)
+                {
+                    return firstAidKit;
+                }
+
                 switch (rarity)
                 {
                     case ItemTemplate.Rarity.COMMON:

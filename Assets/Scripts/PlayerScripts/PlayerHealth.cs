@@ -65,7 +65,7 @@ public class PlayerHealth : MonoBehaviour
 
     public void HealObject(float health)
     {
-        CurrentHealth = (CurrentHealth + health > MaxHealth) ? CurrentHealth : CurrentHealth + health;
+        CurrentHealth = (CurrentHealth + health > MaxHealth) ? MaxHealth : CurrentHealth + health;
         Player.healthBar.setCurrentHealth(CurrentHealth);
     }
 
