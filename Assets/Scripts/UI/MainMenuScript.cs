@@ -10,6 +10,7 @@ public class MainMenuScript : MonoBehaviour
     {
         PauseMenuScript.GameIsPaused = false;
         Time.timeScale = 1f;
+        PlayerStatistics.ResetStatistics();
         SceneManager.LoadSceneAsync("Game");
     }
 

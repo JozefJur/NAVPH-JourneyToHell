@@ -145,6 +145,7 @@ public class PlayerAttack : MonoBehaviour
         Collider2D enemyToHit = findClosest(Physics2D.OverlapCircleAll(sword.position, attackRange, enemyLayers));
         if (enemyToHit != null)
         {
+            PlayerStatistics.DamageDealt += CurrentDmg;
             enemyToHit.gameObject.GetComponent<MonsterHealth>().TakeDamage(CurrentDmg);
         }
     }
@@ -158,6 +159,7 @@ public class PlayerAttack : MonoBehaviour
         {
             foreach (var enemyToHit in enemiesToHit)
             {
+                PlayerStatistics.DamageDealt += CurrentDmg;
                 enemyToHit.gameObject.GetComponent<MonsterHealth>().TakeDamage(CurrentDmg);
             }
         }

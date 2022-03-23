@@ -44,6 +44,7 @@ public class PlayerHealth : MonoBehaviour
 
         if (CanHit)
         {
+            PlayerStatistics.DamageRecieved += dmg;
             playerAnimator.SetTrigger("takeHit");
             CurrentHealth -= dmg;
             Player.healthBar.setCurrentHealth(CurrentHealth);

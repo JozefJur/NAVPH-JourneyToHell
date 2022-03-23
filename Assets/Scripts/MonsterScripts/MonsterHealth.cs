@@ -56,6 +56,7 @@ public class MonsterHealth : MonoBehaviour
 
             if (CurrentHealth <= 0)
             {
+                PlayerStatistics.NumberOfKilledMonsters += 1;
                 monsterAnimator.SetBool("isDead", true);
             }
         }

@@ -124,6 +124,8 @@ public class CharacterMovementController : MonoBehaviour
     // Function adds item to inventory
     public void AddItem(ItemTemplate item)
     {
+
+        PlayerStatistics.NumberOfCollectedItems += 1;
         //Debug.Log(item is Feather);
 
         bool containsItem = false;
