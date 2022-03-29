@@ -46,6 +46,7 @@ public class Stone : MonoBehaviour
         
     }
     public void ExitGame(){
-        SceneManager.LoadSceneAsync("MainMenu");
+        PlayerStatistics.Won = true;
+        SceneManager.LoadSceneAsync("YouDied");
     }
 }

@@ -8,6 +8,7 @@ public class PlayerStatistics : MonoBehaviour
     public static int NumberOfCollectedItems = 0;
     public static float DamageRecieved = 0;
     public static float DamageDealt = 0;
+    public static bool Won = false;
 
     public static void ResetStatistics()
     {
@@ -15,6 +16,7 @@ public class PlayerStatistics : MonoBehaviour
         NumberOfKilledMonsters = 0;
         DamageDealt = 0;
         DamageRecieved = 0;
+        Won = false;
     }
 
     public static int GetTotalScore()
